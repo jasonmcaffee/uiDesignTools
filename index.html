@@ -1,0 +1,276 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="Jason McAffee">
+
+  <!-- Mobile viewport optimized: h5bp.com/viewport -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+  
+  <!-- All JavaScript at the bottom, except this Modernizr build incl. Respond.js
+       Respond is a polyfill for min/max-width media queries. Modernizr enables HTML5 elements & feature detects; 
+       for optimal performance, create your own custom Modernizr build: www.modernizr.com/download/ -->
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+  
+  <style type="text/css">
+  	
+  </style>
+ 
+</head>
+
+<body>
+  <header>
+	UI Design Tools
+  </header>
+  
+  <div role="main">
+
+		<div id="linearGradientWidgetContainer">
+			<div id="linearGradientWidget">
+				
+				<div id="gradientWidgetControls">
+					<label for="redRange">red</label>
+					<input id="redRange" type="range" min="0" max="255" value="25" />
+					
+					<label for="greenRange">green</label>
+					<input id="greenRange" type="range" min="0" max="255" value="25" />
+					
+					<label for="blueRange">blue</label>
+					<input id="blueRange" type="range" min="0" max="255" value="25" />
+					
+					<label for="alphaRange">alpha</label>
+					<input id="alphaRange" type="range" min="0" max="1" step=".01" value="1" />
+				</div>
+				
+				<div id="gradientOutput" style="background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);">
+					output
+				</div>
+				
+			</div>
+		</div>
+		
+  </div>
+  
+  <footer>
+
+  </footer>
+
+	<div id="output"></div>
+  <!-- JavaScript at the bottom for fast page loading -->
+
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.0.min.js"><\/script>')</script>
+
+	<!-- http://code.google.com/closure/templates/docs/javascript_usage.html -->
+  <script src="js/libs/soyutils.js"></script>
+  <script src="js/mylibs/jasonTemplate.js"></script>
+  <script src="js/mylibs/templates/gradients/uiDesignTools.templates.gradients.linearGradient.js"></script>
+  
+  <script type="text/javascript">
+  	//setup the namespaces
+  	if (typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; } //ensure existence
+	  uiDesignTools.gradients = {models: {}};
+	  uiDesignTools.widgets = {};
+  	
+  	//widget for making gradients. don't call this before the document is ready.
+  	uiDesignTools.widgets.linearGradientMakerWidget = function(optionsParam){
+  		var self = this;//for handlers and whatnots
+  		
+  		//default options
+  		this.options = {
+  			gradientWidgetContainerId : 'linearGradientWidgetContainer',
+  			linearGradientCssTemplate : uiDesignTools.templates.gradients.linearGradient.linearGradientCssTemplate, //function used to generate html
+  			linearGradientModel : {} //should be typeof uiDesignTools.gradients.models.linearGradient
+  		};
+  		//merge default options with passed in options
+  		$.extend(this.options, optionsParam);
+  		
+  		//initialize jquery objects
+  		this.$gradientWidgetContainer = $('#'+this.options.gradientWidgetContainerId);
+  		
+  		//we must first generate the html for the widget
+  		//todo. initial values of controls should match model
+  		
+  		this.controls = {
+  			$redRangeInput : $('#redRange', this.$gradientWidgetContainer), //only search within the widget for the range
+  			$greenRangeInput : $('#greenRange', this.$gradientWidgetContainer), 
+  			$blueRangeInput : $('#blueRange', this.$gradientWidgetContainer), 
+  			$alphaRangeInput : $('#alphaRange', this.$gradientWidgetContainer),
+  			$gradientOutput : $('#gradientOutput', this.$gradientWidgetContainer)
+  		};
+  		
+  		//register change handlers
+  		this.controls.$redRangeInput.change(redRangeChangeHandler);
+  		this.controls.$greenRangeInput.change(this.greenRangeChangeHandler);
+  		this.controls.$blueRangeInput.change(this.blueRangeChangeHandler);
+  		this.controls.$alphaRangeInput.change(this.alphaRangeChangeHandler);
+  		
+  		function redRangeChangeHandler(e){
+	  		
+	  		//get value
+	  		var redRangeValue = $(this).val();
+	  		
+	  		//change model
+	  		//todo: find correct color stop
+	  		var colorStop = self.options.linearGradientModel.options.colorStops[0];
+	  		colorStop.options.rgba.red = redRangeValue;
+	  		
+	  		//generate the background: linear-gradient css style using the updated model
+	  		var newLinearGradientCssText = self.options.linearGradientCssTemplate({linearGradient : self.options.linearGradientModel});
+	  		//log2(newLinearGradientCssText);
+	  		//log2(self.options.linearGradientModel.options.colorStops[0].options.rgba.red);
+	  		//re-render
+	  		self.controls.$gradientOutput[0].style.cssText = newLinearGradientCssText;//'background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);'//
+	  		log2(self.controls.$gradientOutput[0].style.cssText);
+	  	};
+	  	
+	  	
+	  	
+  		//init
+			//this.gradientCssTemplate = document.getElementById("gradientWidgetCssTemplate");
+  		
+  	};//end linearGradientMakerWidget
+  	
+  	//http://dev.w3.org/csswg/css3-images/
+  	//gradient represents the gradient we want to turn into css
+  	uiDesignTools.gradients.models.gradient = function(optionsParam){
+  		//default options
+  		this.options = {
+  			colorStops : []//array of colorStop objects used for defining transitions in the gradient
+  		};
+  		
+  		//merge passed in options with default options
+  		$.extend(this.options, optionsParam);
+  		
+  	};//end gradient
+  	
+  	//colorStop used for defining transitions in the gradient
+  	uiDesignTools.gradients.models.colorStop = function(optionsParam){
+  		this.options = {
+  			rgba : {red: 1, green: 1, blue: 1, alpha:1},
+  			position : 90 // where the color stop is positioned (50 for %50)  Color-stops are allowed to have positions before 0% or after 100%
+  		}
+  		
+  		$.extend(this.options, optionsParam);//merge default options with what was passed in
+  		
+  	};//end colorStop
+  	
+  	
+  	//linear gradient definition
+  	uiDesignTools.gradients.models.linearGradient = function(optionsParam){
+  		//default options
+  		this.options = {
+  			angle : 0,
+  			sideOrCorner : 'top' //[left | right] || [top | bottom]
+  		};
+  		
+  		//merge passed in options with default options
+  		$.extend(this.options, optionsParam);
+  		
+  		//fully initialize by calling our prototype
+  		uiDesignTools.gradients.models.gradient.call(this, this.options);
+
+  	};//end linearGradient
+  	
+  	//linearGradient extends gradient
+  	uiDesignTools.gradients.models.linearGradient.prototype = new uiDesignTools.gradients.models.gradient({});
+  	
+  	
+		$(function(){
+			var textFromTemplate = jasonTemplate.helloName({name:'monkey'});
+			//alert(textFromTemplate);
+			textFromTemplate = jasonTemplate.helloNames({names: ['jason', 'monkey']});
+			//alert(textFromTemplate);
+			
+			var gradient = new uiDesignTools.gradients.models.gradient({test:'this is set'});
+			//alert(gradient.options.test);
+			
+			var linearGradient = new uiDesignTools.gradients.models.linearGradient({
+				angle : 45, //only written out if sideOrCorner is empty
+				sideOrCorner : 'top',//if not empty, this will be written out, and angle will not be written out.
+				colorStops : [
+					//colorStop 1
+	  			new uiDesignTools.gradients.models.colorStop({ 
+  					rgba: { red:20, green:98, blue:233, alpha:1 },
+  					position : 0 
+  				}),//end colorStop 1
+	  			//colorStop 2
+	  			new uiDesignTools.gradients.models.colorStop({ 
+  					rgba: { red:22, green:97, blue:195, alpha:1 },
+  					position : 100 
+  				})//end colorStop 2
+  			]
+			});
+			
+			//alert(linearGradient.options.colorStops[0].options.rgba.red);
+			//alert(linearGradient.options.colorStops[1].options.position);
+			
+			//test colorstop template
+			// var colorStop = {colorStop: linearGradient.options.colorStops[0]};
+			// var colorStopText = uiDesignTools.templates.gradients.linearGradient.colorStopTemplate(colorStop);
+			// alert(colorStopText);
+			
+			//test mozilla
+			//var mozillaText = uiDesignTools.templates.gradients.linearGradient.linearGradientForMozillaCssTemplate({linearGradient : linearGradient});
+			//alert(mozillaText);
+			
+			//test whole linearGradient
+			var linearGradientCss = uiDesignTools.templates.gradients.linearGradient.linearGradientCssTemplate({linearGradient: linearGradient});
+			log2(linearGradientCss);
+			
+			var gardientWidget = new uiDesignTools.widgets.linearGradientMakerWidget({
+				linearGradientModel : linearGradient
+			});
+			
+		});
+  	
+  	function log2(message){
+  		document.getElementById("output").innerHTML += message + "<br/>";
+  	}
+  </script>
+  
+  <!-- scripts concatenated and minified via build script -->
+  <script defer src="js/plugins.js"></script>
+  <script defer src="js/script.js"></script>
+  <!-- end scripts -->
+
+
+  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet -->
+  <script>
+    // var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    // (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    // g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    // s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7 ]>
+    <script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+
+</body>
+</html>

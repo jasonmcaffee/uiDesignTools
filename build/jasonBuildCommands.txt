@@ -1,0 +1,27 @@
+//to build js template from closure template:
+$ java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/jasonTemplate.soy
+
+java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/templates/gradients/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.templates.gradients.linearGradient.soy
+
+
+supposed to be:
+background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
+is:
+background: -webkit-linear-gradient(45,rgba(56, 98, 233, 1) 89%, rgba(22, 97, 195, 0.5) 45%);
+is:
+"background: -moz-linear-gradient(45,rgba(56, 98, 233, 1) 89%, rgba(22, 97, 195, 0.5) 45%);background: -webkit-linear-gradient(45,rgba(56, 98, 233, 1) 89%, rgba(22, 97, 195, 0.5) 45%);background: -o-linear-gradient(45,rgba(56, 98, 233, 1) 89%, rgba(22, 97, 195, 0.5) 45%);background: -ms-linear-gradient(45,rgba(56, 98, 233, 1) 89%, rgba(22, 97, 195, 0.5) 45%);background: -linear-gradient(45,rgba(56, 98, 233, 1) 89%, rgba(22, 97, 195, 0.5) 45%);"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

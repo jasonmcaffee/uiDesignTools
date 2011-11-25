@@ -1,0 +1,21 @@
+{namespace jasonTemplate}
+/**
+ * Says hello to a person.
+ * @param name The name of the person to say hello to.
+ */
+{template .helloName}
+  Hello {$name}!
+{/template}
+
+/**
+* says hello to several people.
+* demonstrates subtemplates.
+* @param names names of the people to say hello to
+*/
+{template .helloNames}
+	{foreach $name in $names}
+		{call .helloName}
+			{param name: $name /}
+		{/call}
+	{/foreach}
+{/template}

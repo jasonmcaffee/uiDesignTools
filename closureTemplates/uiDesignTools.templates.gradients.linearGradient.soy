@@ -1,0 +1,150 @@
+
+{namespace uiDesignTools.templates.gradients.linearGradient}
+/**
+ * Generates linear gradient css for different browsers
+ * @param linearGradient complex object representing a linear gradient
+ */
+{template .linearGradientCssTemplate}
+	//background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+ {call .linearGradientForMozillaCssTemplate}{param linearGradient : $linearGradient /}{/call}
+
+ //	background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
+ {call .linearGradientForWebkitCssTemplate}{param linearGradient : $linearGradient /}{/call}
+
+ //todo: background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(50%,rgba(41,137,216,0.84)), color-stop(100%,rgba(125,185,232,0.67)));
+
+ //background: -o-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%); 
+ {call .linearGradientForOperaCssTemplate}{param linearGradient : $linearGradient /}{/call}
+
+ //background: -ms-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%); 
+ {call .linearGradientForMicrosoftCssTemplate}{param linearGradient : $linearGradient /}{/call}
+
+	//background: linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
+ {call .linearGradientForW3cCssTemplate}{param linearGradient : $linearGradient /}{/call}
+{/template}
+
+/**
+* webkit-linear-gradient, moz-linear-gradient, etc, all appear to have the same format
+* output something like:
+* background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+* 
+* from http://dev.w3.org/csswg/css3-images/
+* linear-gradient(yellow, blue);
+* linear-gradient(to bottom, yellow, blue);
+* linear-gradient(180deg, yellow, blue);
+* linear-gradient(to top, blue, yellow);
+* linear-gradient(to bottom, yellow 0%, blue 100%);
+* 
+* @param gradientName name of the gradient. eg (-moz-linear-gradient, linear-gradient)
+* @param linearGradient complex object representing a linear gradient
+*/
+{template .linearGradientCommonFormatCssTemplate}
+background: {$gradientName}(
+//only print out sideOrCorner if it has value. if it doesn't, angle will be used.
+{if $linearGradient.options.sideOrCorner != ''}
+  {$linearGradient.options.sideOrCorner}
+{else}
+  {$linearGradient.options.angle}
+{/if}
+, 
+{foreach $colorStop in  $linearGradient.options.colorStops}
+ {call .colorStopTemplate}{param colorStop : $colorStop /}{/call}
+ {if not isLast($colorStop)}, {/if}
+{/foreach}
+);
+{/template}
+
+/**
+* Generates linear gradient css specifically for mozilla
+*
+* final result will be something like:
+* background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+*
+* @param linearGradient complex object representing a linear gradient
+*/
+{template .linearGradientForMozillaCssTemplate}
+ {call .linearGradientCommonFormatCssTemplate}
+  {param gradientName : '-moz-linear-gradient'/}
+  {param linearGradient : $linearGradient /}
+ {/call}
+{/template}
+
+/**
+* Generates linear gradient css specifically for microsoft
+*
+* final result will be something like:
+* background: -ms-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+*
+* @param linearGradient complex object representing a linear gradient
+*/
+{template .linearGradientForMicrosoftCssTemplate}
+ {call .linearGradientCommonFormatCssTemplate}
+  {param gradientName : '-ms-linear-gradient'/}
+  {param linearGradient : $linearGradient /}
+ {/call}
+{/template}
+
+/**
+* Generates linear gradient css based off of w3c
+*
+* final result will be something like:
+* background: -linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+*
+* @param linearGradient complex object representing a linear gradient
+*/
+{template .linearGradientForW3cCssTemplate}
+ {call .linearGradientCommonFormatCssTemplate}
+  {param gradientName : '-linear-gradient'/}
+  {param linearGradient : $linearGradient /}
+ {/call}
+{/template}
+
+
+/**
+* Generates linear gradient css specifically for opera
+*
+* final result will be something like:
+* background: -o-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+*
+* @param linearGradient complex object representing a linear gradient
+*/
+{template .linearGradientForOperaCssTemplate}
+ {call .linearGradientCommonFormatCssTemplate}
+  {param gradientName : '-o-linear-gradient'/}
+  {param linearGradient : $linearGradient /}
+ {/call}
+{/template}
+
+/**
+* Generates linear gradient css specifically for webkit
+*
+* final result will be something like:
+* background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
+*
+* @param linearGradient complex object representing a linear gradient
+*/
+{template .linearGradientForWebkitCssTemplate}
+ {call .linearGradientCommonFormatCssTemplate}
+  {param gradientName : '-webkit-linear-gradient'/}
+  {param linearGradient : $linearGradient /}
+ {/call}
+{/template}
+
+/**
+* Generates a color stop for use in a linear gradient
+* @param colorStop object representing a color stop with position and rgba properties
+*/
+{template .colorStopTemplate}
+ {call .rgbaTemplate}{param rgba: $colorStop.options.rgba /}{/call} {$colorStop.options.position}%
+{/template}
+
+/**
+* Generates rgba for use in a color stop
+* @param rgba object with red, green, blue, and alpha properties
+*/
+{template .rgbaTemplate}
+ rgba({$rgba.red}, {$rgba.green}, {$rgba.blue}, {$rgba.alpha})
+{/template}
+
+
+
