@@ -85,22 +85,23 @@
 	<!-- http://code.google.com/closure/templates/docs/javascript_usage.html -->
   <script src="js/libs/soyutils.js"></script>
   <script src="js/mylibs/jasonTemplate.js"></script>
-  <script src="js/mylibs/templates/gradients/uiDesignTools.templates.gradients.linearGradient.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradient.js"></script>
   
   <script type="text/javascript">
   	//setup the namespaces
-  	if (typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; } //ensure existence
-	  uiDesignTools.gradients = {models: {}};
-	  uiDesignTools.widgets = {};
+  	if(typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; } //ensure existence
+  	if(typeof uiDesignTools.gradients == 'undefined'){ uiDesignTools.gradients = {}; }
+  	if(typeof uiDesignTools.gradients.models == 'undefined'){ uiDesignTools.gradients.models = {}; }
+  	if(typeof uiDesignTools.gradients.widgets == 'undefined'){ uiDesignTools.gradients.widgets = {}; }
   	
   	//widget for making gradients. don't call this before the document is ready.
-  	uiDesignTools.widgets.linearGradientMakerWidget = function(optionsParam){
+  	uiDesignTools.gradients.widgets.linearGradientMakerWidget = function(optionsParam){
   		var self = this;//for handlers and whatnots
   		
   		//default options
   		this.options = {
   			gradientWidgetContainerId : 'linearGradientWidgetContainer',
-  			linearGradientCssTemplate : uiDesignTools.templates.gradients.linearGradient.linearGradientCssTemplate, //function used to generate html
+  			linearGradientCssTemplate : uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate, //function used to generate html
   			linearGradientModel : {} //should be typeof uiDesignTools.gradients.models.linearGradient
   		};
   		//merge default options with passed in options
@@ -160,7 +161,7 @@
   	
   	
   	//after an update to the linearGradientModel has been made, most likely this function should be called.
-  	uiDesignTools.widgets.linearGradientMakerWidget.prototype.renderGradientOutput = function(){
+  	uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.renderGradientOutput = function(){
   		//generate the background: linear-gradient css style using the updated model
   		var newLinearGradientCssText = this.options.linearGradientCssTemplate({linearGradient : this.options.linearGradientModel});
   		//update the css
@@ -243,18 +244,18 @@
 			
 			//test colorstop template
 			// var colorStop = {colorStop: linearGradient.options.colorStops[0]};
-			// var colorStopText = uiDesignTools.templates.gradients.linearGradient.colorStopTemplate(colorStop);
+			// var colorStopText = uiDesignTools.gradients.templates.linearGradient.colorStopTemplate(colorStop);
 			// alert(colorStopText);
 			
 			//test mozilla
-			//var mozillaText = uiDesignTools.templates.gradients.linearGradient.linearGradientForMozillaCssTemplate({linearGradient : linearGradient});
+			//var mozillaText = uiDesignTools.gradients.templates.linearGradient.linearGradientForMozillaCssTemplate({linearGradient : linearGradient});
 			//alert(mozillaText);
 			
 			//test whole linearGradient
-			var linearGradientCss = uiDesignTools.templates.gradients.linearGradient.linearGradientCssTemplate({linearGradient: linearGradient});
+			var linearGradientCss = uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate({linearGradient: linearGradient});
 			log2(linearGradientCss);
 			
-			var gardientWidget = new uiDesignTools.widgets.linearGradientMakerWidget({
+			var gardientWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
 				linearGradientModel : linearGradient
 			});
 			
