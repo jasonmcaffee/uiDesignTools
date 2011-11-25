@@ -85,145 +85,24 @@
 	<!-- http://code.google.com/closure/templates/docs/javascript_usage.html -->
   <script src="js/libs/soyutils.js"></script>
   <script src="js/mylibs/jasonTemplate.js"></script>
+  
   <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradient.js"></script>
   
+  <!-- order matters! -->
+  <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.colorStop.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.gradient.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.linearGradient.js"></script>
+  
+  <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.linearGradientMakerWidget.js"></script>
+  
   <script type="text/javascript">
-  	//setup the namespaces
-  	if(typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; } //ensure existence
-  	if(typeof uiDesignTools.gradients == 'undefined'){ uiDesignTools.gradients = {}; }
-  	if(typeof uiDesignTools.gradients.models == 'undefined'){ uiDesignTools.gradients.models = {}; }
-  	if(typeof uiDesignTools.gradients.widgets == 'undefined'){ uiDesignTools.gradients.widgets = {}; }
   	
-  	//widget for making gradients. don't call this before the document is ready.
-  	uiDesignTools.gradients.widgets.linearGradientMakerWidget = function(optionsParam){
-  		var self = this;//for handlers and whatnots
-  		
-  		//default options
-  		this.options = {
-  			gradientWidgetContainerId : 'linearGradientWidgetContainer',
-  			linearGradientCssTemplate : uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate, //function used to generate html
-  			linearGradientModel : {} //should be typeof uiDesignTools.gradients.models.linearGradient
-  		};
-  		//merge default options with passed in options
-  		$.extend(this.options, optionsParam);
-  		
-  		//initialize jquery objects
-  		this.$gradientWidgetContainer = $('#'+this.options.gradientWidgetContainerId);
-  		
-  		//we must first generate the html for the widget
-  		//todo. initial values of controls should match model
-  		
-  		this.controls = {
-  			$redRangeInput : $('#redRange', this.$gradientWidgetContainer), //only search within the widget for the range
-  			$greenRangeInput : $('#greenRange', this.$gradientWidgetContainer), 
-  			$blueRangeInput : $('#blueRange', this.$gradientWidgetContainer), 
-  			$alphaRangeInput : $('#alphaRange', this.$gradientWidgetContainer),
-  			$gradientOutput : $('#gradientOutput', this.$gradientWidgetContainer)
-  		};
-  		
-
-  		function registerColorStopRangeChangeHandlerFor(rangeIdSelector, colorStopIndex, rgbaColorPropertyBeingUpdated){
-	  		self.$gradientWidgetContainer.on("change", rangeIdSelector, 
-	  			{//event data
-	  				colorStopIndex : colorStopIndex,//access the correct color stop
-	  				rgbaColorPropertyBeingUpdated : rgbaColorPropertyBeingUpdated//used to access the appropriate property on the colorStop model
-	  			}, 
-	  			colorStopRangeChangeHandler);
-  		}
-  		
-			registerColorStopRangeChangeHandlerFor("#redRange", 0, "red");
-			registerColorStopRangeChangeHandlerFor("#greenRange", 0, "green");
-			registerColorStopRangeChangeHandlerFor("#blueRange", 0, "blue");
-			registerColorStopRangeChangeHandlerFor("#alphaRange", 0, "alpha");
-			
-  		//handles when red slider is manipulated. todo: determine which color stop was chosen.
-  		function colorStopRangeChangeHandler(e){
-	  		//get value
-	  		var rangeValue = $(this).val(),
-	  			  rgbaColorPropertyBeingUpdated = e.data.rgbaColorPropertyBeingUpdated,
-	  				colorStopIndex = e.data.colorStopIndex;
-	  				
-	  		//change model
-	  		//todo: find correct color stop
-	  		var colorStop = self.options.linearGradientModel.options.colorStops[colorStopIndex];
-	  		colorStop.options.rgba[rgbaColorPropertyBeingUpdated] = rangeValue;
-	  		//re-render
-	  		self.renderGradientOutput();
-	  	}
-	  	
-	  	
-	  	
-  		//init
-			//this.gradientCssTemplate = document.getElementById("gradientWidgetCssTemplate");
-  		
-  	};//end linearGradientMakerWidget
-  	
-  	
-  	
-  	//after an update to the linearGradientModel has been made, most likely this function should be called.
-  	uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.renderGradientOutput = function(){
-  		//generate the background: linear-gradient css style using the updated model
-  		var newLinearGradientCssText = this.options.linearGradientCssTemplate({linearGradient : this.options.linearGradientModel});
-  		//update the css
-  		this.controls.$gradientOutput[0].style.cssText = newLinearGradientCssText;
-  	};
-  	
-  	//http://dev.w3.org/csswg/css3-images/
-  	//gradient represents the gradient we want to turn into css
-  	uiDesignTools.gradients.models.gradient = function(optionsParam){
-  		//default options
-  		this.options = {
-  			colorStops : []//array of colorStop objects used for defining transitions in the gradient
-  		};
-  		
-  		//merge passed in options with default options
-  		$.extend(this.options, optionsParam);
-  		
-  	};//end gradient
-  	
-  	//colorStop used for defining transitions in the gradient
-  	uiDesignTools.gradients.models.colorStop = function(optionsParam){
-  		this.options = {
-  			rgba : {red: 1, green: 1, blue: 1, alpha:1},
-  			position : 90 // where the color stop is positioned (50 for %50)  Color-stops are allowed to have positions before 0% or after 100%
-  		}
-  		
-  		$.extend(this.options, optionsParam);//merge default options with what was passed in
-  		
-  	};//end colorStop
-  	
-  	
-  	//linear gradient definition
-  	uiDesignTools.gradients.models.linearGradient = function(optionsParam){
-  		//default options
-  		this.options = {
-  			angle : 0,
-  			sideOrCorner : 'top' //[left | right] || [top | bottom]
-  		};
-  		
-  		//merge passed in options with default options
-  		$.extend(this.options, optionsParam);
-  		
-  		//fully initialize by calling our prototype
-  		uiDesignTools.gradients.models.gradient.call(this, this.options);
-
-  	};//end linearGradient
-  	
-  	//linearGradient extends gradient
-  	uiDesignTools.gradients.models.linearGradient.prototype = new uiDesignTools.gradients.models.gradient({});
   	
   	
 		$(function(){
-			var textFromTemplate = jasonTemplate.helloName({name:'monkey'});
-			//alert(textFromTemplate);
-			textFromTemplate = jasonTemplate.helloNames({names: ['jason', 'monkey']});
-			//alert(textFromTemplate);
-			
-			var gradient = new uiDesignTools.gradients.models.gradient({test:'this is set'});
-			//alert(gradient.options.test);
 			
 			var linearGradient = new uiDesignTools.gradients.models.linearGradient({
-				angle : 45, //only written out if sideOrCorner is empty
+				angle : 0, //only written out if sideOrCorner is empty
 				sideOrCorner : 'top',//if not empty, this will be written out, and angle will not be written out.
 				colorStops : [
 					//colorStop 1
