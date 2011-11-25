@@ -9,9 +9,8 @@ Make sure you are using spaces ' ' and not tabs '\t' when editing your soy files
 
 Closure is a big tool though, and js templating is just one of its facets.  
 I mainly stuck to these pages for guidance in generating js templates:
+
 http://code.google.com/closure/templates/docs/commands.html
 http://code.google.com/closure/templates/docs/javascript_usage.html
-
-Thanks,
 
 # [Jason McAffee](http://codeceratops.jasonmcaffee.com)
