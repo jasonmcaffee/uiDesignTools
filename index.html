@@ -120,30 +120,35 @@
   			$gradientOutput : $('#gradientOutput', this.$gradientWidgetContainer)
   		};
   		
-  		//register change handlers
-  		this.controls.$redRangeInput.change(redRangeChangeHandler);
-  		this.controls.$greenRangeInput.change(this.greenRangeChangeHandler);
-  		this.controls.$blueRangeInput.change(this.blueRangeChangeHandler);
-  		this.controls.$alphaRangeInput.change(this.alphaRangeChangeHandler);
+
+  		function registerColorStopRangeChangeHandlerFor(rangeIdSelector, colorStopIndex, rgbaColorPropertyBeingUpdated){
+	  		self.$gradientWidgetContainer.on("change", rangeIdSelector, 
+	  			{//event data
+	  				colorStopIndex : colorStopIndex,//access the correct color stop
+	  				rgbaColorPropertyBeingUpdated : rgbaColorPropertyBeingUpdated//used to access the appropriate property on the colorStop model
+	  			}, 
+	  			colorStopRangeChangeHandler);
+  		}
   		
-  		function redRangeChangeHandler(e){
-	  		
+			registerColorStopRangeChangeHandlerFor("#redRange", 0, "red");
+			registerColorStopRangeChangeHandlerFor("#greenRange", 0, "green");
+			registerColorStopRangeChangeHandlerFor("#blueRange", 0, "blue");
+			registerColorStopRangeChangeHandlerFor("#alphaRange", 0, "alpha");
+			
+  		//handles when red slider is manipulated. todo: determine which color stop was chosen.
+  		function colorStopRangeChangeHandler(e){
 	  		//get value
-	  		var redRangeValue = $(this).val();
-	  		
+	  		var rangeValue = $(this).val(),
+	  			  rgbaColorPropertyBeingUpdated = e.data.rgbaColorPropertyBeingUpdated,
+	  				colorStopIndex = e.data.colorStopIndex;
+	  				
 	  		//change model
 	  		//todo: find correct color stop
-	  		var colorStop = self.options.linearGradientModel.options.colorStops[0];
-	  		colorStop.options.rgba.red = redRangeValue;
-	  		
-	  		//generate the background: linear-gradient css style using the updated model
-	  		var newLinearGradientCssText = self.options.linearGradientCssTemplate({linearGradient : self.options.linearGradientModel});
-	  		//log2(newLinearGradientCssText);
-	  		//log2(self.options.linearGradientModel.options.colorStops[0].options.rgba.red);
+	  		var colorStop = self.options.linearGradientModel.options.colorStops[colorStopIndex];
+	  		colorStop.options.rgba[rgbaColorPropertyBeingUpdated] = rangeValue;
 	  		//re-render
-	  		self.controls.$gradientOutput[0].style.cssText = newLinearGradientCssText;
-	  		//log2(self.controls.$gradientOutput[0].style.cssText);
-	  	};
+	  		self.renderGradientOutput();
+	  	}
 	  	
 	  	
 	  	
@@ -151,6 +156,16 @@
 			//this.gradientCssTemplate = document.getElementById("gradientWidgetCssTemplate");
   		
   	};//end linearGradientMakerWidget
+  	
+  	
+  	
+  	//after an update to the linearGradientModel has been made, most likely this function should be called.
+  	uiDesignTools.widgets.linearGradientMakerWidget.prototype.renderGradientOutput = function(){
+  		//generate the background: linear-gradient css style using the updated model
+  		var newLinearGradientCssText = this.options.linearGradientCssTemplate({linearGradient : this.options.linearGradientModel});
+  		//update the css
+  		this.controls.$gradientOutput[0].style.cssText = newLinearGradientCssText;
+  	};
   	
   	//http://dev.w3.org/csswg/css3-images/
   	//gradient represents the gradient we want to turn into css
