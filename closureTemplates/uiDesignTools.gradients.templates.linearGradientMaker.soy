@@ -1,0 +1,45 @@
+{namespace uiDesignTools.gradients.templates.linearGradientMaker}
+
+/**
+*
+* @param linearGradient linear gradient model with colorstops,etc. 
+*/
+{template .linearGradientMakerTemplate}
+  <div id="linearGradientMaker">
+  
+  //build controls section, which includes color stops, sliders, etc
+  {call .linearGradientMakerInnerContentTemplate}
+  	{param linearGradient: $linearGradient /}
+  {/call}
+  
+  </div>
+{/template}
+
+/**
+*
+* @param linearGradient linear gradient model with colorstops,etc. 
+*/
+{template .linearGradientMakerInnerContentTemplate}
+  
+  //build controls section, which includes color stops, sliders, etc
+  {call .linearGradientMakerControlsTemplate}
+  	{param linearGradient: $linearGradient /}
+  {/call}
+  
+  //Final result of what gradient looks like (after user modifies using sliders,etc) will go here.
+  <div id="gradientOutput">output</div>
+  
+{/template}
+
+
+/**
+* @param linearGradient model used to create colorstops, etc.
+*/
+{template .linearGradientMakerControlsTemplate}
+  <div id="linearGradientMakerControls">
+  {call uiDesignTools.gradients.templates.colorStop.colorStopsTemplate}
+    {param colorStops : $linearGradient.options.colorStops /}
+  {/call}
+  </div>
+{/template}
+

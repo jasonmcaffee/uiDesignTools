@@ -7,6 +7,20 @@ if (typeof uiDesignTools.gradients.templates == 'undefined') { uiDesignTools.gra
 if (typeof uiDesignTools.gradients.templates.colorStop == 'undefined') { uiDesignTools.gradients.templates.colorStop = {}; }
 
 
+uiDesignTools.gradients.templates.colorStop.colorStopsTemplate = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<div id="colorStops">');
+  var colorStopModelList4 = opt_data.colorStops;
+  var colorStopModelListLen4 = colorStopModelList4.length;
+  for (var colorStopModelIndex4 = 0; colorStopModelIndex4 < colorStopModelListLen4; colorStopModelIndex4++) {
+    var colorStopModelData4 = colorStopModelList4[colorStopModelIndex4];
+    uiDesignTools.gradients.templates.colorStop.colorStopTemplate({colorStopId: colorStopModelData4.options.colorStopId}, output);
+  }
+  output.append('</div>');
+  return opt_sb ? '' : output.toString();
+};
+
+
 uiDesignTools.gradients.templates.colorStop.colorStopTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div id="', soy.$$escapeHtml(opt_data.colorStopId), '">');

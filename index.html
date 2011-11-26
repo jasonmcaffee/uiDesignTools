@@ -43,14 +43,31 @@
   </header>
   
   <div role="main">
-
+		<div id="linearGradientMakerWidgetContainer">
+			generated content goes here
+		</div>
+		
+		<h2>playground</h2>
 		<div id="linearGradientWidgetContainer">
 			<div id="linearGradientWidget">
 				
 				<div id="gradientWidgetControls">
 					
 					<div id="colorStops">
-						<div id="colorStop">
+						<div id="colorStop0">
+							<label for="redRange">red</label>
+							<input id="redRange" type="range" min="0" max="255" value="25" />
+							
+							<label for="greenRange">green</label>
+							<input id="greenRange" type="range" min="0" max="255" value="25" />
+							
+							<label for="blueRange">blue</label>
+							<input id="blueRange" type="range" min="0" max="255" value="25" />
+							
+							<label for="alphaRange">alpha</label>
+							<input id="alphaRange" type="range" min="0" max="1" step=".01" value="1" />
+						</div>
+						<div id="colorStop1">
 							<label for="redRange">red</label>
 							<input id="redRange" type="range" min="0" max="255" value="25" />
 							
@@ -99,6 +116,7 @@
   <!-- templates -->
   <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.colorStop.js"></script>
   <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradient.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradientMaker.js"></script>
   
   <!-- models next -->
   <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.colorStop.js"></script>
@@ -118,11 +136,13 @@
 				colorStops : [
 					//colorStop 1
 	  			new uiDesignTools.gradients.models.colorStop({ 
+	  				colorStopId: 'colorStop0',
   					rgba: { red:20, green:98, blue:233, alpha:1 },
   					position : 0 
   				}),//end colorStop 1
 	  			//colorStop 2
 	  			new uiDesignTools.gradients.models.colorStop({ 
+	  				colorStopId: 'colorStop1',
   					rgba: { red:22, green:97, blue:195, alpha:1 },
   					position : 100 
   				})//end colorStop 2
@@ -167,19 +187,23 @@
 			// });
 			// uiDesignTools.events.eventManager.events['exampleEvent'].publish('fake data stuffage');
 			
-			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].subscribe(function(event){
-				var colorStopWhichChanged = event.data.colorStop;
-				alert('got it');
-				
+			
+			
+			//var colorStopsHtml = uiDesignTools.gradients.templates.colorStop.colorStopsTemplate({colorStops:[linearGradient.options.colorStops[0], linearGradient.options.colorStops[1]]});
+			//log2("<h1>new color stops</h1>")
+			//log2(colorStopsHtml);
+			
+			var linearGradientMakerHtml = uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerTemplate({linearGradient:linearGradient});
+			//log2(linearGradientMakerHtml);
+			var $linearGradientMakerWidgetContainer = $('#linearGradientMakerWidgetContainer');
+			$linearGradientMakerWidgetContainer[0].innerHTML = linearGradientMakerHtml;
+			var $linearGradientMaker = $('#linearGradientMaker', $linearGradientMakerWidgetContainer);
+			
+			//now we can create the widget
+			var linearGradientMakerWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
+				linearGradientModel : linearGradient,
+				$linearGradientMaker : $linearGradientMaker
 			});
-			
-			var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidget({
-				$parent : $('#colorStops'),
-				colorStopDivId : 'colorStop0',
-				colorStopModel : linearGradient.options.colorStops[0]
-			});
-			
-			
 			
 			//CHANGE THE WAY YOU ARE DOING THINS.
 			//JUST HAVE THE WIDGETS GENERATE HTML, NOT WRITE IT TO A PARENT.
@@ -188,6 +212,23 @@
   	
   	function log2(message){
   		document.getElementById("output").innerHTML += message + "<br/>";
+  	}
+  	
+  	function testColorStopWidgetEventHandling(linearGradient){
+  		//test creating colorstop widgets. verify that when sliders move, we get notified
+			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].subscribe(function(event){
+				var colorStopWhichChanged = event.data.colorStop;
+				log2('got it ' + colorStopWhichChanged.options.colorStopId);
+				
+			});
+			var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidget({
+				$colorStop : $('#colorStop0'),
+				colorStopModel : linearGradient.options.colorStops[0]
+			});
+			var colorStopWidget2 = new uiDesignTools.gradients.widgets.colorStopWidget({
+				$colorStop : $('#colorStop1'),
+				colorStopModel : linearGradient.options.colorStops[1]
+			});
   	}
   </script>
   

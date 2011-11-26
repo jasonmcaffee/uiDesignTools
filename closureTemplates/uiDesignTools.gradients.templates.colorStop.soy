@@ -1,6 +1,20 @@
 {namespace uiDesignTools.gradients.templates.colorStop}
 
 /**
+* writes out all colorStops that are passed in
+* @param colorStops array of colorStop models
+*/
+{template .colorStopsTemplate}
+ <div id="colorStops">
+  {foreach $colorStopModel in $colorStops}
+  	{call .colorStopTemplate}
+  		{param colorStopId : $colorStopModel.options.colorStopId /}
+  	{/call}
+  {/foreach}
+ </div>
+{/template}
+
+/**
 * Generates rgba for use in a color stop
 * @param colorStopId id for div representing the color stop
 */
@@ -26,3 +40,4 @@
  <label for="alphaRange">alpha</label>
  <input id="alphaRange" type="range" min="0" max="1" step=".01" value="1" />
 {/template}
+
