@@ -170,6 +170,7 @@
 			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].subscribe(function(event){
 				var colorStopWhichChanged = event.data.colorStop;
 				alert('got it');
+				
 			});
 			
 			var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidget({
@@ -178,6 +179,11 @@
 				colorStopModel : linearGradient.options.colorStops[0]
 			});
 			
+			
+			
+			//CHANGE THE WAY YOU ARE DOING THINS.
+			//JUST HAVE THE WIDGETS GENERATE HTML, NOT WRITE IT TO A PARENT.
+			//WIDGETS ALSO HANDLE EVENT REGISTRY STUFF AND MODEL UPDATES
 		});
   	
   	function log2(message){

@@ -45,9 +45,20 @@ uiDesignTools.gradients.widgets.colorStopWidget = function(optionsParam){
 	
 	//register slide listeners on $colorStopDiv
 	//render the html by adding it to the $parent[0].innerHTML
-	this.initAndRender();
+	//this.initAndRender();
+	this.init();
 }
 
+//first time initialization
+uiDesignTools.gradients.widgets.colorStopWidget.prototype.init = function(){
+	//add event handling for sliders/ranges for red green blue alpha
+	this.registerSliderChangeHandlers();
+}
+
+//returns html representation of this widget
+uiDesignTools.gradients.widgets.colorStopWidget.prototype.toHtml = function(){
+	return this.options.colorStopTemplate({colorStopId : this.options.colorStopDivId});
+}
 //render for the first time. subsequent calls should be made to refreshUI
 //uiDesignTools.gradients.widgets.colorStopWidget.prototype.initAndRender = function(){
 uiDesignTools.gradients.widgets.colorStopWidget.prototype.initAndRender = function(){
@@ -60,8 +71,8 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.initAndRender = functi
 //Initialize
 	//initialize jquery representation by searching the parent for the new div colorStop
 	this.$colorStopDiv = $("#"+this.options.colorStopDivId, this.options.$parent);
-	//add event handling for sliders/ranges for red green blue alpha
-	this.registerSliderChangeHandlers();
+	
+	this.init();
 }
 
 //adds on change events to the appropriate sub widgets (redRange, etc)
@@ -96,6 +107,7 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerSliderChangeHa
 				colorStop : colorStop
 			});
 		}//end colorStopRangeChangeHandler
+		
 	}//end registerColorStopRangeChangeHandlerFor
 	
 	

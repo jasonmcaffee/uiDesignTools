@@ -24,9 +24,12 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget = function(optionsPara
 	//initialize jquery objects
 	this.$gradientWidgetContainer = $('#'+this.options.gradientWidgetContainerId);
 	
-	this.$colorStops = $('#colorStops');//<-- left off here....
+	this.$colorStops = $('#colorStops', this.$gradientWidgetContainer);//<-- left off here....
 	
 	this.colorStopWidgets = [];//array of colorStopWidgets which each represent a colorStop in this linear gradient
+	
+	
+	this.init();
 	//we must first generate the html for the widget
 	//todo. initial values of controls should match model
 	
@@ -41,14 +44,27 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget = function(optionsPara
 	
 };//end linearGradientMakerWidget
 
+uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.init = function(){
+	this.createColorStopWidgets();
+};
+
+uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.toHtml = function(){
+	var finalHtml = this.options.linearGradientCssTemplate({linearGradient:this.options.linearGradientModel});
+	return finalHtml;
+}
+
 uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.createColorStopWidgets = function(){
 	var colorStopModels = this.options.linearGradientModel.options.colorStops;
 	for(var i = 0; i < colorStopModels.length; ++i){
+		//create a color stop widget
 		var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidgets({
-			
+			$parent : this.$colorStops,
+			colorStopDivId : "colorStop" + i,
+			colorStopModel : colorStopModels[i]
 		});
+		this.colorStopWidgets.push(colorStopWidget);
 	}
-}
+};
 
 //after an update to the linearGradientModel has been made, most likely this function should be called.
 uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.renderGradientOutput = function(){
