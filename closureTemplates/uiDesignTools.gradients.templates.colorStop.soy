@@ -1,0 +1,28 @@
+{namespace uiDesignTools.gradients.templates.colorStop}
+
+/**
+* Generates rgba for use in a color stop
+* @param colorStopId id for div representing the color stop
+*/
+{template .colorStopTemplate}
+ <div id="{$colorStopId}">
+	{call .colorStopInnerContentTemplate /}
+ </div>
+{/template}
+
+/**
+* Generates inner contents/html of the colorStop div
+*/
+{template .colorStopInnerContentTemplate}
+ <label for="redRange">red</label>
+ <input id="redRange" type="range" min="0" max="255" value="25" />
+
+ <label for="greenRange">green</label>
+ <input id="greenRange" type="range" min="0" max="255" value="25" />
+
+ <label for="blueRange">blue</label>
+ <input id="blueRange" type="range" min="0" max="255" value="25" />
+
+ <label for="alphaRange">alpha</label>
+ <input id="alphaRange" type="range" min="0" max="1" step=".01" value="1" />
+{/template}

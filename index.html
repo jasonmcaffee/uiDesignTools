@@ -48,17 +48,23 @@
 			<div id="linearGradientWidget">
 				
 				<div id="gradientWidgetControls">
-					<label for="redRange">red</label>
-					<input id="redRange" type="range" min="0" max="255" value="25" />
 					
-					<label for="greenRange">green</label>
-					<input id="greenRange" type="range" min="0" max="255" value="25" />
+					<div id="colorStops">
+						<div id="colorStop">
+							<label for="redRange">red</label>
+							<input id="redRange" type="range" min="0" max="255" value="25" />
+							
+							<label for="greenRange">green</label>
+							<input id="greenRange" type="range" min="0" max="255" value="25" />
+							
+							<label for="blueRange">blue</label>
+							<input id="blueRange" type="range" min="0" max="255" value="25" />
+							
+							<label for="alphaRange">alpha</label>
+							<input id="alphaRange" type="range" min="0" max="1" step=".01" value="1" />
+						</div>
+					</div>
 					
-					<label for="blueRange">blue</label>
-					<input id="blueRange" type="range" min="0" max="255" value="25" />
-					
-					<label for="alphaRange">alpha</label>
-					<input id="alphaRange" type="range" min="0" max="1" step=".01" value="1" />
 				</div>
 				
 				<div id="gradientOutput" style="background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);">
@@ -84,21 +90,26 @@
 
 	<!-- http://code.google.com/closure/templates/docs/javascript_usage.html -->
   <script src="js/libs/soyutils.js"></script>
-  <script src="js/mylibs/jasonTemplate.js"></script>
-  
-  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradient.js"></script>
   
   <!-- order matters! -->
+  <!-- event definitions & eventManager setup -->
+  <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.uiDesignToolsEvent.js"></script>
+  <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.eventManager.js"></script>
+  
+  <!-- templates -->
+  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.colorStop.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradient.js"></script>
+  
+  <!-- models next -->
   <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.colorStop.js"></script>
   <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.gradient.js"></script>
   <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.linearGradient.js"></script>
   
+  <!-- lastly widgets -->
   <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.linearGradientMakerWidget.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.colorStopWidget.js"></script>
   
   <script type="text/javascript">
-  	
-  	
-  	
 		$(function(){
 			
 			var linearGradient = new uiDesignTools.gradients.models.linearGradient({
@@ -131,11 +142,40 @@
 			//alert(mozillaText);
 			
 			//test whole linearGradient
-			var linearGradientCss = uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate({linearGradient: linearGradient});
-			log2(linearGradientCss);
+			// var linearGradientCss = uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate({linearGradient: linearGradient});
+			// log2(linearGradientCss);
+// 			
+			// var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidget({
+				// colorStopDivId : 'colorStop1',
+				// $parent : $('#colorStopsContainer'),
+				// colorStopModel : linearGradient.options.colorStops[0]
+			// });
+// 			
+			// colorStopWidget.initAndRender();
+// 			
+			// var gardientWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
+				// linearGradientModel : linearGradient
+			// });
 			
-			var gardientWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
-				linearGradientModel : linearGradient
+			//adding an event to the event manager
+			// uiDesignTools.events.eventManager.events['exampleEvent'] = new uiDesignTools.events.uiDesignToolsEvent({
+				// type: 'exampleEvent'
+			// });
+			// uiDesignTools.events.eventManager.events['exampleEvent'].subscribe(function(event){
+				// var eventData = event.data;
+				// console.log('exampleEventFired ' + eventData);
+			// });
+			// uiDesignTools.events.eventManager.events['exampleEvent'].publish('fake data stuffage');
+			
+			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].subscribe(function(event){
+				var colorStopWhichChanged = event.data.colorStop;
+				alert('got it');
+			});
+			
+			var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidget({
+				$parent : $('#colorStops'),
+				colorStopDivId : 'colorStop0',
+				colorStopModel : linearGradient.options.colorStops[0]
 			});
 			
 		});

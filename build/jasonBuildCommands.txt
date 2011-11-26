@@ -1,9 +1,9 @@
 //to build js template from closure template:
-$ java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/jasonTemplate.soy
 
-java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/templates/gradients/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.templates.gradients.linearGradient.soy
-
+//linearGradient
 java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/gradients/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.gradients.templates.linearGradient.soy
+//colorStop
+java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/gradients/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.gradients.templates.colorStop.soy
 
 //git config
 git config --global user.name "Jason McAffee"
