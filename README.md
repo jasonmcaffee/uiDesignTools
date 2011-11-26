@@ -5,7 +5,7 @@ This project defines some useful design related controls which you can use to ai
 ### Examine tools and libraries
 
 ### Explore and define patterns for interaction between components
-#### Widgets, Templates, Models
+#### Separation of Concerns: break down work into granular modules.
 ##### Widgets
 widgets are responsible for wiring up events for both model updates, as well as ui updates (eg when a user clicks a button)
 They define the handlers for these events, and take appropriate ui actions (updating output when user interacts with ui)
@@ -38,5 +38,14 @@ I mainly stuck to these pages for guidance in generating js templates:
 http://code.google.com/closure/templates/docs/commands.html
 
 http://code.google.com/closure/templates/docs/javascript_usage.html
+
+# Project Structure
+## js/mylibs/uiDesignTools
+all hand written and generated(from templates) js can be found here.
+### events
+custom eventing model and manager
+### gradients
+js related to gradients
+
 
 # [Jason McAffee](http://codeceratops.jasonmcaffee.com)
