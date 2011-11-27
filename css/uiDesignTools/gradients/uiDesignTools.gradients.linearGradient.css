@@ -14,12 +14,12 @@ html{
 
 
 .linearGradient-linearGradientMakerControlsRow1{
-		padding: 5px;
+	padding: 5px;
 	background: -moz-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-background: -webkit-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-background: -o-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-background: -ms-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background: -webkit-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background: -o-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background: -ms-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 }
 
 /* gradient output and css text area go here */
@@ -85,10 +85,10 @@ background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 
   width:99%;
 	padding:1%;
 	background: -moz-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-background: -webkit-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-background: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-background: -ms-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-background: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background: -webkit-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background: -ms-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 
 	border-radius: 6px 9px 5px 9px; 
 	-moz-border-radius: 6px 9px 5px 9px; 
@@ -104,11 +104,15 @@ background: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 
 .linearGradient-colorStops{
 	padding: 1%;
 	background: -moz-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-background: -webkit-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-background: -o-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-background: -ms-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-background: -linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background: -webkit-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background: -o-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background: -ms-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background: -linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
 
+  border-radius: 6px 9px 5px 9px; 
+	-moz-border-radius: 6px 9px 5px 9px; 
+	-webkit-border-radius: 6px 9px 5px 9px; 
+	-o-border-radius: 6px 9px 5px 9px; 
 }
 
 /* 
@@ -126,6 +130,11 @@ background: -linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100
 	background: -ms-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* IE10+ */
 	background: linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#edeff2',GradientType=1 ); /* IE6-9 */
+	
+	border-radius: 2px; 
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px; 
+	-o-border-radius: 2px;
 }
 
 .linearGradient-colorStop label{
