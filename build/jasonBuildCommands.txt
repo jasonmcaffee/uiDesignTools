@@ -20,6 +20,14 @@ git push -u origin master
 
 
 
+//eclipse commands
+
+//pretty print !!!!!!
+Ctrl + Shift + F
+
+
+
+
 
 
 

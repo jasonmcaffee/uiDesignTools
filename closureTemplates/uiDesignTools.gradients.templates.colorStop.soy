@@ -5,10 +5,10 @@
 * @param colorStops array of colorStop models
 */
 {template .colorStopsTemplate}
- <div id="colorStops">
-  {foreach $colorStopModel in $colorStops}
+ <div id="colorStops" class="linearGradient-colorStops">
+  {foreach $colorStop in $colorStops}
   	{call .colorStopTemplate}
-  		{param colorStopId : $colorStopModel.options.colorStopId /}
+  		{param colorStop : $colorStop /}
   	{/call}
   {/foreach}
  </div>
@@ -16,28 +16,34 @@
 
 /**
 * Generates rgba for use in a color stop
-* @param colorStopId id for div representing the color stop
+* @param colorStop model which dictates some html values
 */
 {template .colorStopTemplate}
- <div id="{$colorStopId}">
-	{call .colorStopInnerContentTemplate /}
+ <div id="{$colorStop.options.colorStopId}" class="linearGradient-colorStop">
+	{call .colorStopInnerContentTemplate}
+		{param colorStop : $colorStop /}
+	{/call}
  </div>
 {/template}
 
 /**
 * Generates inner contents/html of the colorStop div
+* @param colorStop model which dictates some html values
 */
 {template .colorStopInnerContentTemplate}
  <label for="redRange">red</label>
- <input id="redRange" type="range" min="0" max="255" value="25" />
+ <input id="redRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.red}" />
 
  <label for="greenRange">green</label>
- <input id="greenRange" type="range" min="0" max="255" value="25" />
+ <input id="greenRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.green}" />
 
  <label for="blueRange">blue</label>
- <input id="blueRange" type="range" min="0" max="255" value="25" />
+ <input id="blueRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.blue}" />
 
  <label for="alphaRange">alpha</label>
- <input id="alphaRange" type="range" min="0" max="1" step=".01" value="1" />
+ <input id="alphaRange" type="range" min="0" max="1" step=".01" value="{$colorStop.options.rgba.alpha}" />
+ 
+ <label for="positionRange">position</label>
+ <input id="positionRange" type="range" min="0" max="100" step="1" value="{$colorStop.options.position}" />
 {/template}
 

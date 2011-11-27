@@ -1,0 +1,70 @@
+
+#gradientOutput{
+	min-height: 200px;
+	max-width: 200px;
+}
+
+/*
+ * where the user is shown the generated css
+ */
+.linearGradient-generatedLinearGradientCssOutput{
+	
+}
+
+/*
+ * container for colorStops, etc.
+ * all controls the user interacts with will be in this container.
+ */
+.linearGradient-controls{
+	padding: 3px;
+	background: rgb(173,173,173);
+	background: -moz-linear-gradient(top,  rgba(173,173,173,1) 0%, rgba(150,150,150,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(173,173,173,1)), color-stop(100%,rgba(150,150,150,1)));
+	background: -webkit-linear-gradient(top,  rgba(173,173,173,1) 0%,rgba(150,150,150,1) 100%);
+	background: -o-linear-gradient(top,  rgba(173,173,173,1) 0%,rgba(150,150,150,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(173,173,173,1) 0%,rgba(150,150,150,1) 100%);
+	background: linear-gradient(top,  rgba(173,173,173,1) 0%,rgba(150,150,150,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#adadad', endColorstr='#969696',GradientType=0 );
+
+}
+
+.linearGradient-colorStopsComponent{
+	max-width:50%;
+	
+	background: rgb(198,201,191);
+	background: -moz-linear-gradient(top,  rgba(198,201,191,1) 0%, rgba(159,160,155,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(198,201,191,1)), color-stop(100%,rgba(159,160,155,1)));
+	background: -webkit-linear-gradient(top,  rgba(198,201,191,1) 0%,rgba(159,160,155,1) 100%);
+	background: -o-linear-gradient(top,  rgba(198,201,191,1) 0%,rgba(159,160,155,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(198,201,191,1) 0%,rgba(159,160,155,1) 100%);
+	background: linear-gradient(top,  rgba(198,201,191,1) 0%,rgba(159,160,155,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c6c9bf', endColorstr='#9fa09b',GradientType=0 );
+
+}
+
+/*
+ * the linear gradient maker has a colorStops container which holds each individual colorStop used in
+ * formulating the gradientOutput generated css style.
+ */
+.linearGradient-colorStops{
+
+
+}
+
+/* 
+ * entire container for red, green, blue, etc slider controls
+ * */
+.linearGradient-colorStop{
+	min-height: 75px;
+	
+	background: rgb(255,255,255); /* Old browsers */
+	background: -moz-linear-gradient(left,  rgba(255,255,255,1) 1%, rgba(237,239,242,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(1%,rgba(255,255,255,1)), color-stop(100%,rgba(237,239,242,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* IE10+ */
+	background: linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#edeff2',GradientType=1 ); /* IE6-9 */
+
+
+}

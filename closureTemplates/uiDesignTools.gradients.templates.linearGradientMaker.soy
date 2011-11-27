@@ -27,8 +27,13 @@
   {/call}
   
   //Final result of what gradient looks like (after user modifies using sliders,etc) will go here.
-  <div id="gradientOutput">output</div>
+  <div id="gradientOutput">&nbsp;</div>
   
+  //css generated from user interaction
+  <div id="generatedLinearGradientCssOutput" class="linearGradient-generatedLinearGradientCssOutput">
+		<textarea id="generatedLinearGradientCssOutputTextArea" rows="30" cols="50">generated css goes here</textarea>
+	</div>
+	
 {/template}
 
 
@@ -36,10 +41,27 @@
 * @param linearGradient model used to create colorstops, etc.
 */
 {template .linearGradientMakerControlsTemplate}
-  <div id="linearGradientMakerControls">
-  {call uiDesignTools.gradients.templates.colorStop.colorStopsTemplate}
-    {param colorStops : $linearGradient.options.colorStops /}
-  {/call}
+  <div id="linearGradientMakerControls" class="linearGradient-controls">
+		
+		<!-- all controls related to color stops -->
+  	<div id="colorStopsComponent" class="linearGradient-colorStopsComponent">
+			<h4>Color Stops</h4>
+			
+			<!-- write out colorStops button panel (add colorStop)-->
+			<div id="colorStopsButtonPanel" class="linearGradient-colorStopsButtonPanel">
+				<div id="addColorStopButtonContainer" class="linearGradient-colorStopButtonContainer">
+					<input id="addColorStopButton" type="button" value="Add Color Stop">
+				</div>
+			</div>
+  
+		  //write out colorStops
+		  {call uiDesignTools.gradients.templates.colorStop.colorStopsTemplate}
+		    {param colorStops : $linearGradient.options.colorStops /}
+		  {/call}
+		</div>
+		
+		<!-- generated css output-->
+		
   </div>
 {/template}
 

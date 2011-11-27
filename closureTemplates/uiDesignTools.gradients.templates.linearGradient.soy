@@ -24,6 +24,29 @@
 {/template}
 
 /**
+ * Generates linear gradient css for different browsers. Pretty print version for display inside a textarea, etc
+ * @param linearGradient complex object representing a linear gradient
+ */
+{template .linearGradientCssPrettyPrintTemplate}
+	//background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+ {call .linearGradientForMozillaCssTemplate}{param linearGradient : $linearGradient /}{/call}
+{\n}
+ //	background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
+ {call .linearGradientForWebkitCssTemplate}{param linearGradient : $linearGradient /}{/call}
+{\n}
+ //todo: background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(50%,rgba(41,137,216,0.84)), color-stop(100%,rgba(125,185,232,0.67)));
+ //background: -o-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%); 
+ {call .linearGradientForOperaCssTemplate}{param linearGradient : $linearGradient /}{/call}
+{\n}
+ //background: -ms-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%); 
+ {call .linearGradientForMicrosoftCssTemplate}{param linearGradient : $linearGradient /}{/call}
+{\n}
+	//background: linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
+ {call .linearGradientForW3cCssTemplate}{param linearGradient : $linearGradient /}{/call}
+{/template}
+
+
+/**
 * webkit-linear-gradient, moz-linear-gradient, etc, all appear to have the same format
 * output something like:
 * background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);

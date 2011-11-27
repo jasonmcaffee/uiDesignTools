@@ -2,6 +2,9 @@
 This project defines some useful design related controls which you can use to aid you in generating css.
 
 ##Goals
+### Create a set of useful ui tools that you can use to generate css, html, etc.
+Compete against the few existing sites that offer similar functionality.
+
 ### Examine tools and libraries
 
 ### Explore and define patterns for interaction between components

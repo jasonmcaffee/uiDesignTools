@@ -18,15 +18,30 @@ uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate = fun
 };
 
 
+uiDesignTools.gradients.templates.linearGradient.linearGradientCssPrettyPrintTemplate = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  uiDesignTools.gradients.templates.linearGradient.linearGradientForMozillaCssTemplate(opt_data, output);
+  output.append('\n');
+  uiDesignTools.gradients.templates.linearGradient.linearGradientForWebkitCssTemplate(opt_data, output);
+  output.append('\n');
+  uiDesignTools.gradients.templates.linearGradient.linearGradientForOperaCssTemplate(opt_data, output);
+  output.append('\n');
+  uiDesignTools.gradients.templates.linearGradient.linearGradientForMicrosoftCssTemplate(opt_data, output);
+  output.append('\n');
+  uiDesignTools.gradients.templates.linearGradient.linearGradientForW3cCssTemplate(opt_data, output);
+  return opt_sb ? '' : output.toString();
+};
+
+
 uiDesignTools.gradients.templates.linearGradient.linearGradientCommonFormatCssTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('background: ', soy.$$escapeHtml(opt_data.gradientName), '(', (opt_data.linearGradient.options.sideOrCorner != '') ? soy.$$escapeHtml(opt_data.linearGradient.options.sideOrCorner) : soy.$$escapeHtml(opt_data.linearGradient.options.angle), ',');
-  var colorStopList23 = opt_data.linearGradient.options.colorStops;
-  var colorStopListLen23 = colorStopList23.length;
-  for (var colorStopIndex23 = 0; colorStopIndex23 < colorStopListLen23; colorStopIndex23++) {
-    var colorStopData23 = colorStopList23[colorStopIndex23];
-    uiDesignTools.gradients.templates.linearGradient.colorStopTemplate({colorStop: colorStopData23}, output);
-    output.append((! (colorStopIndex23 == colorStopListLen23 - 1)) ? ', ' : '');
+  var colorStopList38 = opt_data.linearGradient.options.colorStops;
+  var colorStopListLen38 = colorStopList38.length;
+  for (var colorStopIndex38 = 0; colorStopIndex38 < colorStopListLen38; colorStopIndex38++) {
+    var colorStopData38 = colorStopList38[colorStopIndex38];
+    uiDesignTools.gradients.templates.linearGradient.colorStopTemplate({colorStop: colorStopData38}, output);
+    output.append((! (colorStopIndex38 == colorStopListLen38 - 1)) ? ', ' : '');
   }
   output.append(');');
   return opt_sb ? '' : output.toString();

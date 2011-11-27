@@ -17,7 +17,7 @@ if(typeof uiDesignTools.gradients.widgets == 'undefined'){ uiDesignTools.gradien
 if(typeof uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp == 'undefined' || !uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp){ 
 	//define event for when the colorStop model has been changed (usually through ui interaction)
 	uiDesignTools.events.eventManager.events['colorStopModelHasChanged'] = new uiDesignTools.events.uiDesignToolsEvent({type:'colorStopModelHasChanged'});
-	
+	uiDesignTools.events.eventManager.events['colorStopModelHasBeenAdded'] = new uiDesignTools.events.uiDesignToolsEvent({type:'colorStopModelHasBeenAdded'});
 	//don't do this again
 	uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp = true; 
 }
@@ -36,8 +36,8 @@ uiDesignTools.gradients.widgets.colorStopWidget = function(optionsParam){
 	//default options
 	this.options = {
 		colorStopModel : {}, //model used to dictate rgba values
-		colorStopTemplate : uiDesignTools.gradients.templates.colorStop.colorStopTemplate, //<div id="colorStopX"> + inner content + </div>
-		colorStopInnerContentTemplate : uiDesignTools.gradients.templates.colorStop.colorStopInnerContentTemplate, //red, green, blue, alpha sliders html generator
+		colorStopTemplate : uiDesignTools.gradients.templates.colorStop.colorStopTemplate, //<div id="colorStopX"> + inner content + </div> <--NOT NEEDED. TODO: DELETE. ONLY NEED INNERCONTENTS TEMPLATE
+		colorStopInnerContentTemplate : uiDesignTools.gradients.templates.colorStop.colorStopInnerContentTemplate, //red, green, blue, alpha sliders html generator 
 		$colorStop : false //jquery representation must be given.
 	};
 	$.extend(this.options, optionsParam);//merge default options with passed in options.
@@ -55,7 +55,7 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerSliderChangeHa
 	function registerColorStopRangeChangeHandlerFor(rangeIdSelector, colorStopIndex, rgbaColorPropertyBeingUpdated){
 		self.options.$colorStop.on("change", rangeIdSelector, 
 			{//event data
-				colorStopIndex : colorStopIndex,//access the correct color stop
+				colorStopIndex : colorStopIndex,//access the correct color stop ( not really needed, as it's updated by reference)
 				rgbaColorPropertyBeingUpdated : rgbaColorPropertyBeingUpdated//used to access the appropriate property on the colorStop model
 			}, 
 			colorStopRangeChangeHandler);
@@ -70,8 +70,12 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerSliderChangeHa
 					
 			//update model to reflect ui selection
 			var colorStop = self.options.colorStopModel;
-			colorStop.options.rgba[rgbaColorPropertyBeingUpdated] = rangeValue;
-			
+			//eww hacky to avoid refactoring these helper methods. ewww
+			if(rgbaColorPropertyBeingUpdated == "position"){
+				colorStop.options.position = rangeValue;
+			}else{
+				colorStop.options.rgba[rgbaColorPropertyBeingUpdated] = rangeValue;
+			}
 			//re-render
 			//self.renderGradientOutput();
 			//emit event so that others can update outputs (such as gradient output)
@@ -90,12 +94,11 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerSliderChangeHa
 	registerColorStopRangeChangeHandlerFor("#greenRange", 0, "green");
 	registerColorStopRangeChangeHandlerFor("#blueRange", 0, "blue");
 	registerColorStopRangeChangeHandlerFor("#alphaRange", 0, "alpha");
-	
-	
+	registerColorStopRangeChangeHandlerFor("#positionRange", 0, "position");
 }
 
 //just update the inner contents.
 uiDesignTools.gradients.widgets.colorStopWidget.prototype.refreshUI = function(){
-	var newHtmlText = this.options.colorStopInnerContentTemplate(null);
+	var newHtmlText = this.options.colorStopInnerContentTemplate({colorStop:this.options.colorStopModel});
 	this.$colorStopDiv[0].innerHTML = newHtmlText;
 }

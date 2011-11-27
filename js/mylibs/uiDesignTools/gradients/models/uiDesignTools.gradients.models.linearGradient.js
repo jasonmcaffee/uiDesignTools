@@ -31,3 +31,11 @@ uiDesignTools.gradients.models.linearGradient = function(optionsParam){
 
 //linearGradient extends gradient
 uiDesignTools.gradients.models.linearGradient.prototype = new uiDesignTools.gradients.models.gradient({});
+
+//
+uiDesignTools.gradients.models.linearGradient.prototype.addColorStop = function(colorStopToAdd){
+	//add the color stop
+	this.options.colorStops.push(colorStopToAdd);
+	//emit the event
+	uiDesignTools.events.eventManager.events['colorStopModelHasBeenAdded'].publish({colorStop:colorStopToAdd});
+}
