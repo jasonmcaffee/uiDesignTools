@@ -1,6 +1,10 @@
 # ui design tools
 This project defines some useful design related controls which you can use to aid you in generating css.
 
+##Demo
+Demo of the final result of this code can be found here:
+[uiDesignTools](http://jasonmcaffee.com/uiDesignTools/index.html)
+
 ##Goals
 ### Create a set of useful ui tools that you can use to generate css, html, etc.
 Compete against the few existing sites that offer similar functionality.
