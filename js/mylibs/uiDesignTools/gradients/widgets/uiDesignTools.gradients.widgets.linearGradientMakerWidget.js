@@ -137,25 +137,21 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.subscribeToC
 	function handleColorStopModelDelete(event){
 		var colorStopWhichWasDeleted = event.data.colorStop;
 		
-		//delete colorStopWidget
+		//find the colorStopWidget with the matching model so we can delete it.
 		var matchingColorStopWidget = self.findMatchingColorStopWidget(colorStopWhichWasDeleted);
 		
 		if(matchingColorStopWidget != null){
 			//call the widget and have it remove $colorStop div from the dom
 			matchingColorStopWidget.options.$colorStop.remove();
-		  //$('#'+colorStopWhichWasDeleted.options.colorStopId).remove();
+			
+			//remove the colorStopWidget from our array of colorStopWidgets (thereby deleting it)
 		  var indexToRemove = self.colorStopWidgets.indexOf(matchingColorStopWidget);
-		  //remove the widget from the array
 		  self.colorStopWidgets.splice(indexToRemove,1);
+		  
 		}else{
 			alert('you deleted a colorstop which doesnt exist');
 		}
-		
-		//self.$colorStops = $('#colorStops', self.$colorStopsComponent);
-		//remove the generated color stop html 
-		//self.$colorStops.remove('#'+colorStopWhichWasDeleted.options.colorStopId);
-		//"#linearGradientMakerWidgetContainer #linearGradientMaker #linearGradientMakerControls #colorStopsComponent #colorStops"
-		
+
 		//generate new css text and update outputs (textarea & gradient)
 		self.refreshGeneratedOutput();
 	}
