@@ -37,6 +37,9 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget = function(optionsPara
 	this.colorStopWidgets = [];//array of colorStopWidgets which each represent a colorStop in this linear gradient
 	this.createColorStopWidgets();
 	
+	//used for generating unique color stop ids
+	this.totalColorStopCount = this.options.linearGradientModel.options.colorStops.length + 1;//start count with unique
+	
 //Events/Wire Up
 	//subscribe to colorstop changed events so we can re-render our output
 	this.subscribeToColorStopModelUpdate();//refresh the gradientOutput, user has moved ui control
@@ -60,7 +63,7 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.registerAddC
 	function addColorStopButtonClickHandler(event){
 		var colorStops = self.options.linearGradientModel.options.colorStops;
 		
-		var newColorStopId = 'colorStop' + colorStops.length;
+		var newColorStopId = self.generateColorStopId();
 		//create a new color stop by cloning last colorStop in colorStops, if it exists
 		var newColorStop = new uiDesignTools.gradients.models.colorStop({
 			colorStopId : newColorStopId
@@ -73,6 +76,10 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.registerAddC
 	//listen for on click so we can add a new colorStop
 	this.$colorStopsComponent.on("click", "#addColorStopButton", addColorStopButtonClickHandler);
 };
+
+uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.generateColorStopId = function(){
+	return 'colorStop' + this.totalColorStopCount++;
+}
 
 //when any of our color stops has been updated, we need to update/render the gradientOutput
 uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.subscribeToColorStopModelUpdate = function(){

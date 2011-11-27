@@ -11,34 +11,66 @@ html{
 	height: 100%;
 }
 
-#gradientOutput{
-	min-height: 200px;
-	max-width: 200px;
-}
 
-/*
- * where the user is shown the generated css
- */
-.linearGradient-generatedLinearGradientCssOutput{
-	font-size: 10px;
-}
 
-/*
- * container for colorStops, etc.
- * all controls the user interacts with will be in this container.
- */
-.linearGradient-controls{
-	padding: 5px;
+.linearGradient-linearGradientMakerControlsRow1{
+		padding: 5px;
 	background: -moz-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 background: -webkit-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 background: -o-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 background: -ms-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+}
+
+/* gradient output and css text area go here */
+.linearGradient-linearGradientMakerControlsColumn1{
+	width:30%;
+	display: inline-block;
+	vertical-align:top;
+  min-width:515px;
+  padding-right: .5%;
+}
+
+/* colorstops go in here */
+.linearGradient-linearGradientMakerControlsColumn2{
+	width:50%;
+	display: inline-block;
+	min-width:515px;
+}
+
+/* --------------------------------------------------------------  output */
+
+.linearGradient-generatedOutputsContainer{
+	padding: 2px;
+  text-align: right;
+}
+/*
+ * where the user is shown the generated css
+ */
+.linearGradient-generatedLinearGradientCssOutput{
+	font-size: 10px;
+	display: inline-block;
+	vertical-align: top;
+}
+.linearGradient-gradientOutput{
+	height: 200px;
+	width: 200px;
+	display: inline-block;
+	margin-left: 1%;
+}
+
+/* --------------------------------------------------------------  controls & inputs */
+/*
+ * container for colorStops, etc.
+ * all controls the user interacts with will be in this container.
+ */
+.linearGradient-controls{
+
 
 }
 
 .linearGradient-colorStopsComponent{
-	max-width:50%;
+  width:99%;
 	padding:1%;
 	background: -moz-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 background: -webkit-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);

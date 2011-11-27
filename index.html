@@ -44,60 +44,9 @@
   
   <div role="main">
 		<div id="linearGradientMakerWidgetContainer">
-			generated content goes here
+			generated content for the linearGradientMakerWidget goes here
 		</div>
-		
-		<!-- <h2>playground</h2>
-		<div id="linearGradientMakerWidgetContainer">
-				<div id="linearGradientMaker">
-					<div id="linearGradientMakerControls" class="linearGradient-controls">
-						
-						<div id="colorStopsComponent" class="linearGradient-colorStopsComponent">
-							<h4>Color Stops</h4>
-							<div id="colorStopsButtonPanel" class="linearGradient-colorStopsButtonPanel">
-								<div id="addColorStopButtonContainer" class="linearGradient-colorStopButtonContainer">
-									<input type="button" value="Add Color Stop">
-								</div>
-							</div>
-							
-							<div id="colorStops" class="linearGradient-colorStops">
-								<div id="colorStop0" class="linearGradient-colorStop">
-									<label for="redRange">red</label>
-									<input id="redRange" type="range" min="0" max="255" value="20">
-									<label for="greenRange">green</label>
-									<input id="greenRange" type="range" min="0" max="255" value="98">
-									<label for="blueRange">blue</label>
-									<input id="blueRange" type="range" min="0" max="255" value="233">
-									<label for="alphaRange">alpha</label>
-									<input id="alphaRange" type="range" min="0" max="1" step=".01" value="1">
-									<label for="positionRange">position</label>
-									<input id="positionRange" type="range" min="0" max="100" step="1" value="1">
-								</div>
-								<div id="colorStop1" class="linearGradient-colorStop">
-									<label for="redRange">red</label>
-									<input id="redRange" type="range" min="0" max="255" value="150">
-									<label for="greenRange">green</label>
-									<input id="greenRange" type="range" min="0" max="255" value="32">
-									<label for="blueRange">blue</label>
-									<input id="blueRange" type="range" min="0" max="255" value="195">
-									<label for="alphaRange">alpha</label>
-									<input id="alphaRange" type="range" min="0" max="1" step=".01" value="1">
-									<label for="positionRange">position</label>
-									<input id="positionRange" type="range" min="0" max="100" step="1" value="100">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="gradientOutput" style="background-image: -webkit-linear-gradient(top, rgb(20, 98, 233) 1%, rgb(150, 32, 195) 100%); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: initial; background-position: initial initial; background-repeat: initial initial; ">
-						&nbsp;
-					</div>
-					
-					<div id="generatedLinearGradientCssOutput" class="linearGradient-generatedLinearGradientCssOutput">
-						<textarea id="generatedLinearGradientCssOutputTextArea" rows="30" cols="50">generated css goes here</textarea>
-					</div>
-				</div>
-			</div> -->
-		
+
   </div>
   
   <footer>
@@ -137,6 +86,7 @@
   <script type="text/javascript">
 		$(function(){
 			
+			//first construct an inital model
 			var linearGradient = new uiDesignTools.gradients.models.linearGradient({
 				angle : 0, //only written out if sideOrCorner is empty
 				sideOrCorner : 'top',//if not empty, this will be written out, and angle will not be written out.
@@ -156,71 +106,31 @@
   			]
 			});
 			
-			//alert(linearGradient.options.colorStops[0].options.rgba.red);
-			//alert(linearGradient.options.colorStops[1].options.position);
-			
-			//test colorstop template
-			// var colorStop = {colorStop: linearGradient.options.colorStops[0]};
-			// var colorStopText = uiDesignTools.gradients.templates.linearGradient.colorStopTemplate(colorStop);
-			// alert(colorStopText);
-			
-			//test mozilla
-			//var mozillaText = uiDesignTools.gradients.templates.linearGradient.linearGradientForMozillaCssTemplate({linearGradient : linearGradient});
-			//alert(mozillaText);
-			
-			//test whole linearGradient
-			// var linearGradientCss = uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate({linearGradient: linearGradient});
-			// log2(linearGradientCss);
-// 			
-			// var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidget({
-				// colorStopDivId : 'colorStop1',
-				// $parent : $('#colorStopsContainer'),
-				// colorStopModel : linearGradient.options.colorStops[0]
-			// });
-// 			
-			// colorStopWidget.initAndRender();
-// 			
-			// var gardientWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
-				// linearGradientModel : linearGradient
-			// });
-			
-			//adding an event to the event manager
-			// uiDesignTools.events.eventManager.events['exampleEvent'] = new uiDesignTools.events.uiDesignToolsEvent({
-				// type: 'exampleEvent'
-			// });
-			// uiDesignTools.events.eventManager.events['exampleEvent'].subscribe(function(event){
-				// var eventData = event.data;
-				// console.log('exampleEventFired ' + eventData);
-			// });
-			// uiDesignTools.events.eventManager.events['exampleEvent'].publish('fake data stuffage');
-			
-			
-			
-			//var colorStopsHtml = uiDesignTools.gradients.templates.colorStop.colorStopsTemplate({colorStops:[linearGradient.options.colorStops[0], linearGradient.options.colorStops[1]]});
-			//log2("<h1>new color stops</h1>")
-			//log2(colorStopsHtml);
-			
+
+			//use the template to generate html reflective of the model.
 			var linearGradientMakerHtml = uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerTemplate({linearGradient:linearGradient});
-			//log2(linearGradientMakerHtml);
+			//grab where we will place the newly created html
 			var $linearGradientMakerWidgetContainer = $('#linearGradientMakerWidgetContainer');
+			//insert the html into the dom
 			$linearGradientMakerWidgetContainer[0].innerHTML = linearGradientMakerHtml;
+			
+			//now that the html is in the dom, we can query to get the top level element
 			var $linearGradientMaker = $('#linearGradientMaker', $linearGradientMakerWidgetContainer);
 			
 			//now we can create the widget
 			var linearGradientMakerWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
 				linearGradientModel : linearGradient,
-				$linearGradientMaker : $linearGradientMaker
+				$linearGradientMaker : $linearGradientMaker //the widget needs its jquery wrapper for the html it represents.
 			});
-			
-			//CHANGE THE WAY YOU ARE DOING THINS.
-			//JUST HAVE THE WIDGETS GENERATE HTML, NOT WRITE IT TO A PARENT.
-			//WIDGETS ALSO HANDLE EVENT REGISTRY STUFF AND MODEL UPDATES
+
 		});
   	
   	function log2(message){
   		document.getElementById("output").innerHTML += message + "<br/>";
   	}
   	
+  	
+ //TESTS
   	function testColorStopWidgetEventHandling(linearGradient){
   		//test creating colorstop widgets. verify that when sliders move, we get notified
 			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].subscribe(function(event){
