@@ -27,7 +27,7 @@ background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 
 	width:30%;
 	display: inline-block;
 	vertical-align:top;
-  min-width:515px;
+  min-width:650px;
   padding-right: .5%;
 }
 
@@ -35,7 +35,7 @@ background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 
 .linearGradient-linearGradientMakerControlsColumn2{
 	width:50%;
 	display: inline-block;
-	min-width:515px;
+	min-width:525px;
 }
 
 /* --------------------------------------------------------------  output */
@@ -51,12 +51,24 @@ background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 
 	font-size: 10px;
 	display: inline-block;
 	vertical-align: top;
+	
+	border-radius: 6px 9px 5px 9px; 
+	-moz-border-radius: 6px 9px 5px 9px; 
+	-webkit-border-radius: 6px 9px 5px 9px; 
+	-o-border-radius: 6px 9px 5px 9px; 
+	border: 3px solid #C7C7C7;
 }
 .linearGradient-gradientOutput{
 	height: 200px;
 	width: 200px;
 	display: inline-block;
 	margin-left: 1%;
+	
+	border-radius: 6px 9px 5px 9px; 
+	-moz-border-radius: 6px 9px 5px 9px; 
+	-webkit-border-radius: 6px 9px 5px 9px; 
+	-o-border-radius: 6px 9px 5px 9px; 
+	border: 3px solid #C7C7C7;
 }
 
 /* --------------------------------------------------------------  controls & inputs */
@@ -78,6 +90,11 @@ background: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198
 background: -ms-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 background: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 
+	border-radius: 6px 9px 5px 9px; 
+	-moz-border-radius: 6px 9px 5px 9px; 
+	-webkit-border-radius: 6px 9px 5px 9px; 
+	-o-border-radius: 6px 9px 5px 9px; 
+	border: 3px solid #C7C7C7;
 }
 
 /*
