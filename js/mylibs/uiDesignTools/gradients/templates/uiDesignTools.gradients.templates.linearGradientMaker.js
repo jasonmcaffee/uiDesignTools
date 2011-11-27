@@ -19,7 +19,7 @@ uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerTemplat
 uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerInnerContentTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerControlsTemplate(opt_data, output);
-  output.append('<div id="gradientOutput">&nbsp;</div><div id="generatedLinearGradientCssOutput" class="linearGradient-generatedLinearGradientCssOutput"><textarea id="generatedLinearGradientCssOutputTextArea" rows="30" cols="50">generated css goes here</textarea></div>');
+  output.append('<div id="gradientOutput">&nbsp;</div><div id="generatedLinearGradientCssOutput" class="linearGradient-generatedLinearGradientCssOutput"><textarea id="generatedLinearGradientCssOutputTextArea" rows="15" cols="70">generated css goes here</textarea></div>');
   return opt_sb ? '' : output.toString();
 };
 

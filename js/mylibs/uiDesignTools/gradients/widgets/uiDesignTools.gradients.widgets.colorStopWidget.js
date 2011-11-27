@@ -13,11 +13,18 @@
 if(typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; } //ensure existence
 if(typeof uiDesignTools.gradients == 'undefined'){ uiDesignTools.gradients = {}; }
 if(typeof uiDesignTools.gradients.widgets == 'undefined'){ uiDesignTools.gradients.widgets = {}; }
+
+//EVENT REGISTRY / CREATION
 //only create colorStop events once, when this script is loaded
 if(typeof uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp == 'undefined' || !uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp){ 
 	//define event for when the colorStop model has been changed (usually through ui interaction)
 	uiDesignTools.events.eventManager.events['colorStopModelHasChanged'] = new uiDesignTools.events.uiDesignToolsEvent({type:'colorStopModelHasChanged'});
 	uiDesignTools.events.eventManager.events['colorStopModelHasBeenAdded'] = new uiDesignTools.events.uiDesignToolsEvent({type:'colorStopModelHasBeenAdded'});
+	//color stop widget cant delete the model, so fires this event when the delete button is clicked
+	uiDesignTools.events.eventManager.events['colorStopModelShouldBeDeleted'] = new uiDesignTools.events.uiDesignToolsEvent({type:'colorStopModelShouldBeDeleted'});
+	//not sure if this should be used...probably
+	uiDesignTools.events.eventManager.events['colorStopModelHasBeenDeleted'] = new uiDesignTools.events.uiDesignToolsEvent({type:'colorStopModelHasBeenDeleted'});
+	
 	//don't do this again
 	uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp = true; 
 }
@@ -42,10 +49,26 @@ uiDesignTools.gradients.widgets.colorStopWidget = function(optionsParam){
 	};
 	$.extend(this.options, optionsParam);//merge default options with passed in options.
 
+	//click handlers
+	this.registerDeleteColorStopButtonClickHandler();
+
 	//listen for change events emitted by the red,green,blue, alpha sliders/range inputs.
 	this.registerSliderChangeHandlers();
 
 }
+
+//define and register handler for when the delete color stop button is clicked
+uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerDeleteColorStopButtonClickHandler = function(){
+	var self = this;//for callbacks
+	
+	function handleDeleteColorStopButtonClick(event){
+		uiDesignTools.events.eventManager.events['colorStopModelShouldBeDeleted'].publish({
+				colorStop : self.options.colorStopModel
+			});
+	}
+	
+	this.options.$colorStop.on('click', '#deleteColorStopButton', handleDeleteColorStopButtonClick);
+};
 
 //adds on change events to the appropriate sub widgets (redRange, etc)
 uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerSliderChangeHandlers = function(){
