@@ -38,7 +38,7 @@ uiDesignTools.gradients.models.linearGradient.prototype.addColorStop = function(
 	this.options.colorStops.push(colorStopToAdd);
 	//emit the event
 	uiDesignTools.events.eventManager.events['colorStopModelHasBeenAdded'].publish({colorStop:colorStopToAdd});
-}
+};
 
 uiDesignTools.gradients.models.linearGradient.prototype.removeColorStop = function(colorStopToRemove){
 	//remove the model from our collection
@@ -47,4 +47,10 @@ uiDesignTools.gradients.models.linearGradient.prototype.removeColorStop = functi
 	colorStops.splice(indexToRemove, 1);
 	//emit the event
 	uiDesignTools.events.eventManager.events['colorStopModelHasBeenDeleted'].publish({colorStop:colorStopToRemove});
-}
+};
+
+//use this method when you want to emit the event
+uiDesignTools.gradients.models.linearGradient.prototype.setSideOrCorner = function(sideOrCorner){
+	this.options.sideOrCorner = sideOrCorner;
+	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish();
+};

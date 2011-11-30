@@ -15,7 +15,7 @@ if(typeof uiDesignTools.gradients.models == 'undefined'){ uiDesignTools.gradient
 uiDesignTools.gradients.models.colorStop = function(optionsParam){
 	this.options = {
 		colorStopId : 0,//used for div id
-		rgba : {red: 1, green: 1, blue: 1, alpha:1},
+		rgba : {red: 1, green: 1, blue: 1, alpha:100},
 		position : 90 // where the color stop is positioned (50 for %50)  Color-stops are allowed to have positions before 0% or after 100%
 	}
 	

@@ -62,7 +62,7 @@
 * @param linearGradient complex object representing a linear gradient
 */
 {template .linearGradientCommonFormatCssTemplate}
-background: {$gradientName}(
+background-image: {$gradientName}(
 //only print out sideOrCorner if it has value. if it doesn't, angle will be used.
 {if $linearGradient.options.sideOrCorner != ''}
   {$linearGradient.options.sideOrCorner}
@@ -96,7 +96,7 @@ background: {$gradientName}(
 * Generates linear gradient css specifically for microsoft
 *
 * final result will be something like:
-* background: -ms-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+* background-image: -ms-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
 *
 * @param linearGradient complex object representing a linear gradient
 */
@@ -111,7 +111,7 @@ background: {$gradientName}(
 * Generates linear gradient css based off of w3c
 *
 * final result will be something like:
-* background: -linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
+* background-image: -linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,0.84) 50%, rgba(125,185,232,0.67) 100%);
 *
 * @param linearGradient complex object representing a linear gradient
 */

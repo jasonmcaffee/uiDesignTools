@@ -1,0 +1,28 @@
+finish css3 gradient generation.
+- for various browsers
+- for more options
+-- directions - top left, top, top right, left, right, bottom left, bottom, bottom right
+
+circular gradient
+elliptical gradient
+
+rounded corners
+
+drop shadow
+
+text
+
+
+presets
+
+pallets
+share palletes
+
+
+
+
+
+
+============= DONE ========================================
+fix alpha .01. make 1-100 range and modify before write.
+fix background to background-image

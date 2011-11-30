@@ -31,6 +31,7 @@
 * @param colorStop model which dictates some html values
 */
 {template .colorStopInnerContentTemplate}
+
  <label for="redRange">red</label>
  <input id="redRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.red}" />
 
@@ -41,7 +42,7 @@
  <input id="blueRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.blue}" />
 
  <label for="alphaRange">alpha</label>
- <input id="alphaRange" type="range" min="0" max="1" step=".01" value="{$colorStop.options.rgba.alpha}" />
+ <input id="alphaRange" type="range" min="1" max="100" step="1" value="{$colorStop.options.rgba.alpha}" />
  
  <label for="positionRange">position</label>
  <input id="positionRange" type="range" min="0" max="100" step="1" value="{$colorStop.options.position}" />

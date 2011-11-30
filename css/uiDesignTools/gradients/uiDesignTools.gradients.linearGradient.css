@@ -1,11 +1,11 @@
 body{
 	height: 100%;
 	background-repeat:no-repeat;
-	background: -moz-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
-	background: -webkit-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
-	background: -o-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
-	background: -ms-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
-	background: -linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
+	background-image: -moz-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
+	background-image: -o-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
+	background-image: -ms-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
+	background-image: -linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
 }
 html{
 	height: 100%;
@@ -15,11 +15,11 @@ html{
 
 .linearGradient-linearGradientMakerControlsRow1{
 	padding: 5px;
-	background: -moz-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-	background: -webkit-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-	background: -o-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-	background: -ms-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
-	background: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background-image: -moz-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background-image: -o-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background-image: -ms-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background-image: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 }
 
 /* gradient output and css text area go here */
@@ -84,11 +84,11 @@ html{
 .linearGradient-colorStopsComponent{
   width:99%;
 	padding:1%;
-	background: -moz-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background: -webkit-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background: -ms-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background-image: -moz-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background-image: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background-image: -ms-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background-image: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 
 	border-radius: 6px 9px 5px 9px; 
 	-moz-border-radius: 6px 9px 5px 9px; 
@@ -103,11 +103,11 @@ html{
  */
 .linearGradient-colorStops{
 	padding: 1%;
-	background: -moz-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-	background: -webkit-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-	background: -o-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-	background: -ms-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
-	background: -linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background-image: -moz-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background-image: -o-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background-image: -ms-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background-image: -linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
 
   border-radius: 6px 9px 5px 9px; 
 	-moz-border-radius: 6px 9px 5px 9px; 
@@ -123,12 +123,12 @@ html{
 	margin-bottom: 1%;
 	
 	background: rgb(255,255,255); /* Old browsers */
-	background: -moz-linear-gradient(left,  rgba(255,255,255,1) 1%, rgba(237,239,242,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right top, color-stop(1%,rgba(255,255,255,1)), color-stop(100%,rgba(237,239,242,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* IE10+ */
-	background: linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* W3C */
+	background-image: -moz-linear-gradient(left,  rgba(255,255,255,1) 1%, rgba(237,239,242,1) 100%); /* FF3.6+ */
+	background-image: -webkit-gradient(linear, left top, right top, color-stop(1%,rgba(255,255,255,1)), color-stop(100%,rgba(237,239,242,1))); /* Chrome,Safari4+ */
+	background-image: -webkit-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Chrome10+,Safari5.1+ */
+	background-image: -o-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Opera 11.10+ */
+	background-image: -ms-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* IE10+ */
+	background-image: linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#edeff2',GradientType=1 ); /* IE6-9 */
 	
 	border-radius: 2px; 

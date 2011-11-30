@@ -32,7 +32,7 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget = function(optionsPara
 	this.$colorStops = $('#colorStops', this.$colorStopsComponent);//colorstops allow us to tweak the output (generated gradient)
 	this.$gradientOutput = $('#gradientOutput', this.options.$linearGradientMaker);//the final result of users modification. updated as user interacts with controls.
 	this.$generatedLinearGradientCssOutputTextArea = $('#generatedLinearGradientCssOutputTextArea', this.options.$linearGradientMaker);//where we will display generated css for the linear gradient
-	
+	//i don't know that i need this yet... this.$linearGradientSideOrCornerSelect = $('#linearGradientSideOrCorner', this.options.$linearGradientMaker);//user can pick which way the linear gradient should go.
 	
 	this.colorStopWidgets = [];//array of colorStopWidgets which each represent a colorStop in this linear gradient
 	this.createColorStopWidgets();
@@ -46,14 +46,32 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget = function(optionsPara
 	this.subscribeToColorStopModelAdd();//refresh colorStops, user has clicked add colorstop button.
 	this.subscribeToColorStopModelDelete();//we fire this event after we get the colorStopModelShouldBeDeleted and update the model.
 	this.subscribeToColorStopModelShouldBeDeleted();//colorStopWidget fires this event when user clicks delete button
-	
+	//subscribe to linearGradientModel events
+	this.subscribeToLinearGradientModelUpdate();
 	//listen for on click so we can add a new colorStop
 	this.registerAddColorStopButtonClickHandler();
+	this.registerLinearGradientSideOrCornerSelectChangeHandler();
 	
 	//gradientOutput and textarea should be refreshed to reflect the current model
 	this.refreshGeneratedOutput();
 	
 };//end linearGradientMakerWidget
+
+//when user selects which direction the gradient should go
+uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.registerLinearGradientSideOrCornerSelectChangeHandler = function(){
+	var self = this;
+	
+	function linearGradientSideOrCornerSelectChangeHandler(event){
+		//this.value is the value of the selected option
+		
+		//update the model and emit the event for linearGradientModelUpdated
+		//i'm emitting events rather than just calling refreshUI here because i think this widget could be broken down into smaller parts.
+		//also something else could change the model, and i want this widget to react (not realistic, but this project is about principles in enterprise dev)
+		self.options.linearGradientModel.setSideOrCorner(this.value);
+	}
+	
+	this.$linearGradientMakerControls.on("change", "#linearGradientSideOrCorner", linearGradientSideOrCornerSelectChangeHandler);
+};
 
 //when user clicks 'Add Color Stop', this function will be fired so we can update the model, etc.
 uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.registerAddColorStopButtonClickHandler = function(){
@@ -77,9 +95,26 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.registerAddC
 	this.$colorStopsComponent.on("click", "#addColorStopButton", addColorStopButtonClickHandler);
 };
 
+//ensure all colorstops have a unique id so there are no conflicts when adding, deleting, adding, etc the color stops (click handlers break if not unique id.)
 uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.generateColorStopId = function(){
 	return 'colorStop' + this.totalColorStopCount++;
 }
+
+
+uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.subscribeToLinearGradientModelUpdate = function(){
+	var self = this;//so call back functions can access method of this.
+	
+	//when the input of a color stop range (red, green, blue, alpha) has changed, we want to be notified so we can
+	//re-render the gradientOuput so that it reflects the change the user made.
+	function handleLinearGradientModelUpdate(event){
+		//generate new css text and update the textarea and gradient outputs.
+		self.refreshGeneratedOutput();
+	}
+	
+	//subscribe to the event
+	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].subscribe(handleLinearGradientModelUpdate);
+};
+
 
 //when any of our color stops has been updated, we need to update/render the gradientOutput
 uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.subscribeToColorStopModelUpdate = function(){

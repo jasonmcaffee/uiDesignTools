@@ -25,6 +25,7 @@ if(typeof uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp == 'undef
 	//not sure if this should be used...probably
 	uiDesignTools.events.eventManager.events['colorStopModelHasBeenDeleted'] = new uiDesignTools.events.uiDesignToolsEvent({type:'colorStopModelHasBeenDeleted'});
 	
+	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'] = new uiDesignTools.events.uiDesignToolsEvent({type:'linearGradientModelHasChanged'});
 	//don't do this again
 	uiDesignTools.gradients.widgets.colorStopEventsHaveBeenSetUp = true; 
 }
@@ -97,6 +98,7 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerSliderChangeHa
 			if(rgbaColorPropertyBeingUpdated == "position"){
 				colorStop.options.position = rangeValue;
 			}else{
+				if(rgbaColorPropertyBeingUpdated == "alpha"){ rangeValue = rangeValue * .01}//convert 1 to .1, 100 to 1
 				colorStop.options.rgba[rgbaColorPropertyBeingUpdated] = rangeValue;
 			}
 			//re-render

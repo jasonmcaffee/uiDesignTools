@@ -35,7 +35,7 @@ uiDesignTools.gradients.templates.linearGradient.linearGradientCssPrettyPrintTem
 
 uiDesignTools.gradients.templates.linearGradient.linearGradientCommonFormatCssTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('background: ', soy.$$escapeHtml(opt_data.gradientName), '(', (opt_data.linearGradient.options.sideOrCorner != '') ? soy.$$escapeHtml(opt_data.linearGradient.options.sideOrCorner) : soy.$$escapeHtml(opt_data.linearGradient.options.angle), ',');
+  output.append('background-image: ', soy.$$escapeHtml(opt_data.gradientName), '(', (opt_data.linearGradient.options.sideOrCorner != '') ? soy.$$escapeHtml(opt_data.linearGradient.options.sideOrCorner) : soy.$$escapeHtml(opt_data.linearGradient.options.angle), ',');
   var colorStopList38 = opt_data.linearGradient.options.colorStops;
   var colorStopListLen38 = colorStopList38.length;
   for (var colorStopIndex38 = 0; colorStopIndex38 < colorStopListLen38; colorStopIndex38++) {
