@@ -14,6 +14,7 @@ uiDesignTools.gradients.templates.linearGradient.linearGradientCssTemplate = fun
   uiDesignTools.gradients.templates.linearGradient.linearGradientForOperaCssTemplate(opt_data, output);
   uiDesignTools.gradients.templates.linearGradient.linearGradientForMicrosoftCssTemplate(opt_data, output);
   uiDesignTools.gradients.templates.linearGradient.linearGradientForW3cCssTemplate(opt_data, output);
+  uiDesignTools.gradients.templates.linearGradient.linearGradientWebkitOlderTemplate(opt_data, output);
   return opt_sb ? '' : output.toString();
 };
 
@@ -29,6 +30,23 @@ uiDesignTools.gradients.templates.linearGradient.linearGradientCssPrettyPrintTem
   uiDesignTools.gradients.templates.linearGradient.linearGradientForMicrosoftCssTemplate(opt_data, output);
   output.append('\n');
   uiDesignTools.gradients.templates.linearGradient.linearGradientForW3cCssTemplate(opt_data, output);
+  output.append('\n');
+  uiDesignTools.gradients.templates.linearGradient.linearGradientWebkitOlderTemplate(opt_data, output);
+  return opt_sb ? '' : output.toString();
+};
+
+
+uiDesignTools.gradients.templates.linearGradient.linearGradientWebkitOlderTemplate = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('background-image: -webkit-gradient(linear, ', soy.$$escapeHtml(opt_data.linearGradient.options.oldWebKitSideOrCorner.startPosition), ', ', soy.$$escapeHtml(opt_data.linearGradient.options.oldWebKitSideOrCorner.endPosition), ',');
+  var colorStopList39 = opt_data.linearGradient.options.colorStops;
+  var colorStopListLen39 = colorStopList39.length;
+  for (var colorStopIndex39 = 0; colorStopIndex39 < colorStopListLen39; colorStopIndex39++) {
+    var colorStopData39 = colorStopList39[colorStopIndex39];
+    uiDesignTools.gradients.templates.linearGradient.colorStopForOldWebkitTemplate({colorStop: colorStopData39}, output);
+    output.append((! (colorStopIndex39 == colorStopListLen39 - 1)) ? ', ' : '');
+  }
+  output.append(');');
   return opt_sb ? '' : output.toString();
 };
 
@@ -36,12 +54,12 @@ uiDesignTools.gradients.templates.linearGradient.linearGradientCssPrettyPrintTem
 uiDesignTools.gradients.templates.linearGradient.linearGradientCommonFormatCssTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('background-image: ', soy.$$escapeHtml(opt_data.gradientName), '(', (opt_data.linearGradient.options.sideOrCorner != '') ? soy.$$escapeHtml(opt_data.linearGradient.options.sideOrCorner) : soy.$$escapeHtml(opt_data.linearGradient.options.angle), ',');
-  var colorStopList38 = opt_data.linearGradient.options.colorStops;
-  var colorStopListLen38 = colorStopList38.length;
-  for (var colorStopIndex38 = 0; colorStopIndex38 < colorStopListLen38; colorStopIndex38++) {
-    var colorStopData38 = colorStopList38[colorStopIndex38];
-    uiDesignTools.gradients.templates.linearGradient.colorStopTemplate({colorStop: colorStopData38}, output);
-    output.append((! (colorStopIndex38 == colorStopListLen38 - 1)) ? ', ' : '');
+  var colorStopList57 = opt_data.linearGradient.options.colorStops;
+  var colorStopListLen57 = colorStopList57.length;
+  for (var colorStopIndex57 = 0; colorStopIndex57 < colorStopListLen57; colorStopIndex57++) {
+    var colorStopData57 = colorStopList57[colorStopIndex57];
+    uiDesignTools.gradients.templates.linearGradient.colorStopTemplate({colorStop: colorStopData57}, output);
+    output.append((! (colorStopIndex57 == colorStopListLen57 - 1)) ? ', ' : '');
   }
   output.append(');');
   return opt_sb ? '' : output.toString();
@@ -87,6 +105,15 @@ uiDesignTools.gradients.templates.linearGradient.colorStopTemplate = function(op
   var output = opt_sb || new soy.StringBuilder();
   uiDesignTools.gradients.templates.linearGradient.rgbaTemplate({rgba: opt_data.colorStop.options.rgba}, output);
   output.append(' ', soy.$$escapeHtml(opt_data.colorStop.options.position), '%');
+  return opt_sb ? '' : output.toString();
+};
+
+
+uiDesignTools.gradients.templates.linearGradient.colorStopForOldWebkitTemplate = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('color-stop(', soy.$$escapeHtml(opt_data.colorStop.options.position), '%,');
+  uiDesignTools.gradients.templates.linearGradient.rgbaTemplate({rgba: opt_data.colorStop.options.rgba}, output);
+  output.append(')');
   return opt_sb ? '' : output.toString();
 };
 

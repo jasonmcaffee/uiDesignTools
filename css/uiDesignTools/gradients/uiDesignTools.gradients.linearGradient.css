@@ -6,6 +6,7 @@ body{
 	background-image: -o-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
 	background-image: -ms-linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
 	background-image: -linear-gradient(top,rgba(241, 238, 233, 1) 69%, rgba(183, 175, 163, 1) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(69%,rgba(241, 238, 233, 1)), color-stop(100%,rgba(183, 175, 163, 1)));
 }
 html{
 	height: 100%;
@@ -20,6 +21,9 @@ html{
 	background-image: -o-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 	background-image: -ms-linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
 	background-image: -linear-gradient(top,rgba(146, 143, 149, 1) 1%, rgba(77, 80, 80, 1) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(146, 143, 149, 1)), color-stop(100%,rgba(77, 80, 80, 1)));
+	
+	/*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));*/
 }
 
 /* gradient output and css text area go here */
@@ -89,6 +93,7 @@ html{
 	background-image: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 	background-image: -ms-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 	background-image: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(226, 226, 233, 1)), color-stop(100%,rgba(183, 189, 198, 1)));
 
 	border-radius: 6px 9px 5px 9px; 
 	-moz-border-radius: 6px 9px 5px 9px; 
@@ -108,6 +113,7 @@ html{
 	background-image: -o-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
 	background-image: -ms-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
 	background-image: -linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(72, 74, 72, 1)), color-stop(100%,rgba(57, 57, 63, 1)));
 
   border-radius: 6px 9px 5px 9px; 
 	-moz-border-radius: 6px 9px 5px 9px; 

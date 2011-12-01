@@ -21,6 +21,9 @@
 
 	//background: linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
  {call .linearGradientForW3cCssTemplate}{param linearGradient : $linearGradient /}{/call}
+ 
+ //background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
+ {call .linearGradientWebkitOlderTemplate}{param linearGradient : $linearGradient /}{/call}
 {/template}
 
 /**
@@ -43,8 +46,23 @@
 {\n}
 	//background: linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,0.84) 50%,rgba(125,185,232,0.67) 100%);
  {call .linearGradientForW3cCssTemplate}{param linearGradient : $linearGradient /}{/call}
+{\n}
+ //background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
+ {call .linearGradientWebkitOlderTemplate}{param linearGradient : $linearGradient /}{/call}
 {/template}
 
+/**
+* old webkit has the points (left top, etc) different than the current standard.
+* @param linearGradient complex object representing a linear gradient
+*/
+{template .linearGradientWebkitOlderTemplate}
+ background-image: -webkit-gradient(linear, {$linearGradient.options.oldWebKitSideOrCorner.startPosition}, {$linearGradient.options.oldWebKitSideOrCorner.endPosition}, 
+ {foreach $colorStop in  $linearGradient.options.colorStops}
+  {call .colorStopForOldWebkitTemplate}{param colorStop : $colorStop /}{/call}
+   {if not isLast($colorStop)}, {/if}
+  {/foreach}
+ );
+{/template}
 
 /**
 * webkit-linear-gradient, moz-linear-gradient, etc, all appear to have the same format
@@ -162,12 +180,24 @@ background-image: {$gradientName}(
 {/template}
 
 /**
+* Old Webkit
+* Generates a color stop for use in a linear gradient
+* @param colorStop object representing a color stop with position and rgba properties
+*/
+{template .colorStopForOldWebkitTemplate}
+ color-stop({$colorStop.options.position}%,
+ {call .rgbaTemplate}{param rgba: $colorStop.options.rgba /}{/call}
+ )
+{/template}
+/**
 * Generates rgba for use in a color stop
 * @param rgba object with red, green, blue, and alpha properties
 */
 {template .rgbaTemplate}
  rgba({$rgba.red}, {$rgba.green}, {$rgba.blue}, {$rgba.alpha})
 {/template}
+
+
 
 
 

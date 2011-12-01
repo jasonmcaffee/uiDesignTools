@@ -18,7 +18,11 @@ uiDesignTools.gradients.models.linearGradient = function(optionsParam){
 		//angle will only be used if sideOrCorner is not set.
 		angle : 0,
 		//if this has a value, angle will not be used
-		sideOrCorner : 'top' //[left | right] || [top | bottom]
+		sideOrCorner : 'top', //[left | right] || [top | bottom]
+		oldWebKitSideOrCorner : { //right top | left top | right bottom | right top
+			startPosition : 'left top',
+			endPosition : 'left bottom'
+		}
 	};
 	
 	//merge passed in options with default options
@@ -52,5 +56,43 @@ uiDesignTools.gradients.models.linearGradient.prototype.removeColorStop = functi
 //use this method when you want to emit the event
 uiDesignTools.gradients.models.linearGradient.prototype.setSideOrCorner = function(sideOrCorner){
 	this.options.sideOrCorner = sideOrCorner;
-	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish();
+	
+	//now set the old webkit specific model
+	switch(this.options.sideOrCorner){
+		case "top left":
+			this.options.oldWebKitSideOrCorner.startPosition = "left top";
+			this.options.oldWebKitSideOrCorner.endPosition = "right bottom";
+			break;
+		case "top right":
+			this.options.oldWebKitSideOrCorner.startPosition = "right top";
+			this.options.oldWebKitSideOrCorner.endPosition = "left bottom";
+			break;
+		case "top":
+			this.options.oldWebKitSideOrCorner.startPosition = "left top";
+			this.options.oldWebKitSideOrCorner.endPosition = "left bottom";
+		  break;
+		case "bottom":
+			this.options.oldWebKitSideOrCorner.startPosition = "left bottom";
+			this.options.oldWebKitSideOrCorner.endPosition = "left top";
+			break;
+		case "bottom left":
+			this.options.oldWebKitSideOrCorner.startPosition = "left bottom";
+			this.options.oldWebKitSideOrCorner.endPosition = "right top";
+			break;
+		case "bottom right":
+			this.options.oldWebKitSideOrCorner.startPosition = "right bottom";
+			this.options.oldWebKitSideOrCorner.endPosition = "left top";
+			break;
+		case "right":
+			this.options.oldWebKitSideOrCorner.startPosition = "right top";
+			this.options.oldWebKitSideOrCorner.endPosition = "left top";
+			break;
+		case "left":
+			this.options.oldWebKitSideOrCorner.startPosition = "left top";
+			this.options.oldWebKitSideOrCorner.endPosition = "right top";
+			break;
+	}
+	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish({linearGradient: this});
 };
+
+
