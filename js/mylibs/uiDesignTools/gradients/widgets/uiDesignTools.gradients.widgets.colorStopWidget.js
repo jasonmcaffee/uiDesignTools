@@ -7,6 +7,8 @@
  * widgets don't generate html, they layer functionality on top of the html
  * 
  * @requires eventManager
+ * @requires fs-slider
+ * @requires Modernizr.inputtypes.range
  */
 
 //setup the namespaces
@@ -50,12 +52,38 @@ uiDesignTools.gradients.widgets.colorStopWidget = function(optionsParam){
 	};
 	$.extend(this.options, optionsParam);//merge default options with passed in options.
 
+//JQuery Object Initialization
+	this.polyfillInputRanges();//only executes if needed
+	
 	//click handlers
 	this.registerDeleteColorStopButtonClickHandler();
 
 	//listen for change events emitted by the red,green,blue, alpha sliders/range inputs.
 	this.registerSliderChangeHandlers();
+	
+	
+}
 
+//only initializes if Modernizr.inputtypes.range == false
+//we need to register the input range polyfill (to get support in firefox & ie)
+uiDesignTools.gradients.widgets.colorStopWidget.prototype.polyfillInputRanges = function(){	
+	if(Modernizr.inputtypes.range){return;}
+	
+	//WE ONLY NEED THESE IF THE BROWSER DOESN'T SUPPORT INPUT TYPE="RANGE": TO DO : optimize by not querying for these if range type is supported?
+	this.$redRange = $("#" + this.options.colorStopModel.options.colorStopId + "redRange", this.options.$colorStop);
+	this.$greenRange = $("#" + this.options.colorStopModel.options.colorStopId + "greenRange", this.options.$colorStop);
+	this.$blueRange = $("#" + this.options.colorStopModel.options.colorStopId + "blueRange", this.options.$colorStop);
+	this.$alphaRange = $("#" + this.options.colorStopModel.options.colorStopId + "alphaRange", this.options.$colorStop);
+	this.$positionRange = $("#" + this.options.colorStopModel.options.colorStopId + "positionRange", this.options.$colorStop);
+
+
+	//these will only execute if the input doesn't support type="range"
+	fdSlider.createSlider({html5Shim :true, inp:this.$redRange[0], animation:"tween", min:1, max:100, step:1});
+	fdSlider.createSlider({ html5Shim :true, inp:this.$greenRange[0], animation:"tween", min:1, max:100, step:1});
+	fdSlider.createSlider({ html5Shim :true, inp:this.$blueRange[0], animation:"tween", min:1, max:100, step:1});
+	fdSlider.createSlider({ html5Shim :true, inp:this.$alphaRange[0], animation:"tween", min:1, max:100, step:1});
+	fdSlider.createSlider({ html5Shim :true, inp:this.$positionRange[0], animation:"tween", min:1, max:100, step:1});
+		
 }
 
 //define and register handler for when the delete color stop button is clicked
@@ -68,7 +96,7 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerDeleteColorSto
 			});
 	}
 	
-	this.options.$colorStop.on('click', '#deleteColorStopButton', handleDeleteColorStopButtonClick);
+	this.options.$colorStop.on('click', '#deleteColorStopButton' + this.options.colorStopModel.options.colorStopId, handleDeleteColorStopButtonClick);
 };
 
 //adds on change events to the appropriate sub widgets (redRange, etc)
@@ -115,11 +143,14 @@ uiDesignTools.gradients.widgets.colorStopWidget.prototype.registerSliderChangeHa
 
 //Register change handlers	
 	//register
-	registerColorStopRangeChangeHandlerFor("#redRange", 0, "red");
-	registerColorStopRangeChangeHandlerFor("#greenRange", 0, "green");
-	registerColorStopRangeChangeHandlerFor("#blueRange", 0, "blue");
-	registerColorStopRangeChangeHandlerFor("#alphaRange", 0, "alpha");
-	registerColorStopRangeChangeHandlerFor("#positionRange", 0, "position");
+	//this feels a little dirty...
+	//var rangeIdPrepend = Modernizr.inputtypes.range ? this.options.colorStopModel.options.colorStopId : 'fs-slider-'+this.options.colorStopModel.options.colorStopId;//unique range ids
+	var rangeIdPrepend = this.options.colorStopModel.options.colorStopId;
+	registerColorStopRangeChangeHandlerFor("#" + rangeIdPrepend + "redRange", 0, "red");
+	registerColorStopRangeChangeHandlerFor("#" + rangeIdPrepend + "greenRange", 0, "green");
+	registerColorStopRangeChangeHandlerFor("#" + rangeIdPrepend + "blueRange", 0, "blue");
+	registerColorStopRangeChangeHandlerFor("#" + rangeIdPrepend + "alphaRange", 0, "alpha");
+	registerColorStopRangeChangeHandlerFor("#" + rangeIdPrepend + "positionRange", 0, "position");
 }
 
 //just update the inner contents.

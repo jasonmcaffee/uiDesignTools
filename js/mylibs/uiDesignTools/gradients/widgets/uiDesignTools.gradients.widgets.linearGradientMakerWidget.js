@@ -260,4 +260,11 @@ uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.refreshGener
 	this.$generatedLinearGradientCssOutputTextArea.val(newLinearGradientCssText);
 };
 
+//called by the callback function of Modernizr.load for the fdslider input range polyfill
+uiDesignTools.gradients.widgets.linearGradientMakerWidget.prototype.polyfillInputRangeForAllColorStops = function(){
+	for(var i = 0; i < this.colorStopWidgets.length; ++i){
+		this.colorStopWidgets[i].polyfillInputRanges();
+	}
+}
+
 

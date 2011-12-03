@@ -1,8 +1,8 @@
 finish css3 gradient generation.
 - for various browsers
 - for more options
--select values not going to work. need to modify when gen css
 
+color picker
 use jquery ui for sliders (doesn't work in all modern browsers)
 
 linearGradientMakerWidget - needs inheritance. outputs go to gradientMakerWidget?
@@ -35,7 +35,7 @@ fix alpha .01. make 1-100 range and modify before write.
 fix background to background-image
 -- directions - top left, top, top right, left, right, bottom left, bottom, bottom right
 
-
+-select values not going to work. need to modify when gen css -- alpha slider
 
 background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(206, 155, 215, 100)), color-stop(100%,rgba(155, 109, 183, 100)));
 background-image: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));

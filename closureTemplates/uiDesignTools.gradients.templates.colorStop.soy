@@ -32,21 +32,21 @@
 */
 {template .colorStopInnerContentTemplate}
 
- <label for="redRange">red</label>
- <input id="redRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.red}" />
+ <label for="{$colorStop.options.colorStopId}redRange">red</label>
+ <input id="{$colorStop.options.colorStopId}redRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.red}" />
 
- <label for="greenRange">green</label>
- <input id="greenRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.green}" />
+ <label for="{$colorStop.options.colorStopId}greenRange">green</label>
+ <input id="{$colorStop.options.colorStopId}greenRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.green}" />
 
- <label for="blueRange">blue</label>
- <input id="blueRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.blue}" />
+ <label for="{$colorStop.options.colorStopId}blueRange">blue</label>
+ <input id="{$colorStop.options.colorStopId}blueRange" type="range" min="0" max="255" value="{$colorStop.options.rgba.blue}" />
 
- <label for="alphaRange">alpha</label>
- <input id="alphaRange" type="range" min="1" max="100" step="1" value="{$colorStop.options.rgba.alpha}" />
+ <label for="{$colorStop.options.colorStopId}alphaRange">alpha</label>
+ <input id="{$colorStop.options.colorStopId}alphaRange" type="range" min="1" max="100" step="1" value="{$colorStop.options.rgba.alpha}" />
  
- <label for="positionRange">position</label>
- <input id="positionRange" type="range" min="0" max="100" step="1" value="{$colorStop.options.position}" />
+ <label for="{$colorStop.options.colorStopId}positionRange">position</label>
+ <input id="{$colorStop.options.colorStopId}positionRange" type="range" min="0" max="100" step="1" value="{$colorStop.options.position}" />
  
- <input id="deleteColorStopButton" type="button" value="Delete"/>
+ <input id="deleteColorStopButton{$colorStop.options.colorStopId}" type="button" value="Delete"/>
 {/template}
 

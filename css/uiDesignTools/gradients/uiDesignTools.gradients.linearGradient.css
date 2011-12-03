@@ -152,3 +152,8 @@ html{
 	width: 100px;
 }
 
+.linearGradient-colorStop .fd-slider{
+	display:inline-block;
+}
+
+
