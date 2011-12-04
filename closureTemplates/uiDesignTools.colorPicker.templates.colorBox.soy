@@ -1,0 +1,25 @@
+{namespace uiDesignTools.colorPicker.templates.colorBox}
+
+/**
+* writes out all colorBoxes that are passed in
+* @param colorBoxes array of colorStop models
+* @param colorBoxesDivId id for the div the colorBoxes will go in.
+*/
+{template .colorBoxesTemplate}
+ <div id="{$colorBoxesDivId}" class="colorPicker-colorBoxes">
+  {foreach $colorBox in $colorBoxes}
+  	{call .colorBoxTemplate}{param colorBox : $colorBox /}{/call}
+  {/foreach}
+ </div>
+{/template}
+
+/**
+* writes out colorBox
+* @param colorBox
+*/
+{template .colorBoxTemplate}
+ <div id="{$colorBox.options.colorBoxId}" class="colorBox" style="background-color: rgba({$colorBox.options.rgba.red}, {$colorBox.options.rgba.green}, {$colorBox.options.rgba.blue}, {$colorBox.options.rgba.alpha});">
+	&nbsp;
+ </div>
+{/template}
+

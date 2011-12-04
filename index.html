@@ -23,9 +23,10 @@
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/uiDesignTools/gradients/uiDesignTools.gradients.linearGradient.css">
+  <link rel="stylesheet" href="css/uiDesignTools/colorPicker/uiDesignTools.colorPicker.colorPicker.css">
   <!-- <link rel="stylesheet" href="css/inputRangePolyfill/fd-slider.css"> -->
 
-  
+  <script src="js/libs/require-jquery.js"></script>
   <!-- All JavaScript at the bottom, except this Modernizr build incl. Respond.js
        Respond is a polyfill for min/max-width media queries. Modernizr enables HTML5 elements & feature detects; 
        for optimal performance, create your own custom Modernizr build: www.modernizr.com/download/ -->
@@ -63,6 +64,11 @@
 			generated content for the linearGradientMakerWidget goes here
 		</div>
 
+		<div id="colorPicker" class="colorPicker">
+
+		</div>
+
+
   </div>
   
   <footer>
@@ -73,9 +79,10 @@
   <!-- JavaScript at the bottom for fast page loading -->
 
 
+
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.0.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery.min.js"><\/script>')</script>
 
 	
 	<!-- http://code.google.com/closure/templates/docs/javascript_usage.html -->
@@ -84,7 +91,11 @@
   <!-- input range polyfill-->
   <!-- <script src="js/libs/fd-slider.js"></script> -->
   
+  
   <!-- order matters! -->
+  <!-- core library, namespace, event creation -->
+  <script src="js/mylibs/uiDesignTools/uiDesignTools.js"></script>
+  
   <!-- event definitions & eventManager setup -->
   <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.uiDesignToolsEvent.js"></script>
   <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.eventManager.js"></script>
@@ -103,13 +114,48 @@
   <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.linearGradientMakerWidget.js"></script>
   <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.colorStopWidget.js"></script>
   
+  
+  
+  <!-- order shouldn't matter with requirejs -->
+  <!-- models -->
+  <script src="js/mylibs/uiDesignTools/colorPicker/models/colorBox.js"></script>
+  <script src="js/mylibs/uiDesignTools/colorPicker/models/colorPicker.js"></script>
+  
+  <!-- templates -->
+  <script src="js/mylibs/uiDesignTools/colorPicker/templates/uiDesignTools.colorPicker.templates.colorBox.js"></script>
+  
+  <!-- widgets -->
+  <script src="js/mylibs/uiDesignTools/colorPicker/widgets/colorPickerWidget.js"></script>
+  
   <script type="text/javascript">
-		//needs global scope for polyfill for input type="range" (fd-slider)
-		var linearGradientMakerWidget;
-		
+
 		$(function(){
 			
-			//first construct an inital model
+			//linearGradientWidget creation
+			createLinearGradientModelAndWidget();
+
+			//colorPickerWidget
+			createColorPickerModelAndWidget();
+		});
+  	
+  	function createColorPickerModelAndWidget(){
+  		var colorPickerModel = new uiDesignTools.colorPicker.models.colorPicker({
+  			
+  		});
+  		
+  		//jquery representation
+  		var $colorPicker = $("#colorPicker");
+  		
+  		//create the widget, passing it the jquery rep and model
+  		var colorPickerWidget = new uiDesignTools.colorPicker.widgets.colorPickerWidget({
+  			colorPickerModel : colorPickerModel,
+  			$colorPicker : $colorPicker
+  		});
+  	}
+  	
+  	//================================================== linearGradientWidget
+  	function createLinearGradientModelAndWidget(){
+  		//first construct an inital model
 			var linearGradient = new uiDesignTools.gradients.models.linearGradient({
 				angle : 0, //only written out if sideOrCorner is empty
 				sideOrCorner : 'top',//if not empty, this will be written out, and angle will not be written out.
@@ -141,34 +187,18 @@
 			var $linearGradientMaker = $('#linearGradientMaker', $linearGradientMakerWidgetContainer);
 			
 			//now we can create the widget
-			linearGradientMakerWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
+			var linearGradientMakerWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
 				linearGradientModel : linearGradient,
 				$linearGradientMaker : $linearGradientMaker //the widget needs its jquery wrapper for the html it represents.
 			});
-
-		});
+  	}
+  	
   	
   	function log2(message){
   		document.getElementById("output").innerHTML += message + "<br/>";
   	}
   	
- //TESTS
-  	function testColorStopWidgetEventHandling(linearGradient){
-  		//test creating colorstop widgets. verify that when sliders move, we get notified
-			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].subscribe(function(event){
-				var colorStopWhichChanged = event.data.colorStop;
-				log2('got it ' + colorStopWhichChanged.options.colorStopId);
-				
-			});
-			var colorStopWidget = new uiDesignTools.gradients.widgets.colorStopWidget({
-				$colorStop : $('#colorStop0'),
-				colorStopModel : linearGradient.options.colorStops[0]
-			});
-			var colorStopWidget2 = new uiDesignTools.gradients.widgets.colorStopWidget({
-				$colorStop : $('#colorStop1'),
-				colorStopModel : linearGradient.options.colorStops[1]
-			});
-  	}
+
   </script>
   
   <!-- scripts concatenated and minified via build script -->
