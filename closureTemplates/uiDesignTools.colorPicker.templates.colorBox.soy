@@ -2,16 +2,30 @@
 
 /**
 * writes out all colorBoxes that are passed in
-* @param colorBoxes array of colorStop models
+* @param colorBoxRows array of colorStop models
 * @param colorBoxesDivId id for the div the colorBoxes will go in.
 */
 {template .colorBoxesTemplate}
  <div id="{$colorBoxesDivId}" class="colorPicker-colorBoxes">
-  {foreach $colorBox in $colorBoxes}
-  	{call .colorBoxTemplate}{param colorBox : $colorBox /}{/call}
+  
+	{foreach $colorBoxRow in $colorBoxRows}
+		<div class="colorBoxRow">
+		  {foreach $colorBox in $colorBoxRow.colorBoxes}
+		  	<div id="{$colorBox.options.colorBoxId}" class="colorBox" style="background-color: rgba({$colorBox.options.rgba.red}, {$colorBox.options.rgba.green}, {$colorBox.options.rgba.blue}, {$colorBox.options.rgba.alpha});">
+					&nbsp;
+		 		</div>
+		  {/foreach}
+		</div>
+	  
+	  
   {/foreach}
+  
  </div>
 {/template}
+
+
+
+
 
 /**
 * writes out colorBox

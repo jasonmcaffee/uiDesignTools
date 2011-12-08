@@ -10,11 +10,18 @@ if (typeof uiDesignTools.colorPicker.templates.colorBox == 'undefined') { uiDesi
 uiDesignTools.colorPicker.templates.colorBox.colorBoxesTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div id="', soy.$$escapeHtml(opt_data.colorBoxesDivId), '" class="colorPicker-colorBoxes">');
-  var colorBoxList6 = opt_data.colorBoxes;
-  var colorBoxListLen6 = colorBoxList6.length;
-  for (var colorBoxIndex6 = 0; colorBoxIndex6 < colorBoxListLen6; colorBoxIndex6++) {
-    var colorBoxData6 = colorBoxList6[colorBoxIndex6];
-    uiDesignTools.colorPicker.templates.colorBox.colorBoxTemplate({colorBox: colorBoxData6}, output);
+  var colorBoxRowList6 = opt_data.colorBoxRows;
+  var colorBoxRowListLen6 = colorBoxRowList6.length;
+  for (var colorBoxRowIndex6 = 0; colorBoxRowIndex6 < colorBoxRowListLen6; colorBoxRowIndex6++) {
+    var colorBoxRowData6 = colorBoxRowList6[colorBoxRowIndex6];
+    output.append('<div class="colorBoxRow">');
+    var colorBoxList8 = colorBoxRowData6.colorBoxes;
+    var colorBoxListLen8 = colorBoxList8.length;
+    for (var colorBoxIndex8 = 0; colorBoxIndex8 < colorBoxListLen8; colorBoxIndex8++) {
+      var colorBoxData8 = colorBoxList8[colorBoxIndex8];
+      output.append('<div id="', soy.$$escapeHtml(colorBoxData8.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData8.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.alpha), ');">&nbsp;</div>');
+    }
+    output.append('</div>');
   }
   output.append('</div>');
   return opt_sb ? '' : output.toString();

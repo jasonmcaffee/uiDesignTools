@@ -26,7 +26,7 @@ uiDesignTools.colorPicker.widgets.colorPickerWidget = function(optionsParam){
 uiDesignTools.colorPicker.widgets.colorPickerWidget.prototype.generateInnerHtmlAndAppend  = function(){
 	//call the template to get the colorBoxes Html
 	var innerHtml = this.options.colorBoxesTemplate({
-		colorBoxes:this.options.colorPickerModel.options.colorBoxes, 
+		colorBoxRows:this.options.colorPickerModel.options.colorBoxRows, 
 		colorBoxesDivId: "whatever"
 	});
 	
