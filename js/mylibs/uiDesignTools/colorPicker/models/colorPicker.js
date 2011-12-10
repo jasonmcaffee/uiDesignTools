@@ -1,6 +1,15 @@
 /**
  * @author Jason McAffee
  * 
+ * This module is responsible for representing the colorPicker model.
+ * It's primary responsibility is to define state, as well as some factory methods used to generate all the colorBoxes for a particular hue color.
+ * This means that all the variances, including saturation and brightness, will be generated and placed into colorBoxRows.
+ * 
+ * A colorBoxRow represents all the colorBox saturation variances for a single brightness level.
+ * 
+ * Saturation values are 1-100, and run left to right. (row)
+ * Brightness values are 1-100, and run bottom to top. (column)
+ * 
  * @requires colorBox model
  * @requires colorBoxTemplate
  */
@@ -19,16 +28,12 @@ uiDesignTools.colorPicker.models.colorPicker = function(optionsParam){
 	
 	$.extend(this.options, optionsParam);
 	
-	//only create if the user hasn't passed in defined colorBoxes
-	// if(this.options.colorBoxes.length == 0){
-		// this.createColorBoxes();
-	// }
-	
+	//create all the rows for a given hue color
 	this.createColorBoxRows(359, 30,30);
+	
 }
 
-//thanks to colorpicker.com for the algorithm  http://colorpicker.com
-//TODO: replace this function with your own.
+//using the hueColor(0-359), saturation(0-100), and brightness(0-100), this function calculates and returns the corresponding rgb values.
 uiDesignTools.colorPicker.models.colorPicker.prototype.calculateRgbColorsUsingHsv = function(hue, saturation, valueBrightness) {
         while (hue >= 360)
             hue -= 360;
@@ -94,17 +99,17 @@ uiDesignTools.colorPicker.models.colorPicker.prototype.calculateRgbColorsUsingHs
 //creates all brightness & saturation combinations for given hueColor.
 //rows & columns should likely be the same.
 uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBoxRows = function(hueColor, numberOfRows, numberOfColumns){
-	
+	//calculate stages of brightness based off how many rows they want
 	var brightnessDecrement = 100/numberOfRows;
 	
 	//iterate over each brightness possiblity, creating a new row for each possibility.
 	for(var brightness = 100; brightness > 0; brightness-=brightnessDecrement){
 		this.options.colorBoxRows.push(this.createColorBoxRow(numberOfColumns, brightness, hueColor));//create the row and add to our array
 	}
-	//var colorBoxRow = this.createColorBoxRow();
 	
 }
 
+//creates a colorBoxRow (saturation 1-100) comprised of colorBoxes for the given hue color and number of columns
 uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBoxRow = function(numberOfColumns, rowBrightness, hueColor){
 	var colorBoxes = this.createColorBoxesForRow(numberOfColumns, rowBrightness, hueColor);
 	var colorBoxRow = {colorBoxes:colorBoxes};
@@ -124,7 +129,7 @@ uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBoxesForRow = 
    //return value
 	var colorBoxes = [];
 	
-	//var brightnessDecrement = 100 / numberOfRows;
+	//calculate the number saturation stages (ie how many variances of saturation we can have given the number of columns)
 	var saturationIncrement = 100 / numberOfColumns;
 	
 	//helper to quickly create colorbox and add to colorBoxes array.
@@ -135,14 +140,39 @@ uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBoxesForRow = 
 		return c;//chain calls to this function with no . operator
 	}
 	
+	//iterate over each saturation variance we can create, given the number of columns, and create a color box with that saturation
 	for(var saturation = 0; saturation < 100; saturation+=saturationIncrement){
+		//calculate the rgb for the given hue color, saturation, and brightness
 		var calculatedRgb = this.calculateRgbColorsUsingHsv(hueColor, saturation, rowBrightness);
 		c(calculatedRgb.red, calculatedRgb.green, calculatedRgb.blue);//create the colorBox
 	}
 	
+	//return the colorBoxes we've created
+	return colorBoxes;
+}
+
+//creates a single colorBox which will display the given rgba (via css background)
+uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBox = function(rgba){
+	//var generatedBackgroundCssText = this.options.colorBoxRgbaBackgroundColorTemplate({rgba: rgba});  //don't do this. performance nightmare with so many objects keeping the text in memory
 	
+	var colorBox = new uiDesignTools.colorPicker.models.colorBox({
+		colorBoxId : this.generateColorBoxId(rgba),//unique id for the color box. useful for on click events.
+		rgba : rgba//the color the colorBox will be
+	});
 	
-	//basically you can do random ratios
+	return colorBox;
+}
+
+uiDesignTools.colorPicker.models.colorPicker.prototype.generateColorBoxId = function(rgba){
+	return "colorBox_" + rgba.red + "_" + rgba.green + "_" + rgba.blue;
+}
+
+
+
+
+
+//old junk i don't want to get rid of yet
+//basically you can do random ratios
 	// subtract 10 from red, subtract 9 for green, subtract 0 for blue????????????????
 	//more like a ratio
 	
@@ -209,10 +239,9 @@ uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBoxesForRow = 
 		 // (194,216,242)   //
 		 // (187,213,242)   //
 		// }
-
-	
-	return colorBoxes;
-	// //black to grey to white.
+		
+		
+			// //black to grey to white.
 	// for(var red =1; red<=max; red+=increment){
 		// var colorBox = this.createColorBox({red: red, green: red, blue:red, alpha: 1});
 		// this.options.colorBoxes.push(colorBox);
@@ -235,22 +264,3 @@ uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBoxesForRow = 
 			// }
 		// }
 	// }
-	
-}
-
-
-uiDesignTools.colorPicker.models.colorPicker.prototype.createColorBox = function(rgba){
-	//var generatedBackgroundCssText = this.options.colorBoxRgbaBackgroundColorTemplate({rgba: rgba});  //don't do this. performance nightmare with so many objects keeping the text in memory
-	
-	var colorBox = new uiDesignTools.colorPicker.models.colorBox({
-		//boxColorCssText : generatedBackgroundCssText,
-		colorBoxId : this.generateColorBoxId(rgba),
-		rgba : rgba
-	});
-	
-	return colorBox;
-}
-
-uiDesignTools.colorPicker.models.colorPicker.prototype.generateColorBoxId = function(rgba){
-	return "colorBox_" + rgba.red + "_" + rgba.green + "_" + rgba.blue;
-}

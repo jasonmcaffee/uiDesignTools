@@ -44,14 +44,19 @@ uiDesignTools.colorPicker.widgets.colorPickerWidget.prototype.registerClickHandl
 	}
 	
 	//iterate over each colorbox and register the click handler
-	for(var i = 0; i < this.options.colorPickerModel.options.colorBoxes.length; ++i){
-		var colorBox = this.options.colorPickerModel.options.colorBoxes[i];
-		//register click
-		this.options.$colorPicker.on("click", "#"+colorBox.options.colorBoxId, 
-		{ //event data
-			colorBox : colorBox
-		},
-		handleColorBoxClick);
+	var colorBoxRows = this.options.colorPickerModel.options.colorBoxRows;
+	for(var j = 0; j < colorBoxRows.length; ++j){
+		var colorBoxRow = colorBoxRows[j];
+		
+		for(var i = 0; i < colorBoxRow.colorBoxes.length; ++i){
+			var colorBox = colorBoxRow.colorBoxes[i];
+			//register click
+			this.options.$colorPicker.on("click", "#"+colorBox.options.colorBoxId, //TODO: I believe this is a performance hit. 
+			{ //event data
+				colorBox : colorBox
+			},
+			handleColorBoxClick);
+		}
 	}
 	
 };

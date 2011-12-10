@@ -12,28 +12,25 @@
 		<div class="colorBoxRow">
 		  {foreach $colorBox in $colorBoxRow.colorBoxes}
 		  	<div id="{$colorBox.options.colorBoxId}" class="colorBox" style="background-color: rgba({$colorBox.options.rgba.red}, {$colorBox.options.rgba.green}, {$colorBox.options.rgba.blue}, {$colorBox.options.rgba.alpha});">
-					&nbsp;
+					//fixes chrome issue with &nbsp; here. chrome wouldn't recognize the area when really small.
+					<a href="javascript:return;" style="opacity:0.0">#</a>
 		 		</div>
 		  {/foreach}
 		</div>
-	  
-	  
   {/foreach}
   
  </div>
+ 
+	<div class="hueRangeContainer">
+		<label for="hueRange">hue</label>
+		<input id="hueRange" type="range" max="359" min="0"/>
+	</div>
+	
 {/template}
 
 
 
 
 
-/**
-* writes out colorBox
-* @param colorBox
-*/
-{template .colorBoxTemplate}
- <div id="{$colorBox.options.colorBoxId}" class="colorBox" style="background-color: rgba({$colorBox.options.rgba.red}, {$colorBox.options.rgba.green}, {$colorBox.options.rgba.blue}, {$colorBox.options.rgba.alpha});">
-	&nbsp;
- </div>
-{/template}
+
 

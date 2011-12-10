@@ -5,7 +5,10 @@ finish css3 gradient generation.
 color picker
 - tiny boxes. each box N px in height&width
 
+colorBoxes has an extra row - get rid of it.
 
+onclick event needed for color box. broke right now
+ - using colorBoxes instead of colorBoxRow.colorBoxes
 
 linearGradientMakerWidget - needs inheritance. outputs go to gradientMakerWidget?
 

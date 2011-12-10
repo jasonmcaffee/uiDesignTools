@@ -19,17 +19,10 @@ uiDesignTools.colorPicker.templates.colorBox.colorBoxesTemplate = function(opt_d
     var colorBoxListLen8 = colorBoxList8.length;
     for (var colorBoxIndex8 = 0; colorBoxIndex8 < colorBoxListLen8; colorBoxIndex8++) {
       var colorBoxData8 = colorBoxList8[colorBoxIndex8];
-      output.append('<div id="', soy.$$escapeHtml(colorBoxData8.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData8.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.alpha), ');">&nbsp;</div>');
+      output.append('<div id="', soy.$$escapeHtml(colorBoxData8.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData8.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData8.options.rgba.alpha), ');"><a href="javascript:return;" style="opacity:0.0">#</a></div>');
     }
     output.append('</div>');
   }
-  output.append('</div>');
-  return opt_sb ? '' : output.toString();
-};
-
-
-uiDesignTools.colorPicker.templates.colorBox.colorBoxTemplate = function(opt_data, opt_sb) {
-  var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="', soy.$$escapeHtml(opt_data.colorBox.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(opt_data.colorBox.options.rgba.red), ', ', soy.$$escapeHtml(opt_data.colorBox.options.rgba.green), ', ', soy.$$escapeHtml(opt_data.colorBox.options.rgba.blue), ', ', soy.$$escapeHtml(opt_data.colorBox.options.rgba.alpha), ');">&nbsp;</div>');
+  output.append('</div><div class="hueRangeContainer"><label for="hueRange">hue</label><input id="hueRange" type="range" max="359" min="0"/></div>');
   return opt_sb ? '' : output.toString();
 };
