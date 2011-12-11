@@ -1,4 +1,4 @@
-# ui design tools
+# UI Design Tools
 This project defines some useful design related controls which you can use to aid you in generating css3.
 Gradient css3 generation, drop shadows, text, text shadows, etc will eventually be provided.
 The goal is to have a completely open source page/element designer which can be used from the browser.
@@ -60,8 +60,10 @@ The Module Pattern allows us to define self contained modules which do not pollu
 The modules that you 'define' have their dependecies injected when the module is first created.
 
 #### Requirejs
-Requirejs is an AMD library which allows you to elegantly define your modules and depencies.
+Requirejs is an AMD library which allows you to elegantly define your modules and dependencies.
 Dependencies are either downloaded when needed at runtime, or you can use Requirejs to precompile 'bundles' of dependent modules.
+Using requirejs allows us to completely eradicate the use of the global scope.  
+This means we can do things like version our depencies, allowing for some modules to get a depency update, while others can choose to utilize an older version.
 
 I have found working with Requirejs to be overall enjoyable.  The provided apis allow you to write beautiful & clean code.
 When things go wrong though, it will be a bit challenging to track down what is wrong.  
