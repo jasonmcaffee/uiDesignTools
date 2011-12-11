@@ -12,8 +12,9 @@
 
 define([
 	'mylibs/uiDesignTools/uiDesignTools',
+	'libs/jquery/jqueryModule',
 	'mylibs/uiDesignTools/colorPicker/templates/colorBoxTemplateModule'
-], function(uiDesignTools, colorBoxTemplate){
+], function(uiDesignTools, $, colorBoxTemplate){
 	
 	function colorPickerWidget(optionsParam){
 		this.options = {

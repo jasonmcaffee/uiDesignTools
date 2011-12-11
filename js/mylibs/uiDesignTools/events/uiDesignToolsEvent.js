@@ -5,7 +5,9 @@
  * eg eventManager.events['myEventType'] = new uiDesignToolsEvent({'myEventType'})
  * 
  */
-define([], function(){
+define([
+	'libs/jquery/jqueryModule',
+], function($){
 	//define the event
 	function uiDesignToolsEvent(optionsParam){
 		this.options = {

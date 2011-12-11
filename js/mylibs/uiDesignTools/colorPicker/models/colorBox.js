@@ -3,11 +3,10 @@
  * represents a small colorbox inside the colorpicker ( a large range of saturation and brightness for a given hue color)
  * 
  */
-
-// if(typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; }
-// if(typeof uiDesignTools.colorPicker == 'undefined'){ uiDesignTools.colorPicker = {}; }
-// if(typeof uiDesignTools.colorPicker.models == 'undefined'){ uiDesignTools.colorPicker.models = {}; }
-define([], function(){
+define([
+	'mylibs/uiDesignTools/uiDesignTools', //core library
+	'libs/jquery/jqueryModule'
+], function(uiDesignTools, $){
 	
 	function colorBox(optionsParam){
 		this.options = {

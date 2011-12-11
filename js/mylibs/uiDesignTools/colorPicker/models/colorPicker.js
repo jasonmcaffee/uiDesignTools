@@ -16,8 +16,9 @@
 
 define([
 	'mylibs/uiDesignTools/uiDesignTools', //core library
+	'libs/jquery/jqueryModule',
 	'mylibs/uiDesignTools/colorPicker/models/colorBox'
-], function(uiDesignTools, colorBox){
+], function(uiDesignTools, $, colorBox){
 	
 	function colorPicker(optionsParam){
 		this.options = {

@@ -9,8 +9,9 @@
 
 define([
 	'mylibs/uiDesignTools/uiDesignTools', //core library
+	'libs/jquery/jqueryModule',
 	'mylibs/uiDesignTools/gradients/models/gradient' //todo: add event requirement or perhaps uidesigntools.js
-], function(uiDesignTools, gradient){
+], function(uiDesignTools, $, gradient){
 	
 	//linear gradient definition
 	function linearGradient(optionsParam){

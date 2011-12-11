@@ -5,7 +5,10 @@
  * 
  * a gradient can have multiple color stops. each color stop represents a transition in color and/or opacity.
  */
-define([], function(){
+define([
+	'mylibs/uiDesignTools/uiDesignTools',
+	'libs/jquery/jqueryModule'
+], function(uiDesignTools, $){
 	
 	//colorStop used for defining transitions in the gradient
 	function colorStop(optionsParam){

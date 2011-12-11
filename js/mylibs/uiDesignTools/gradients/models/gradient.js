@@ -4,8 +4,10 @@
  * http://dev.w3.org/csswg/css3-images/
  */
 define([
+	'mylibs/uiDesignTools/uiDesignTools',
+	'libs/jquery/jqueryModule',
 	'mylibs/uiDesignTools/gradients/models/colorStop' //colorStop model 
-], function(colorStop){
+], function(uiDesignTools, $, colorStop){
 	function gradient(optionsParam){
 		//default options
 		this.options = {

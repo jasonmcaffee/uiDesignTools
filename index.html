@@ -84,27 +84,19 @@
   <script>window.jQuery || document.write('<script src="js/libs/jquery/jquery.min.js"><\/script>')</script> -->
 
 	<!-- Legacy approach. Soon to be gone once i convert the colorPickerWidget to requirejs-->
-	<script src="js/libs/jquery/jquery.min.js"></script>
+	<!-- <script src="js/libs/jquery/jquery.min.js"></script> -->
 
-  
-  <!-- input range polyfill-->
-  <!-- <script src="js/libs/fd-slider.js"></script> -->
-  
-  <!-- Temporary legacy approach remnants.  completely separate widget. -->
-  <!-- models -->
-  
-  
-  
-  
   <script type="text/javascript">
 
+//drawing board for the colorPickerWidget (work in progress)
 require([
 	'mylibs/uiDesignTools/uiDesignTools',
+	'libs/jquery/jqueryModule', //if you don't use this passed in param you will be using the global $ object
 	'mylibs/uiDesignTools/colorPicker/models/colorPicker',
 	'mylibs/uiDesignTools/colorPicker/widgets/colorPickerWidget',
-], function(uiDesignTools, colorPicker, colorPickerWidget){
+], function(uiDesignTools, $, colorPicker, colorPickerWidget){
 	
-	//on dom ready
+	//on document ready
 	$(function(){
 			//lose scope inside of this function, therefore must pass in require-scope parameters
 			createColorPickerModelAndWidget(colorPicker, colorPickerWidget);
@@ -124,42 +116,27 @@ require([
 	  			$colorPicker : $colorPicker
 	  		});
 	  	}//end createColorPickerModelAndWidget
-	  });//end dom ready
+	  });//end document ready
 });//end require
 
 
 
-//main chalkboard/ui component creator for right now.
-//this will create the widgets we have defined.
+//probably should move this to main.js
+//creates the colo
 require([
 	'mylibs/uiDesignTools/uiDesignTools',
+	'libs/jquery/jqueryModule', //if you don't use this passed in param you will be using the global $ object
 	'mylibs/uiDesignTools/gradients/models/linearGradient',
 	'mylibs/uiDesignTools/gradients/models/colorStop',
 	'mylibs/uiDesignTools/gradients/templates/linearGradientMakerTemplateModule',
 	'mylibs/uiDesignTools/gradients/widgets/linearGradientMakerWidget'
-	], function(uiDesignTools, linearGradient, colorStop, linearGradientMakerTemplate, linearGradientMakerWidget){
+	], function(uiDesignTools, $, linearGradient, colorStop, linearGradientMakerTemplate, linearGradientMakerWidget){
 
 		//on document ready.
 		$(function(){
 			//lose scope inside of this function, therefore must pass in require-scope parameters
 			createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate);
-			
-			//================================================== colorPickerWidget - Legacy approach. soon to be gone.
-			function createColorPickerModelAndWidget(){
-	  		var colorPickerModel = new uiDesignTools.colorPicker.models.colorPicker({
-	  			
-	  		});
-	  		
-	  		//jquery representation
-	  		var $colorPicker = $("#colorPicker");
-	  		
-	  		//create the widget, passing it the jquery rep and model
-	  		var colorPickerWidget = new uiDesignTools.colorPicker.widgets.colorPickerWidget({
-	  			colorPickerModel : colorPickerModel,
-	  			$colorPicker : $colorPicker
-	  		});
-	  	}//end createColorPickerModelAndWidget
-	  	
+				
 	  	//================================================== linearGradientWidget - Requirejs approach. Teh awesome.
 	  	function createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate){
 	  		//first construct an inital model
@@ -198,7 +175,7 @@ require([
 					linearGradientModel : linearGradientModel,
 					$linearGradientMaker : $linearGradientMaker //the widget needs its jquery wrapper for the html it represents.
 				});
-	  	}
+	  	}//end createLinearGradientModelAndWidget
 		});
   	
   	
