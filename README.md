@@ -47,6 +47,8 @@ http://code.google.com/closure/templates/docs/commands.html
 http://code.google.com/closure/templates/docs/javascript_usage.html
 
 # Project Structure
+<img src="http://cloud.github.com/downloads/jasonmcaffee/uiDesignTools/uiDesignToolsProjectStructure.png" alt="project structure screenshot"/>
+
 ## js/mylibs/uiDesignTools
 all hand written and generated(from templates) js can be found here.
 ### events
