@@ -92,16 +92,42 @@
   
   <!-- Temporary legacy approach remnants.  completely separate widget. -->
   <!-- models -->
-  <script src="js/mylibs/uiDesignTools/colorPicker/models/colorBox.js"></script>
-  <script src="js/mylibs/uiDesignTools/colorPicker/models/colorPicker.js"></script>
-  <!-- templates -->
-  <script src="js/mylibs/uiDesignTools/colorPicker/templates/uiDesignTools.colorPicker.templates.colorBox.js"></script>
-  <!-- widgets -->
-  <script src="js/mylibs/uiDesignTools/colorPicker/widgets/colorPickerWidget.js"></script>
+  
   
   
   
   <script type="text/javascript">
+
+require([
+	'mylibs/uiDesignTools/uiDesignTools',
+	'mylibs/uiDesignTools/colorPicker/models/colorPicker',
+	'mylibs/uiDesignTools/colorPicker/widgets/colorPickerWidget',
+], function(uiDesignTools, colorPicker, colorPickerWidget){
+	
+	//on dom ready
+	$(function(){
+			//lose scope inside of this function, therefore must pass in require-scope parameters
+			createColorPickerModelAndWidget(colorPicker, colorPickerWidget);
+			
+			//================================================== colorPickerWidget - Legacy approach. soon to be gone.
+			function createColorPickerModelAndWidget(colorPicker, colorPickerWidget){
+	  		var colorPickerModel = new colorPicker({
+	  			
+	  		});
+	  		
+	  		//jquery representation
+	  		var $colorPicker = $("#colorPicker");
+	  		
+	  		//create the widget, passing it the jquery rep and model
+	  		var colorPickerWidget = new colorPickerWidget({
+	  			colorPickerModel : colorPickerModel,
+	  			$colorPicker : $colorPicker
+	  		});
+	  	}//end createColorPickerModelAndWidget
+	  });//end dom ready
+});//end require
+
+
 
 //main chalkboard/ui component creator for right now.
 //this will create the widgets we have defined.

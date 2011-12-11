@@ -5,11 +5,9 @@
  */
 
 define([
-	'mylibs/uiDesignTools/uiDesignTools',
-	'mylibs/uiDesignTools/gradients/models/colorStop'
-  //'jqueryModule' //we can use this shortcut now that it was established in main.js
+	'mylibs/uiDesignTools/uiDesignTools'
  ], 
- function(uiDesignTools, colorStop){
+ function(uiDesignTools){
   var initialize = function(){
 		
 		//alert('horray');
