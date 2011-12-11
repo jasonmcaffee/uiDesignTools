@@ -61,10 +61,16 @@ The modules that you 'define' have their dependecies injected when the module is
 
 #### Requirejs
 Requirejs is an AMD library which allows you to elegantly define your modules and dependencies.
-Dependencies are either downloaded when needed at runtime, or you can use Requirejs to precompile 'bundles' of dependent modules.
-Using requirejs allows us to completely eradicate the use of the global scope.  
-This means we can do things like version our depencies, allowing for some modules to get a depency update, while others can choose to utilize an older version.
 
+##### Dependency Injection
+Dependencies are either downloaded when needed at runtime, or you can use Requirejs to precompile 'bundles' of dependent modules.
+Dependencies are explicitly handed to your module, allowing you only to work with what you have specified.
+
+##### Get Off The Global Scope
+Using requirejs allows us to completely eradicate the use of the global scope.  By doing so, we can avoid inconvenient namespace collisions.
+This also means we can do things like version our depencies, allowing for some modules to get a depency update, while others can choose to utilize an older version.
+
+##### Overall Experience With Requirejs
 I have found working with Requirejs to be overall enjoyable.  The provided apis allow you to write beautiful & clean code.
 When things go wrong though, it will be a bit challenging to track down what is wrong.  
 Requirejs throws an error message which gives you the list of modules that couldn't be loaded.
