@@ -74,6 +74,7 @@ Once I got used to the apis, refactoring another group of widgets only took abou
 
 ###### require
 the require method signature allows you to define a block of code which depends on external js files to be loaded before it's work can begin
+```javascript
 require([
  'libs/depency1', 
  'libs/dependency2'
@@ -92,11 +93,12 @@ require([
    //do some work with the instance of dependency1
    d1.doSomeWork();
 });
-
+```
 ###### define
 the define method is very similar to the require method, however with define you are expected to export/return a module of some kind. 
 by default, your module's name will be the same name as the js file in which it lives, but without the .js extension.
 e.g. module in file js/libs/myModule.js would be called 'myModule'
+```javascript
 define([
  'libs/depency1', 
  'libs/dependency2'
@@ -123,7 +125,7 @@ define([
    return myModule;
    
 });
-
+```
 
 # Project Structure
 <img src="http://github.com/downloads/jasonmcaffee/uiDesignTools/uiDesignToolsProjectStructure.png" alt="project structure screenshot"/>
