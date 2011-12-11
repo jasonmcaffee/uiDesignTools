@@ -34,6 +34,7 @@
   <script src="js/libs/modernizr/modernizr-2.0.6.min.js"></script>
   
   <script type="text/javascript">
+  //I HATE POLYFILLS!!! ARG
 		// Modernizr.load({
 		  // test: Modernizr.inputtypes.range,
 		  // nope: ['js/libs/polyfills/fd-slider.js', 'css/inputRangePolyfill/fd-slider.css'],//older browser performance hit for not supporting cool stuff. that'll teach em.
@@ -77,60 +78,33 @@
   </footer>
 
 	<div id="output"></div>
-  <!-- JavaScript at the bottom for fast page loading -->
-
-
-
+	
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery/jquery.min.js"><\/script>')</script> -->
 
+	<!-- Legacy approach. Soon to be gone once i convert the colorPickerWidget to requirejs-->
 	<script src="js/libs/jquery/jquery.min.js"></script>
-	
-	<!-- http://code.google.com/closure/templates/docs/javascript_usage.html -->
-  <!-- <script src="js/libs/closure/soyutils.js"></script> -->
+
   
   <!-- input range polyfill-->
   <!-- <script src="js/libs/fd-slider.js"></script> -->
   
-  
-  <!-- order matters! -->
-  <!-- core library, namespace, event creation -->
-  <!-- <script src="js/mylibs/uiDesignTools/uiDesignTools.js"></script> -->
-  
-  <!-- event definitions & eventManager setup -->
-  <!-- <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.uiDesignToolsEvent.js"></script>
-  <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.eventManager.js"></script> -->
-  
-  <!-- templates -->
-  <!-- <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.colorStop.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradient.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradientMaker.js"></script> -->
-  
-  <!-- models next -->
-  <!-- <script src="js/mylibs/uiDesignTools/gradients/models/colorStop.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/models/gradient.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/models/linearGradient.js"></script> -->
-  
-  <!-- lastly widgets -->
-  <!-- <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.linearGradientMakerWidget.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.colorStopWidget.js"></script> -->
-  
-  
-  
-  <!-- order shouldn't matter with requirejs -->
+  <!-- Temporary legacy approach remnants.  completely separate widget. -->
   <!-- models -->
   <script src="js/mylibs/uiDesignTools/colorPicker/models/colorBox.js"></script>
   <script src="js/mylibs/uiDesignTools/colorPicker/models/colorPicker.js"></script>
-  
   <!-- templates -->
   <script src="js/mylibs/uiDesignTools/colorPicker/templates/uiDesignTools.colorPicker.templates.colorBox.js"></script>
-  
   <!-- widgets -->
   <script src="js/mylibs/uiDesignTools/colorPicker/widgets/colorPickerWidget.js"></script>
   
+  
+  
   <script type="text/javascript">
 
+//main chalkboard/ui component creator for right now.
+//this will create the widgets we have defined.
 require([
 	'mylibs/uiDesignTools/uiDesignTools',
 	'mylibs/uiDesignTools/gradients/models/linearGradient',
@@ -139,26 +113,12 @@ require([
 	'mylibs/uiDesignTools/gradients/widgets/linearGradientMakerWidget'
 	], function(uiDesignTools, linearGradient, colorStop, linearGradientMakerTemplate, linearGradientMakerWidget){
 
-		// var funcToExec = function(uiDesignTools2, linearGradient2){
-			// var self2 = {};
-			// self2.uiDesignTools = uiDesignTools2;
-			// self2.linearGradient = linearGradient2;
-			// return function(){
-				// //alert(self2.linearGradient);
-				// //linearGradientWidget creation
-				// var linear = new self2.linearGradient({});
-				// createLinearGradientModelAndWidget();
-// 	
-				// //colorPickerWidget
-				// createColorPickerModelAndWidget();
-			// };
-		// }(uiDesignTools, linearGradient);
-		
+		//on document ready.
 		$(function(){
-			//var t = new linearGradient();
-			
+			//lose scope inside of this function, therefore must pass in require-scope parameters
 			createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate);
 			
+			//================================================== colorPickerWidget - Legacy approach. soon to be gone.
 			function createColorPickerModelAndWidget(){
 	  		var colorPickerModel = new uiDesignTools.colorPicker.models.colorPicker({
 	  			
@@ -174,7 +134,7 @@ require([
 	  		});
 	  	}//end createColorPickerModelAndWidget
 	  	
-	  	//================================================== linearGradientWidget
+	  	//================================================== linearGradientWidget - Requirejs approach. Teh awesome.
 	  	function createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate){
 	  		//first construct an inital model
 				var linearGradientModel = new linearGradient({
