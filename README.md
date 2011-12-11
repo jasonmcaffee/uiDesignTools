@@ -1,5 +1,7 @@
 # ui design tools
-This project defines some useful design related controls which you can use to aid you in generating css.
+This project defines some useful design related controls which you can use to aid you in generating css3.
+Gradient css3 generation, drop shadows, text, text shadows, etc will eventually be provided.
+The goal is to have a completely open source page/element designer which can be used from the browser.
 
 ##Demo
 Demo of the final result of this code can be found here:
@@ -9,7 +11,11 @@ Demo of the final result of this code can be found here:
 ### Create a set of useful ui tools that you can use to generate css, html, etc.
 Compete against the few existing sites that offer similar functionality.
 
+### Open Source
+Make it free and open!
+
 ### Examine tools and libraries
+Requirejs rules! see below under Technologies Used
 
 ### Explore and define patterns for interaction between components
 #### Separation of Concerns: break down work into granular modules.
@@ -46,15 +52,120 @@ http://code.google.com/closure/templates/docs/commands.html
 
 http://code.google.com/closure/templates/docs/javascript_usage.html
 
+### Requirejs & The Module Pattern
+Asynchronous Module Definitions (AMD) and the Module Pattern help in establishing a cohesive project structure.
+
+#### Module Pattern
+The Module Pattern allows us to define self contained modules which do not pollute the global scope.
+The modules that you 'define' have their dependecies injected when the module is first created.
+
+#### Requirejs
+Requirejs is an AMD library which allows you to elegantly define your modules and depencies.
+Dependencies are either downloaded when needed at runtime, or you can use Requirejs to precompile 'bundles' of dependent modules.
+
+I have found working with Requirejs to be overall enjoyable.  The provided apis allow you to write beautiful & clean code.
+When things go wrong though, it will be a bit challenging to track down what is wrong.  
+Requirejs throws an error message which gives you the list of modules that couldn't be loaded.
+
+Refactoring an existing project while learning Requirejs was somewhat challenging, and took me about 4-5 hours to complete the first group of widgets.
+Once I got used to the apis, refactoring another group of widgets only took about 30-45 minutes, and was actually pretty easy to do.
+
+##### Requirejs methods:
+
+###### require
+the require method signature allows you to define a block of code which depends on external js files to be loaded before it's work can begin
+require([
+ 'libs/depency1', 
+ 'libs/dependency2'
+ ], 
+ //the second parameter is the function you wish to execute once your dependencies have been loaded.
+ functionToCallWhenDependenciesAreLoaded(dependency1, dependency2){
+   //create a new dependency1
+   var d1 = new dependecy1();
+   
+   //do some work with the instance of dependency1
+   d1.doSomeWork();
+   
+   //create a new dependency2
+   var d2 = new dependecy2();
+   
+   //do some work with the instance of dependency1
+   d1.doSomeWork();
+});
+
+###### define
+the define method is very similar to the require method, however with define you are expected to export/return a module of some kind. 
+by default, your module's name will be the same name as the js file in which it lives, but without the .js extension.
+e.g. module in file js/libs/myModule.js would be called 'myModule'
+define([
+ 'libs/depency1', 
+ 'libs/dependency2'
+ ], 
+ //the second parameter is the function you wish to execute once your dependencies have been loaded.
+ functionToCallWhenDependenciesAreLoaded(dependency1, dependency2){
+   
+   //our constructor function for the myModule module. note the name of this function doesn't matter, but it's probably smart to keep it the same as the filename
+   function myModule(){
+	   //create a new dependency1
+	   var d1 = new dependecy1();
+	   
+	   //do some work with the instance of dependency1
+	   d1.doSomeWork();
+	   
+	   //create a new dependency2
+	   var d2 = new dependecy2();
+	   
+	   //do some work with the instance of dependency1
+	   d1.doSomeWork();
+   }
+   
+   //our export will be the constructor function for the module we've defined. 
+   return myModule;
+   
+});
+
+
 # Project Structure
 <img src="http://github.com/downloads/jasonmcaffee/uiDesignTools/uiDesignToolsProjectStructure.png" alt="project structure screenshot"/>
 
+The project is currently comprised of several widgets relating to the generation of css3 text.
+
 ## js/mylibs/uiDesignTools
 all hand written and generated(from templates) js can be found here.
-### events
-custom eventing model and manager
-### gradients
-js related to gradients
 
+### js/mylibs/uiDesignTools/events
+all things event related.
+#### eventManager.js
+global object of the uiDesignTools.event namespace, used for keeping track of all event types.
+
+#### js/mylibs/uiDesignTools/uiDesignToolsEvent.js
+defines the event structure, include subscribe and publish functionality.
+subscription callbacks are maintained in an array.
+
+### js/mylibs/uiDesignTools/gradients
+components related to the generation of gradients.
+#### models
+models establish the structure in which data is passed around.  
+These are typically free of any dom references, but do use some basic jquery provided methods, such as $.extend.
+#### templates
+templates are autogenerated by the soy compile jar provided by Google Closure.
+Since templates are not generated in an AMD compliant way, we must create module wrappers so that the templates can be specified and loaded as dependencies.
+Wrapping non-AMD-compliant libraries as modules is fairly easy to do, especially when using the order plugin for requirejs.
+##### Wrapping A Non-AMD-Compliant Libraries Example
+define([
+	  'order!mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.colorStop',//need order! to ensure this is completely loaded before our function executes.
+	], 
+	function(){
+	  // Tell Require.js that this module returns a reference to the global generated namespace.
+	  //this is the global object. needed because of the way the templates are defined/auto-generated
+	  return uiDesignTools.gradients.templates.colorStop;
+	}); 
+#### widgets
+Widgets expect a containing element to already be defined and on the document before they are constructed.
+Most all widgets expect the containing element to be passed in via the options param, and for that element to be wrapped by jquery.
+This allows the widget to perform all event registration and dom creating to occur within only that container element.
+
+### colorPicker
+in progress control for selecting all the variances in brightness and saturation for a given hue color.
 
 # [Jason McAffee](http://codeceratops.jasonmcaffee.com)
