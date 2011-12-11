@@ -41,6 +41,8 @@ uiDesignTools.colorPicker.widgets.colorPickerWidget.prototype.registerClickHandl
 	function handleColorBoxClick(e){
 		var selectedColorBox = e.data.colorBox;
 		alert("color box clicked " + selectedColorBox.options.colorBoxId);
+		e.preventDefault();
+		return false;
 	}
 	
 	//iterate over each colorbox and register the click handler

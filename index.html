@@ -12,8 +12,8 @@
        More info: h5bp.com/b/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title></title>
-  <meta name="description" content="">
+  <title>uiDesignTools</title>
+  <meta name="description" content="tools which aid in designing html UIs, including css3 generation and html generation.">
   <meta name="author" content="Jason McAffee">
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
@@ -24,27 +24,28 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/uiDesignTools/gradients/uiDesignTools.gradients.linearGradient.css">
   <link rel="stylesheet" href="css/uiDesignTools/colorPicker/uiDesignTools.colorPicker.colorPicker.css">
-  <!-- <link rel="stylesheet" href="css/inputRangePolyfill/fd-slider.css"> -->
 
-  <script src="js/libs/require-jquery.js"></script>
+	<!-- Load the script "js/main.js" as our entry point, along with requirejs -->
+	<script data-main="js/main" src="js/libs/require/require.js"></script>
+				
   <!-- All JavaScript at the bottom, except this Modernizr build incl. Respond.js
        Respond is a polyfill for min/max-width media queries. Modernizr enables HTML5 elements & feature detects; 
        for optimal performance, create your own custom Modernizr build: www.modernizr.com/download/ -->
-  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+  <script src="js/libs/modernizr/modernizr-2.0.6.min.js"></script>
   
   <script type="text/javascript">
-		Modernizr.load({
-		  test: Modernizr.inputtypes.range,
-		  nope: ['js/libs/fd-slider.js', 'css/inputRangePolyfill/fd-slider.css'],
-		  callback: function(id, testResult) {
-        // If the slider file has loaded then fire the onDomReady event        
-        if("fdSlider" in window && typeof (fdSlider.onDomReady) != "undefined") {
-                try { fdSlider.onDomReady(); } catch(err) {};
-        };
-        
-        //linearGradientMakerWidget.polyfillInputRangeForAllColorStops();//lame i hate this stupid polyfill
-    	}
-		});
+		// Modernizr.load({
+		  // test: Modernizr.inputtypes.range,
+		  // nope: ['js/libs/polyfills/fd-slider.js', 'css/inputRangePolyfill/fd-slider.css'],//older browser performance hit for not supporting cool stuff. that'll teach em.
+		  // callback: function(id, testResult) {
+        // // If the slider file has loaded then fire the onDomReady event        
+        // if("fdSlider" in window && typeof (fdSlider.onDomReady) != "undefined") {
+                // try { fdSlider.onDomReady(); } catch(err) {};
+        // };
+//         
+        // //linearGradientMakerWidget.polyfillInputRangeForAllColorStops();//lame i hate this stupid polyfill
+    	// }
+		// });
 		
 	</script>
   
@@ -81,12 +82,13 @@
 
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery.min.js"><\/script>')</script>
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery/jquery.min.js"><\/script>')</script> -->
 
+	<script src="js/libs/jquery/jquery.min.js"></script>
 	
 	<!-- http://code.google.com/closure/templates/docs/javascript_usage.html -->
-  <script src="js/libs/soyutils.js"></script>
+  <!-- <script src="js/libs/closure/soyutils.js"></script> -->
   
   <!-- input range polyfill-->
   <!-- <script src="js/libs/fd-slider.js"></script> -->
@@ -94,25 +96,25 @@
   
   <!-- order matters! -->
   <!-- core library, namespace, event creation -->
-  <script src="js/mylibs/uiDesignTools/uiDesignTools.js"></script>
+  <!-- <script src="js/mylibs/uiDesignTools/uiDesignTools.js"></script> -->
   
   <!-- event definitions & eventManager setup -->
-  <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.uiDesignToolsEvent.js"></script>
-  <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.eventManager.js"></script>
+  <!-- <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.uiDesignToolsEvent.js"></script>
+  <script src="js/mylibs/uiDesignTools/events/uiDesignTools.events.eventManager.js"></script> -->
   
   <!-- templates -->
-  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.colorStop.js"></script>
+  <!-- <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.colorStop.js"></script>
   <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradient.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradientMaker.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.linearGradientMaker.js"></script> -->
   
   <!-- models next -->
-  <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.colorStop.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.gradient.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/models/uiDesignTools.gradients.models.linearGradient.js"></script>
+  <!-- <script src="js/mylibs/uiDesignTools/gradients/models/colorStop.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/models/gradient.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/models/linearGradient.js"></script> -->
   
   <!-- lastly widgets -->
-  <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.linearGradientMakerWidget.js"></script>
-  <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.colorStopWidget.js"></script>
+  <!-- <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.linearGradientMakerWidget.js"></script>
+  <script src="js/mylibs/uiDesignTools/gradients/widgets/uiDesignTools.gradients.widgets.colorStopWidget.js"></script> -->
   
   
   
@@ -129,70 +131,95 @@
   
   <script type="text/javascript">
 
-		$(function(){
-			
-			//linearGradientWidget creation
-			createLinearGradientModelAndWidget();
+require([
+	'mylibs/uiDesignTools/uiDesignTools',
+	'mylibs/uiDesignTools/gradients/models/linearGradient',
+	'mylibs/uiDesignTools/gradients/models/colorStop',
+	'mylibs/uiDesignTools/gradients/templates/linearGradientMakerTemplateModule',
+	'mylibs/uiDesignTools/gradients/widgets/linearGradientMakerWidget'
+	], function(uiDesignTools, linearGradient, colorStop, linearGradientMakerTemplate, linearGradientMakerWidget){
 
-			//colorPickerWidget
-			createColorPickerModelAndWidget();
+		// var funcToExec = function(uiDesignTools2, linearGradient2){
+			// var self2 = {};
+			// self2.uiDesignTools = uiDesignTools2;
+			// self2.linearGradient = linearGradient2;
+			// return function(){
+				// //alert(self2.linearGradient);
+				// //linearGradientWidget creation
+				// var linear = new self2.linearGradient({});
+				// createLinearGradientModelAndWidget();
+// 	
+				// //colorPickerWidget
+				// createColorPickerModelAndWidget();
+			// };
+		// }(uiDesignTools, linearGradient);
+		
+		$(function(){
+			//var t = new linearGradient();
+			
+			createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate);
+			
+			function createColorPickerModelAndWidget(){
+	  		var colorPickerModel = new uiDesignTools.colorPicker.models.colorPicker({
+	  			
+	  		});
+	  		
+	  		//jquery representation
+	  		var $colorPicker = $("#colorPicker");
+	  		
+	  		//create the widget, passing it the jquery rep and model
+	  		var colorPickerWidget = new uiDesignTools.colorPicker.widgets.colorPickerWidget({
+	  			colorPickerModel : colorPickerModel,
+	  			$colorPicker : $colorPicker
+	  		});
+	  	}//end createColorPickerModelAndWidget
+	  	
+	  	//================================================== linearGradientWidget
+	  	function createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate){
+	  		//first construct an inital model
+				var linearGradientModel = new linearGradient({
+					angle : 0, //only written out if sideOrCorner is empty
+					sideOrCorner : 'top',//if not empty, this will be written out, and angle will not be written out.
+					colorStops : [
+						//colorStop 1
+		  			new colorStop({ 
+		  				colorStopId: 'colorStop0',
+	  					rgba: { red:206, green:155, blue:215, alpha:100 },
+	  					position : 1 
+	  				}),//end colorStop 1
+		  			//colorStop 2
+		  			new colorStop({ 
+		  				colorStopId: 'colorStop1',
+	  					rgba: { red:155, green:109, blue:183, alpha:100 },
+	  					position : 100 
+	  				})//end colorStop 2
+	  			]
+				});
+				
+	
+				//use the template to generate html reflective of the model.
+				var linearGradientMakerHtml = linearGradientMakerTemplate.linearGradientMakerTemplate({linearGradient:linearGradientModel});
+				//grab where we will place the newly created html
+				var $linearGradientMakerWidgetContainer = $('#linearGradientMakerWidgetContainer');
+				//insert the html into the dom
+				$linearGradientMakerWidgetContainer[0].innerHTML = linearGradientMakerHtml;
+				
+				//now that the html is in the dom, we can query to get the top level element
+				var $linearGradientMaker = $('#linearGradientMaker', $linearGradientMakerWidgetContainer);
+				
+				//now we can create the widget
+				var linearGradientMakerWidget = new linearGradientMakerWidget({
+					linearGradientModel : linearGradientModel,
+					$linearGradientMaker : $linearGradientMaker //the widget needs its jquery wrapper for the html it represents.
+				});
+	  	}
 		});
   	
-  	function createColorPickerModelAndWidget(){
-  		var colorPickerModel = new uiDesignTools.colorPicker.models.colorPicker({
-  			
-  		});
-  		
-  		//jquery representation
-  		var $colorPicker = $("#colorPicker");
-  		
-  		//create the widget, passing it the jquery rep and model
-  		var colorPickerWidget = new uiDesignTools.colorPicker.widgets.colorPickerWidget({
-  			colorPickerModel : colorPickerModel,
-  			$colorPicker : $colorPicker
-  		});
-  	}
   	
-  	//================================================== linearGradientWidget
-  	function createLinearGradientModelAndWidget(){
-  		//first construct an inital model
-			var linearGradient = new uiDesignTools.gradients.models.linearGradient({
-				angle : 0, //only written out if sideOrCorner is empty
-				sideOrCorner : 'top',//if not empty, this will be written out, and angle will not be written out.
-				colorStops : [
-					//colorStop 1
-	  			new uiDesignTools.gradients.models.colorStop({ 
-	  				colorStopId: 'colorStop0',
-  					rgba: { red:206, green:155, blue:215, alpha:100 },
-  					position : 1 
-  				}),//end colorStop 1
-	  			//colorStop 2
-	  			new uiDesignTools.gradients.models.colorStop({ 
-	  				colorStopId: 'colorStop1',
-  					rgba: { red:155, green:109, blue:183, alpha:100 },
-  					position : 100 
-  				})//end colorStop 2
-  			]
-			});
-			
-
-			//use the template to generate html reflective of the model.
-			var linearGradientMakerHtml = uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerTemplate({linearGradient:linearGradient});
-			//grab where we will place the newly created html
-			var $linearGradientMakerWidgetContainer = $('#linearGradientMakerWidgetContainer');
-			//insert the html into the dom
-			$linearGradientMakerWidgetContainer[0].innerHTML = linearGradientMakerHtml;
-			
-			//now that the html is in the dom, we can query to get the top level element
-			var $linearGradientMaker = $('#linearGradientMaker', $linearGradientMakerWidgetContainer);
-			
-			//now we can create the widget
-			var linearGradientMakerWidget = new uiDesignTools.gradients.widgets.linearGradientMakerWidget({
-				linearGradientModel : linearGradient,
-				$linearGradientMaker : $linearGradientMaker //the widget needs its jquery wrapper for the html it represents.
-			});
-  	}
   	
+  	
+});//end require
+  	//});//end require
   	
   	function log2(message){
   		document.getElementById("output").innerHTML += message + "<br/>";
