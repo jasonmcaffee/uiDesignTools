@@ -137,6 +137,9 @@ define([//method signature is the same as require
 });
 ```
 
+#### More Info About AMD and RequireJS
+More info can be found here: [CommonJS Asynchronous Definition](http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition) and here [RequireJS](http://requirejs.org/)
+
 # Project Structure
 <img src="http://github.com/downloads/jasonmcaffee/uiDesignTools/uiDesignToolsProjectStructure.png" alt="project structure screenshot"/>
 
