@@ -4,7 +4,7 @@ Gradient css3 generation, drop shadows, text, text shadows, etc will eventually 
 The goal is to have a completely open source page/element designer which can be used from the browser.
 
 ##Demo
-Demo of the final result of this code can be found here:
+Demo of the final result of this code can be found here: (currently works best in chrome or opera)
 [uiDesignTools](http://jasonmcaffee.com/uiDesignTools/index.html)
 
 ##Goals
@@ -72,8 +72,7 @@ This also means we can do things like version our depencies, allowing for some m
 
 ##### Overall Experience With Requirejs
 I have found working with Requirejs to be overall enjoyable.  The provided apis allow you to write beautiful & clean code.
-When things go wrong though, it will be a bit challenging to track down what is wrong.  
-Requirejs throws an error message which gives you the list of modules that couldn't be loaded.
+It can be sometimes difficult determining where something went wrong, as you have to match the error message to the module which failed.
 
 Refactoring an existing project while learning Requirejs was somewhat challenging, and took me about 4-5 hours to complete the first group of widgets.
 Once I got used to the apis, refactoring another group of widgets only took about 30-45 minutes, and was actually pretty easy to do.
@@ -81,15 +80,16 @@ Once I got used to the apis, refactoring another group of widgets only took abou
 ##### Requirejs methods:
 
 ###### require
-the require method signature allows you to define a block of code which depends on external js files to be loaded before it's work can begin
+The require method allows you to define a block of code which depends on external js files to be loaded before it's work can begin.
+Use this when you are only interested in doing work, but aren't interested in exporting a module.
 
 ``` javascript
-require([
- 'libs/depency1', 
- 'libs/dependency2'
+require([ //the first param is an array of dependencies
+ 'libs/dependency1', //filepath to the .js file which contains the defined module you depend on
+ 'libs/dependency2' //note: there is no need to include the .js extension.
  ], 
  //the second parameter is the function you wish to execute once your dependencies have been loaded.
- functionToCallWhenDependenciesAreLoaded(dependency1, dependency2){
+ function(dependency1, dependency2){
    //create a new dependency1
    var d1 = new dependecy1();
    
@@ -109,12 +109,12 @@ by default, your module's name will be the same name as the js file in which it 
 e.g. module in file js/libs/myModule.js would be called 'myModule'
 
 ``` javascript
-define([
- 'libs/depency1', 
+define([//method signature is the same as require
+ 'libs/dependency1', 
  'libs/dependency2'
  ], 
  //the second parameter is the function you wish to execute once your dependencies have been loaded.
- functionToCallWhenDependenciesAreLoaded(dependency1, dependency2){
+ function(dependency1, dependency2){
    
    //our constructor function for the myModule module. note the name of this function doesn't matter, but it's probably smart to keep it the same as the filename
    function myModule(){
