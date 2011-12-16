@@ -23,11 +23,14 @@ define([
 		
 		$.extend(this.options, optionsParam);
 		
+		//when the user clicks a colorBox, this model will be set
+		this.currentlySelectedRGB = {red:1, green: 1, blue:1};
+		
 //generate html for innerHtml of the colorPicker, including colorBoxes and hue range input
 		this.generateInnerHtmlAndAppend();
 
 //jquery objects
-	this.$colorBoxesDiv = $("#" + this.options.colorBoxesDivId, this.options.$colorPicker);	
+		this.$colorBoxesDiv = $("#" + this.options.colorBoxesDivId, this.options.$colorPicker);	
 		
 //setup ui listeners
 		this.registerClickHandlerForColorBoxes();
@@ -61,8 +64,8 @@ define([
 		//this.$colorBoxesDiv.replaceWith(newColorBoxesDivHtml);
 		this.$colorBoxesDiv[0].innerHTML = newColorBoxesDivHtml;
 		
-		//re-register event listeners. this is bad...
-		this.registerClickHandlerForColorBoxes();
+		//we don't need to re-register events for colorboxes, as we will be using the same colorBox ids
+		//this.registerClickHandlerForColorBoxes();
 		
 	};
 	
@@ -76,12 +79,9 @@ define([
 			var newColorPickerModel = event.data.colorPicker;
 			self.options.colorPickerModel = newColorPickerModel;//the new colorpickerModel has regened rows. since the reference is updated, don't really need this unless something else changes the model.
 			
-			//var aRandomValue = self.options.colorPickerModel.options.colorBoxRows[20].colorBoxes[20].options.rgba.red;
-			//console.log('model update : ' + aRandomValue );
-			
 			//refresh ui so that the color Box Rows display the correct color
 			//we'll have to regen the colorBoxRows
-			//probably should unsubscribe from events...or just use the same id for each cell (instead of colorBox_121_22_21 make it colorBox1, colorBox2 etc)
+			//we don't need to re-register events for colorboxes, as we will be using the same colorBox ids
 			self.refreshColorBoxes();
 		}
 		

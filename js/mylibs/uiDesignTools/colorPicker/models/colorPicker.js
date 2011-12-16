@@ -118,15 +118,16 @@ define([
 		var brightnessDecrement = 100/numberOfRows;
 		
 		//iterate over each brightness possiblity, creating a new row for each possibility.
-		for(var brightness = 100; brightness > 0; brightness-=brightnessDecrement){
-			this.options.colorBoxRows.push(this.createColorBoxRow(numberOfColumns, brightness, hueColor));//create the row and add to our array
+		
+		for(var brightness = 100, rowNumber=0; brightness > 0; brightness-=brightnessDecrement, ++rowNumber){
+			this.options.colorBoxRows.push(this.createColorBoxRow(numberOfColumns, brightness, hueColor, rowNumber));//create the row and add to our array
 		}
 		
 	};
 	
 	//creates a colorBoxRow (saturation 1-100) comprised of colorBoxes for the given hue color and number of columns
-	colorPicker.prototype.createColorBoxRow = function(numberOfColumns, rowBrightness, hueColor){
-		var colorBoxes = this.createColorBoxesForRow(numberOfColumns, rowBrightness, hueColor);
+	colorPicker.prototype.createColorBoxRow = function(numberOfColumns, rowBrightness, hueColor, rowNumber){
+		var colorBoxes = this.createColorBoxesForRow(numberOfColumns, rowBrightness, hueColor, rowNumber);
 		var colorBoxRow = {colorBoxes:colorBoxes};
 		return colorBoxRow;
 	};
@@ -137,7 +138,7 @@ define([
 	 * @param hueColor - value 0 (orange) to 359 (red)
 	 */
 	//creates an array of colorBox models and pushes them to this.options.colorBoxes
-	colorPicker.prototype.createColorBoxesForRow = function(numberOfColumns, rowBrightness, hueColor){
+	colorPicker.prototype.createColorBoxesForRow = function(numberOfColumns, rowBrightness, hueColor, rowNumber){
 		var self = this;
 		
 	   //return value
@@ -147,18 +148,26 @@ define([
 		var saturationIncrement = 100 / numberOfColumns;
 		
 		//helper to quickly create colorbox and add to colorBoxes array.
-		function c(red, green, blue){
-			if(!red){return c;}//allow for placeholders (functioncalls with no params)
-			var newColorBox = self.createColorBox({red: red, green: green, blue:blue, alpha: 1});
-			colorBoxes.push(newColorBox);
-			return c;//chain calls to this function with no . operator
-		}
+		// function c(red, green, blue){
+			// if(!red){return c;}//allow for placeholders (functioncalls with no params)
+			// var newColorBox = self.createColorBox({red: red, green: green, blue:blue, alpha: 1});
+			// colorBoxes.push(newColorBox);
+			// return c;//chain calls to this function with no . operator
+		// }
 		
 		//iterate over each saturation variance we can create, given the number of columns, and create a color box with that saturation
-		for(var saturation = 0; saturation < 100; saturation+=saturationIncrement){
+		for(var saturation = 0, columnNumber=0; saturation < 100; saturation+=saturationIncrement, ++columnNumber){
 			//calculate the rgb for the given hue color, saturation, and brightness
 			var calculatedRgb = this.calculateRgbColorsUsingHsv(hueColor, saturation, rowBrightness);
-			c(calculatedRgb.red, calculatedRgb.green, calculatedRgb.blue);//create the colorBox
+			
+			//create the colorBox
+			var newColorBox = new colorBox({ 
+					rgba: {red: calculatedRgb.red, green: calculatedRgb.green, blue: calculatedRgb.blue, alpha: 1},
+					colorBoxId : "colorBox_" + rowNumber + "_" + columnNumber //we don't want this to be unique every time.
+				});
+				
+			//ad the colorBox to our collection
+			colorBoxes.push(newColorBox);
 		}
 		
 		//return the colorBoxes we've created
@@ -166,21 +175,21 @@ define([
 	};
 	
 	//creates a single colorBox which will display the given rgba (via css background)
-	colorPicker.prototype.createColorBox = function(rgba){
-		//var generatedBackgroundCssText = this.options.colorBoxRgbaBackgroundColorTemplate({rgba: rgba});  //don't do this. performance nightmare with so many objects keeping the text in memory
-		
-		var newColorBox = new colorBox({
-			colorBoxId : this.generateColorBoxId(rgba),//unique id for the color box. useful for on click events.
-			rgba : rgba//the color the colorBox will be
-		});
-		
-		return newColorBox;
-	};
+	// colorPicker.prototype.createColorBox = function(rgba){
+		// //var generatedBackgroundCssText = this.options.colorBoxRgbaBackgroundColorTemplate({rgba: rgba});  //don't do this. performance nightmare with so many objects keeping the text in memory
+// 		
+		// var newColorBox = new colorBox({
+			// colorBoxId : this.generateColorBoxId(rgba),//unique id for the color box. useful for on click events.
+			// rgba : rgba//the color the colorBox will be
+		// });
+// 		
+		// return newColorBox;
+	// };
 	
 	//generates a unique id (inside of its container, not necessarily unique for entire page) for the colorbox
-	colorPicker.prototype.generateColorBoxId = function(rgba){
-		return "colorBox_" + rgba.red + "_" + rgba.green + "_" + rgba.blue;
-	};
+	// colorPicker.prototype.generateColorBoxId = function(rgba){
+		// return "colorBox_" + rgba.red + "_" + rgba.green + "_" + rgba.blue;
+	// };
  
   //return module export
  	return colorPicker;
