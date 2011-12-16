@@ -29,6 +29,7 @@ define([
 	
 	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'] = new uiDesignToolsEvent({type:'linearGradientModelHasChanged'});
 	
+	uiDesignTools.events.eventManager.events['colorPickerModelChanged'] = new uiDesignToolsEvent({type:'colorPickerModelChanged'});
 
 	return uiDesignTools;//todo: stop global namespage polution and declare this as a local var. looks like it's already behaving that way.
 });//end require

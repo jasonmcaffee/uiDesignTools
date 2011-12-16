@@ -22,19 +22,30 @@ define([
 	
 	function colorPicker(optionsParam){
 		this.options = {
-			//colorBoxes : [], //array of colorBox models
-			colorBoxRows : [] //array of object {colorBoxes:[]}
-			//colorBoxRgbaBackgroundColorTemplate : uiDesignTools.colorPicker.templates.colorBox.simpleRgbaBackgroundColorTemplate //default template
-	
+			colorBoxRows : [], //array of object {colorBoxes:[]}
+			hueColor : 128, //color we are currently displaying in the colorPicker. 0-359
+			numberOfRows : 30, //the number of rows the colorPicker should have
+			numberOfColumns : 30
 		};
 		
 		$.extend(this.options, optionsParam);
 		
 		//create all the rows for a given hue color
-		this.createColorBoxRows(359, 30,30);
+		this.createColorBoxRows(this.options.hueColor, this.options.numberOfRows,this.options.numberOfColumns);
 		
 	}
 	
+  //model updates which emit events. regens colorBoxRows
+	colorPicker.prototype.setHueColor = function(newHueColor){
+		this.options.hueColor = newHueColor;
+		//regen colorBoxRows
+		this.createColorBoxRows(this.options.hueColor, this.options.numberOfRows,this.options.numberOfColumns);
+		
+		uiDesignTools.events.eventManager.events['colorPickerModelChanged'].publish({colorPicker:this});
+		
+	};
+
+
 	//using the hueColor(0-359), saturation(0-100), and brightness(0-100), this function calculates and returns the corresponding rgb values.
 	colorPicker.prototype.calculateRgbColorsUsingHsv = function(hue, saturation, valueBrightness) {
 	        while (hue >= 360)
@@ -101,6 +112,8 @@ define([
 	//creates all brightness & saturation combinations for given hueColor.
 	//rows & columns should likely be the same.
 	colorPicker.prototype.createColorBoxRows = function(hueColor, numberOfRows, numberOfColumns){
+		this.options.colorBoxRows = [];//always start anew when this is called.
+		
 		//calculate stages of brightness based off how many rows they want
 		var brightnessDecrement = 100/numberOfRows;
 		

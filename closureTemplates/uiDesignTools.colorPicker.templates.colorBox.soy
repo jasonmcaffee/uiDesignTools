@@ -1,14 +1,35 @@
 {namespace uiDesignTools.colorPicker.templates.colorBox}
 
 /**
-* writes out all colorBoxes that are passed in
-* @param colorBoxRows array of colorStop models
+* 
+* @param colorPickerModel
 * @param colorBoxesDivId id for the div the colorBoxes will go in.
 */
-{template .colorBoxesTemplate}
+{template .colorPickerInnerContentsTemplate}
+
  <div id="{$colorBoxesDivId}" class="colorPicker-colorBoxes">
-  
-	{foreach $colorBoxRow in $colorBoxRows}
+  //first generate each variation of the color (variances are in saturation and brightness, but the hue color remains constant)
+  {call .colorBoxesTemplate}
+  	{param colorPickerModel : $colorPickerModel /}
+  	{param colorBoxesDivId : $colorBoxesDivId /}
+  {/call}
+ </div>
+ 
+  //the slider for changing the hue color
+  {call .hueRangeTemplate}
+  	//{param colorPickerModel : $colorPickerModel /}
+  {/call}
+ 
+{/template}
+
+
+/**
+* writes out all colorBoxes that are passed in
+* @param colorPickerModel model which inclues array of colorBoxes.
+*/
+{template .colorBoxesTemplate}
+ 
+	{foreach $colorBoxRow in $colorPickerModel.options.colorBoxRows}
 		<div class="colorBoxRow">
 		  {foreach $colorBox in $colorBoxRow.colorBoxes}
 		  	<div id="{$colorBox.options.colorBoxId}" class="colorBox" style="background-color: rgba({$colorBox.options.rgba.red}, {$colorBox.options.rgba.green}, {$colorBox.options.rgba.blue}, {$colorBox.options.rgba.alpha});">
@@ -19,14 +40,19 @@
 		</div>
   {/foreach}
   
- </div>
- 
+{/template}
+
+/**
+* generates html for the hue color slider
+* //param colorPickerModel
+*/
+{template .hueRangeTemplate}
 	<div class="hueRangeContainer">
 		<label for="hueRange">hue</label>
 		<input id="hueRange" type="range" max="359" min="0"/>
 	</div>
-	
 {/template}
+
 
 
 

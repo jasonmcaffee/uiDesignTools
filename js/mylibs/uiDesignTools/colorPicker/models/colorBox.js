@@ -16,6 +16,7 @@ define([
 		
 		$.extend(this.options, optionsParam);
 		
+		
 	};
 	
 	colorBox.prototype.someFunction = function(){

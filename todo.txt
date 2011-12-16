@@ -3,12 +3,13 @@ finish css3 gradient generation.
 - for more options
 
 color picker
-- tiny boxes. each box N px in height&width
+ x tiny boxes. each box N px in height&width
+ x hue color slider - requires refactor of template..
+ - click event registry is bad approach for colorBoxes. fix it! (duplicate event listens, etc)
 
 colorBoxes has an extra row - get rid of it.
 
-onclick event needed for color box. broke right now
- - using colorBoxes instead of colorBoxRow.colorBoxes
+
 
 linearGradientMakerWidget - needs inheritance. outputs go to gradientMakerWidget?
 
@@ -17,6 +18,7 @@ elliptical gradient
 repeating gradients!
 
 
+for css3 effects, separate out bad browsers. eg. android 2.3 sucks with scrolling and drop shadow.
 
 rounded corners
 
@@ -43,3 +45,6 @@ fix background to background-image
 -select values not going to work. need to modify when gen css -- alpha slider
 
 - polyfill for input type="range"
+
+onclick event needed for color box. broke right now
+ - using colorBoxes instead of colorBoxRow.colorBoxes
