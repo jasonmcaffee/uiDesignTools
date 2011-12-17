@@ -143,6 +143,11 @@ html{
 	-o-border-radius: 2px;
 }
 
+/* contains each input type="range" that the colorStop uses. */
+.linearGradient-colorStop-inputRanges{
+	
+}
+
 .linearGradient-colorStop label{
 	font-size:10px;
 	vertical-align: top;

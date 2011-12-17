@@ -1,4 +1,8 @@
 
+.colorPicker-minimized-container{
+	
+}
+
 /* Always shown colored square/box/div which represents the color picker*/
 .colorPicker-minimized{
   width: 100%; /* fill the space we've been given by our container.*/

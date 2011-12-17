@@ -39,11 +39,12 @@ define([                 //todo: fsslider requirement
 		};
 		$.extend(this.options, optionsParam);//merge default options with passed in options.
 		
-		console.log('uniqueId is : ' + this.options.myUniqueId);
+		//console.log('uniqueId is : ' + this.options.myUniqueId);
 
 //Jquery Objects
 		this.$colorPicker = $("#colorPicker", this.options.$colorStop); //colorPicker id is hardcoded into the colorStop template	
-	
+		this.$colorStopInputRanges = $("#" + this.options.colorStopModel.options.colorStopId + "InputRanges", this.options.$colorStop);
+		
 //Widget Creation
 		this.colorPickerWidget = this.createColorPickerWidget();
 	
@@ -89,15 +90,20 @@ define([                 //todo: fsslider requirement
 			self.options.colorStopModel.options.rgba.blue = newRGBA.blue;
 			
 			//update the input range sliders to reflect the rgba of what the user selected. 
-			self.refreshUI();
+			self.refreshColorStopInputRanges();
 		}
 		
 		//subscribe to the event.
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!! THIS DOES NOT WORK. WE NEED OUR OWN INSTANCE OF THE EVENT...OR WE NEED TO FILTER INCOMING EVENTS....
 		uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].subscribe(  //<---- use our myUniqueId to filter event
 			handleColorPickerNewColorSelected, //point callback to our handler
-			function(myExtraDataParameter){ return myExtraDataParameter.myUniqueId === self.options.myUniqueId;},//only call our handler when this criteria is matched (this is not so great. because of the way eventManager is designed, every callback will get fired. it could be worse...)
-			{myUniqueId : this.options.myUniqueId} //any extra data you want passed to the criteria function defined up above ^
+			function(event, myExtraDataParameter){ 
+				return myExtraDataParameter.myUniqueId === self.options.myUniqueId && event.data.originatingColorPickerWidgetUniqueId == myExtraDataParameter.colorPickerICareAboutUniqueId;
+			},//only call our handler when this criteria is matched (this is not so great. because of the way eventManager is designed, every callback will get fired. it could be worse...)
+			{
+				myUniqueId : this.options.myUniqueId,
+				colorPickerICareAboutUniqueId : this.colorPickerWidget.options.uniqueId
+			} //any extra data you want passed to the criteria function defined up above ^
 		);
 		
 	};
@@ -169,12 +175,19 @@ define([                 //todo: fsslider requirement
 	}
 	
 //============================================================= HTML Generation =====================================
-	//just update the inner contents.
-	colorStopWidget.prototype.refreshUI = function(){
-		var newHtmlText = this.options.colorStopInnerContentTemplate({colorStop:this.options.colorStopModel});
-		this.options.$colorStop[0].innerHTML = newHtmlText;
-	}
+	//just update the inner contents.  THIS WILL DESTROY THE COLORPICKER WIDGET. CALL ON FIRST CREATION ONLY
+	// colorStopWidget.prototype.refreshUI = function(){
+		// var newHtmlText = this.options.colorStopInnerContentTemplate({colorStop:this.options.colorStopModel});
+		// this.options.$colorStop[0].innerHTML = newHtmlText;
+// 		
+		// //need to recreate the colorPickerWidget
+	// }
   
+  //only refresh the input ranges, and not the colorPicker div
+  colorStopWidget.prototype.refreshColorStopInputRanges = function(){
+  	var newHtmlText = this.options.colorStopInnerContentTemplate({colorStop:this.options.colorStopModel});
+  	this.$colorStopInputRanges[0].innerHTML = newHtmlText;
+  }
 //============================================================== Export =============================================
   return colorStopWidget;
 });//end requirejs

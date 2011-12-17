@@ -20,8 +20,11 @@ define([
 	'mylibs/uiDesignTools/colorPicker/models/colorBox'
 ], function(uiDesignTools, $, colorBox){
 	
+	var uniqueIdCount = 0;
+	
 	function colorPicker(optionsParam){
 		this.options = {
+			uniqueId : uniqueIdCount++,
 			colorBoxRows : [], //array of object {colorBoxes:[]}
 			hueColor : 128, //color we are currently displaying in the colorPicker. 0-359
 			numberOfRows : 30, //the number of rows the colorPicker should have
@@ -41,6 +44,9 @@ define([
   //model updates which emit events. regens colorBoxRows
 	colorPicker.prototype.setHueColor = function(newHueColor){
 		this.options.hueColor = newHueColor;
+		
+		this.currentlySelectedRGBA = this.calculateRgbColorsUsingHsv(this.options.hueColor, 100, 100);
+		
 		//regen colorBoxRows
 		this.createColorBoxRows(this.options.hueColor, this.options.numberOfRows,this.options.numberOfColumns);
 		

@@ -4,6 +4,7 @@
 * 
 * @param colorPickerModel
 * @param colorPickerMinimizedDivId id for the small representation of the colorPicker
+* @param colorPickerMinimizedContainerDivId id for the container which contains minimized. needed so we can refresh innerHTML
 * @param colorPickerExpandedDivId id for the expanded representation of the colorPicker
 * @param colorBoxesDivId id for the div the colorBoxes will go in.
 */
@@ -12,8 +13,11 @@
   //this element will always be shown. it is the html representation of the color picker in its minimal/non-expanded size.
   //css will make this a colored box
   //use the passed in currentSelectedColor model to style this element's background.
-	<div id="{$colorPickerMinimizedDivId}" class="colorPicker-minimized" style="background-color: rgba(1,1,1,1);">
-		&nbsp;
+	<div id="{$colorPickerMinimizedContainerDivId}" class="colorPicker-minimized-container">
+		{call .colorPickerMinimizedTemplate}
+			{param colorPickerModel : $colorPickerModel /}
+			{param colorPickerMinimizedDivId : $colorPickerMinimizedDivId /}
+		{/call}
 	</div>
 
   //only displayed when the colorPicker-minimized is clicked
@@ -34,6 +38,17 @@
   
   </div><!-- end colorPickerDivIdExpanded -->
  
+{/template}
+
+/**
+* @param colorPickerModel needed for currentlySelectedRGBA
+* @param colorPickerMinimizedDivId id for the small representation of the colorPicker
+* 
+*/
+{template .colorPickerMinimizedTemplate}
+  <div id="{$colorPickerMinimizedDivId}" class="colorPicker-minimized" style="background-color: rgba({$colorPickerModel.currentlySelectedRGBA.red},{$colorPickerModel.currentlySelectedRGBA.green},{$colorPickerModel.currentlySelectedRGBA.blue}, 1);">
+		&nbsp;
+	</div>
 {/template}
 
 

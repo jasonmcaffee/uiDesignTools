@@ -23,9 +23,9 @@ uiDesignTools.gradients.templates.colorStop.colorStopsTemplate = function(opt_da
 
 uiDesignTools.gradients.templates.colorStop.colorStopTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="', soy.$$escapeHtml(opt_data.colorStop.options.colorStopId), '" class="linearGradient-colorStop">');
+  output.append('<div id="', soy.$$escapeHtml(opt_data.colorStop.options.colorStopId), '" class="linearGradient-colorStop"><div id="', soy.$$escapeHtml(opt_data.colorStop.options.colorStopId), 'InputRanges" class="linearGradient-colorStop-inputRanges">');
   uiDesignTools.gradients.templates.colorStop.colorStopInnerContentTemplate(opt_data, output);
-  output.append('</div>');
+  output.append('</div><div id="colorPicker" class="linearGradient-colorStop-colorPicker"></div></div>');
   return opt_sb ? '' : output.toString();
 };
 

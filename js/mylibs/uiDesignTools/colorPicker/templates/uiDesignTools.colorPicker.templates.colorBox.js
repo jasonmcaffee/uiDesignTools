@@ -9,25 +9,34 @@ if (typeof uiDesignTools.colorPicker.templates.colorBox == 'undefined') { uiDesi
 
 uiDesignTools.colorPicker.templates.colorBox.colorPickerInnerContentsTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="', soy.$$escapeHtml(opt_data.colorPickerMinimizedDivId), '" class="colorPicker-minimized" style="background-color: rgba(1,1,1,1);">&nbsp;</div><div id="', soy.$$escapeHtml(opt_data.colorPickerExpandedDivId), '" class="colorPicker-expanded"><div id="', soy.$$escapeHtml(opt_data.colorBoxesDivId), '" class="colorPicker-colorBoxes">');
+  output.append('<div id="', soy.$$escapeHtml(opt_data.colorPickerMinimizedContainerDivId), '" class="colorPicker-minimized-container">');
+  uiDesignTools.colorPicker.templates.colorBox.colorPickerMinimizedTemplate(opt_data, output);
+  output.append('</div><div id="', soy.$$escapeHtml(opt_data.colorPickerExpandedDivId), '" class="colorPicker-expanded"><div id="', soy.$$escapeHtml(opt_data.colorBoxesDivId), '" class="colorPicker-colorBoxes">');
   uiDesignTools.colorPicker.templates.colorBox.colorBoxesTemplate(opt_data, output);
   output.append('</div>\t<div class="hueRangeContainer"><label for="hueRange">hue</label><input id="hueRange" type="range" max="359" min="0"/></div></div><!-- end colorPickerDivIdExpanded -->');
   return opt_sb ? '' : output.toString();
 };
 
 
+uiDesignTools.colorPicker.templates.colorBox.colorPickerMinimizedTemplate = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<div id="', soy.$$escapeHtml(opt_data.colorPickerMinimizedDivId), '" class="colorPicker-minimized" style="background-color: rgba(', soy.$$escapeHtml(opt_data.colorPickerModel.currentlySelectedRGBA.red), ',', soy.$$escapeHtml(opt_data.colorPickerModel.currentlySelectedRGBA.green), ',', soy.$$escapeHtml(opt_data.colorPickerModel.currentlySelectedRGBA.blue), ', 1);">&nbsp;</div>');
+  return opt_sb ? '' : output.toString();
+};
+
+
 uiDesignTools.colorPicker.templates.colorBox.colorBoxesTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  var colorBoxRowList17 = opt_data.colorPickerModel.options.colorBoxRows;
-  var colorBoxRowListLen17 = colorBoxRowList17.length;
-  for (var colorBoxRowIndex17 = 0; colorBoxRowIndex17 < colorBoxRowListLen17; colorBoxRowIndex17++) {
-    var colorBoxRowData17 = colorBoxRowList17[colorBoxRowIndex17];
+  var colorBoxRowList31 = opt_data.colorPickerModel.options.colorBoxRows;
+  var colorBoxRowListLen31 = colorBoxRowList31.length;
+  for (var colorBoxRowIndex31 = 0; colorBoxRowIndex31 < colorBoxRowListLen31; colorBoxRowIndex31++) {
+    var colorBoxRowData31 = colorBoxRowList31[colorBoxRowIndex31];
     output.append('<div class="colorBoxRow">');
-    var colorBoxList19 = colorBoxRowData17.colorBoxes;
-    var colorBoxListLen19 = colorBoxList19.length;
-    for (var colorBoxIndex19 = 0; colorBoxIndex19 < colorBoxListLen19; colorBoxIndex19++) {
-      var colorBoxData19 = colorBoxList19[colorBoxIndex19];
-      output.append('<div id="', soy.$$escapeHtml(colorBoxData19.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData19.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData19.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData19.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData19.options.rgba.alpha), ');"><a href="javascript:return;" style="opacity:0.0">#</a></div>');
+    var colorBoxList33 = colorBoxRowData31.colorBoxes;
+    var colorBoxListLen33 = colorBoxList33.length;
+    for (var colorBoxIndex33 = 0; colorBoxIndex33 < colorBoxListLen33; colorBoxIndex33++) {
+      var colorBoxData33 = colorBoxList33[colorBoxIndex33];
+      output.append('<div id="', soy.$$escapeHtml(colorBoxData33.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData33.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData33.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData33.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData33.options.rgba.alpha), ');"><a href="javascript:return;" style="opacity:0.0">#</a></div>');
     }
     output.append('</div>');
   }
