@@ -31,6 +31,8 @@ define([
 		
 		$.extend(this.options, optionsParam);
 		
+		this.isExpanded = false; //for toggleUI and expandUI
+		
 //generate html for innerHtml of the colorPicker, including colorBoxes and hue range input
 		this.generateInnerHtmlAndAppend();
 
@@ -51,9 +53,24 @@ define([
 	
 //==================================================== UI Display ================================================
 	colorPickerWidget.prototype.expandUI = function(){
+		this.isExpanded = true;
 		this.$colorPickerExpanded.show();
 	};
 	
+	colorPickerWidget.prototype.collapseUI = function(){
+		this.isExpanded = false;
+		this.$colorPickerExpanded.hide();	
+	};
+	
+	colorPickerWidget.prototype.toggleUI = function(){
+		if(this.isExpanded){
+			//collapse
+			this.collapseUI();
+		}else{
+			this.expandUI();
+		}
+		//this.isExpanded != this.isExpanded;//set this to the opposite of what it currently is
+	};
 
 	
 //==================================================== Html Generation ===========================================
@@ -112,7 +129,12 @@ define([
 			self.refreshColorBoxes();
 		}
 		
-		uiDesignTools.events.eventManager.events['colorPickerModelChanged'].subscribe(handleColorPickerModelChanged);
+		uiDesignTools.events.eventManager.events['colorPickerModelChanged'].subscribe(
+			handleColorPickerModelChanged,//callback to fire when the event is published
+			function(event, myExtraData){ //only call my callback when this returns true
+				return event.data.colorPicker.options.uniqueId == self.options.colorPickerModel.options.uniqueId;
+			}
+		);
 	};
 	
 	
@@ -123,7 +145,7 @@ define([
 		var self = this;
 		
 		function handleColorPickerMinimizedClicked(event){
-			self.expandUI();
+			self.toggleUI();
 		}
 		
 		this.options.$colorPicker.on('click', '#'+this.options.colorPickerMinimizedDivId, handleColorPickerMinimizedClicked);
@@ -143,9 +165,9 @@ define([
 			//alert("color box clicked " + selectedColorBox.options.colorBoxId);
 			
 			//update our colorPickerModel's currently selected rgba property to reflect what the user just clicked.
-			self.options.colorPickerModel.currentlySelectedRGBA = selectedColorBox.options.rgba;  //<-- the rgba isn't right here when the hue color slider changes, this isn't updated.
+			self.options.colorPickerModel.options.currentlySelectedRGBA = selectedColorBox.options.rgba;  //<-- the rgba isn't right here when the hue color slider changes, this isn't updated.
 			
-			console.log('currentlySelectedRGBA - red :' + self.options.colorPickerModel.currentlySelectedRGBA.red + " green : " + self.options.colorPickerModel.currentlySelectedRGBA.green + " blue : " + self.options.colorPickerModel.currentlySelectedRGBA.blue);
+			//console.log('currentlySelectedRGBA - red :' + self.options.colorPickerModel.currentlySelectedRGBA.red + " green : " + self.options.colorPickerModel.currentlySelectedRGBA.green + " blue : " + self.options.colorPickerModel.currentlySelectedRGBA.blue);
 			//need to set huecolor as well, so minimized can gen the right background color
 			//self.options.colorPickerModel.options.hueColor =    ????????????????
 			

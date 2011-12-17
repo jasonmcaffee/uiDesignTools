@@ -7,7 +7,7 @@
 define([
 	'mylibs/uiDesignTools/uiDesignTools',
 	  'order!mylibs/uiDesignTools/gradients/templates/uiDesignTools.gradients.templates.colorStop',//need order! to ensure this is completely loaded before our function executes.
-	  'order!mylibs/uiDesignTools/colorPicker/templates/colorBoxTemplateModule', //the colorStop contains a colorPicker, so we need that html template
+	  //'order!mylibs/uiDesignTools/colorPicker/templates/colorBoxTemplateModule', //the colorStop contains a colorPicker, so we need that html template
 	  'libs/closure/soyutils'
 	], 
 	function(uiDesignTools2){

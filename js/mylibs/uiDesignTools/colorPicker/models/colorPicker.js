@@ -28,13 +28,15 @@ define([
 			colorBoxRows : [], //array of object {colorBoxes:[]}
 			hueColor : 128, //color we are currently displaying in the colorPicker. 0-359
 			numberOfRows : 30, //the number of rows the colorPicker should have
-			numberOfColumns : 30
+			numberOfColumns : 30,
+			currentlySelectedRGBA : false //will be calculated for you based off the hue color if not set. this quirk is due to us not having a formula to calculate hsv based off of rgba (we only have the other way around)
 		};
 		
 		$.extend(this.options, optionsParam);
 		
 		//when the user clicks a colorBox, this model will be set
-		this.currentlySelectedRGBA = this.calculateRgbColorsUsingHsv(this.options.hueColor, 100, 100);//needed for generating the template, as the background color of colorPicker-minimized depends on this value.
+		if(!this.options.currentlySelectedRGBA)
+			this.options.currentlySelectedRGBA = this.calculateRgbColorsUsingHsv(this.options.hueColor, 100, 100);//needed for generating the template, as the background color of colorPicker-minimized depends on this value.
 		
 		//create all the rows for a given hue color
 		this.createColorBoxRows(this.options.hueColor, this.options.numberOfRows,this.options.numberOfColumns);
@@ -45,7 +47,7 @@ define([
 	colorPicker.prototype.setHueColor = function(newHueColor){
 		this.options.hueColor = newHueColor;
 		
-		this.currentlySelectedRGBA = this.calculateRgbColorsUsingHsv(this.options.hueColor, 100, 100);
+		this.options.currentlySelectedRGBA = this.calculateRgbColorsUsingHsv(this.options.hueColor, 100, 100);
 		
 		//regen colorBoxRows
 		this.createColorBoxRows(this.options.hueColor, this.options.numberOfRows,this.options.numberOfColumns);

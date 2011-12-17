@@ -91,19 +91,25 @@ define([                 //todo: fsslider requirement
 			
 			//update the input range sliders to reflect the rgba of what the user selected. 
 			self.refreshColorStopInputRanges();
+			
+			//update the css text and gradient of linearGradientWidget to reflect the rgba of our now updated colorStopModel.
+			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].publish({
+					colorStop : self.options.colorStopModel
+			});
 		}
 		
 		//subscribe to the event.
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!! THIS DOES NOT WORK. WE NEED OUR OWN INSTANCE OF THE EVENT...OR WE NEED TO FILTER INCOMING EVENTS....
-		uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].subscribe(  //<---- use our myUniqueId to filter event
+		//This now works, but is a bit awkward. 
+		uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].subscribe(  
 			handleColorPickerNewColorSelected, //point callback to our handler
-			function(event, myExtraDataParameter){ 
-				return myExtraDataParameter.myUniqueId === self.options.myUniqueId && event.data.originatingColorPickerWidgetUniqueId == myExtraDataParameter.colorPickerICareAboutUniqueId;
-			},//only call our handler when this criteria is matched (this is not so great. because of the way eventManager is designed, every callback will get fired. it could be worse...)
-			{
-				myUniqueId : this.options.myUniqueId,
+			function(event, myExtraDataParameter){ //our callback won't be fired unless this function returns true.
+				//use our myUniqueId to filter event. only call our handler when this criteria is matched (this is not so great. 
+				//because of the way eventManager is designed, every callback will get fired. it could be worse...)
+				return event.data.originatingColorPickerWidgetUniqueId == myExtraDataParameter.colorPickerICareAboutUniqueId;
+			},//define the myExtraDataParameter that will be passed when the above callback is executed.
+			{//any extra data you want passed to the criteria function defined up above ^
 				colorPickerICareAboutUniqueId : this.colorPickerWidget.options.uniqueId
-			} //any extra data you want passed to the criteria function defined up above ^
+			} 
 		);
 		
 	};

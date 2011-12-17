@@ -15,13 +15,14 @@
  * */
 .colorPicker-expanded{
 	display: none;
+	width:100%;
 }
 
 
 .colorPicker-experimental-only {
-	width:50%;
+	/*width:50%;
 	height:50%;
-	background-color: rgba(1,1,1,1);
+	background-color: rgba(1,1,1,1);*/
 	
 }
 

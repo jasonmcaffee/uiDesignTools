@@ -1,4 +1,4 @@
-// This file was automatically generated from uiDesignTools.colorPicker.templates.colorBox.soy.
+// This file was automatically generated from uiDesignTools.colorPicker.templates.colorBox.html.
 // Please don't edit this file by hand.
 
 if (typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; }
@@ -20,7 +20,7 @@ uiDesignTools.colorPicker.templates.colorBox.colorPickerInnerContentsTemplate = 
 
 uiDesignTools.colorPicker.templates.colorBox.colorPickerMinimizedTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="', soy.$$escapeHtml(opt_data.colorPickerMinimizedDivId), '" class="colorPicker-minimized" style="background-color: rgba(', soy.$$escapeHtml(opt_data.colorPickerModel.currentlySelectedRGBA.red), ',', soy.$$escapeHtml(opt_data.colorPickerModel.currentlySelectedRGBA.green), ',', soy.$$escapeHtml(opt_data.colorPickerModel.currentlySelectedRGBA.blue), ', 1);">&nbsp;</div>');
+  output.append('<div id="', soy.$$escapeHtml(opt_data.colorPickerMinimizedDivId), '" class="colorPicker-minimized" style="background-color: rgba(', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.red), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.green), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.blue), ', 1);">&nbsp;</div>');
   return opt_sb ? '' : output.toString();
 };
 

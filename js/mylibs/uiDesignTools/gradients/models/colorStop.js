@@ -17,10 +17,16 @@ define([
 			colorStopId : 0,//used for div id
 			rgba : {red: 1, green: 1, blue: 1, alpha:100},
 			position : 90, // where the color stop is positioned (50 for %50)  Color-stops are allowed to have positions before 0% or after 100%
-			colorPickerModel : new colorPicker() // we hold state for the colorPickerWidget. default options are fine. TODO: this is an expensive constructor. may want to move out of options.
+			colorPickerModel : false // we hold state for the colorPickerWidget. default options are fine. TODO: this is an expensive constructor. may want to move out of options.
 		}
 		
 		$.extend(this.options, optionsParam);//merge default options with what was passed in
+		
+		//if a colorPickerModel isn't created, create it
+		if(!this.options.colorPickerModel)
+			this.options.colorPickerModel = new colorPicker({
+				currentlySelectedRGBA : this.options.rgba
+			});
 		
 	};//end colorStop
 	
