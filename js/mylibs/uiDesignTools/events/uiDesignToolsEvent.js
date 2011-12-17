@@ -22,7 +22,7 @@ define([
 	uiDesignToolsEvent.prototype.publish = function(eventData){
 		//iterate over each registered callback/handler and execute it, passing it the passed in event data.
 		for(var i=0; i < this.options.callbacks.length; ++i){
-			var callbackToFire = this.options.callbacks[i];
+			var callbackToFire = this.options.callbacks[i];                     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FIND WAY TO REGISTER AND CALL FILTER CRITERIA SO THAT THE CALLBACK ISNT FIRED . ugh just add it to the event data and have them filter..maybe..
 			callbackToFire({data:eventData});
 		}
 	};

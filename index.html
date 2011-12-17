@@ -66,7 +66,7 @@
 			generated content for the linearGradientMakerWidget goes here
 		</div>
 
-		<div id="colorPicker" class="colorPicker">
+		<div id="colorPicker" class="colorPicker-experimental-only">
 
 		</div>
 
@@ -115,6 +115,9 @@ require([
 	  			colorPickerModel : colorPickerModel,
 	  			$colorPicker : $colorPicker
 	  		});
+	  		
+	  		//expand it.
+	  		colorPickerWidget.expandUI();
 	  	}//end createColorPickerModelAndWidget
 	  });//end document ready
 });//end require

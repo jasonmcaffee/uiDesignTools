@@ -38,13 +38,14 @@ define([
 		this.$generatedLinearGradientCssOutputTextArea = $('#generatedLinearGradientCssOutputTextArea', this.options.$linearGradientMaker);//where we will display generated css for the linear gradient
 		//i don't know that i need this yet... this.$linearGradientSideOrCornerSelect = $('#linearGradientSideOrCorner', this.options.$linearGradientMaker);//user can pick which way the linear gradient should go.
 		
+//Widget Creation
 		this.colorStopWidgets = [];//array of colorStopWidgets which each represent a colorStop in this linear gradient
 		this.createColorStopWidgets();
 		
 		//used for generating unique color stop ids
 		this.totalColorStopCount = this.options.linearGradientModel.options.colorStops.length + 1;//start count with unique
 		
-	//Events/Wire Up
+//Model Events Registry
 		//subscribe to colorstop changed events so we can re-render our output
 		this.subscribeToColorStopModelUpdate();//refresh the gradientOutput, user has moved ui control
 		this.subscribeToColorStopModelAdd();//refresh colorStops, user has clicked add colorstop button.
@@ -52,6 +53,8 @@ define([
 		this.subscribeToColorStopModelShouldBeDeleted();//colorStopWidget fires this event when user clicks delete button
 		//subscribe to linearGradientModel events
 		this.subscribeToLinearGradientModelUpdate();
+		
+//UI Events Registry
 		//listen for on click so we can add a new colorStop
 		this.registerAddColorStopButtonClickHandler();
 		this.registerLinearGradientSideOrCornerSelectChangeHandler();
@@ -61,6 +64,8 @@ define([
 		
 	};//end linearGradientMakerWidget
 	
+
+//=================================================================== UI Events ===============================================
 	//when user selects which direction the gradient should go
 	linearGradientMakerWidget.prototype.registerLinearGradientSideOrCornerSelectChangeHandler = function(){
 		var self = this;
@@ -77,6 +82,7 @@ define([
 		this.$linearGradientMakerControls.on("change", "#linearGradientSideOrCorner", linearGradientSideOrCornerSelectChangeHandler);
 	};
 	
+
 	//when user clicks 'Add Color Stop', this function will be fired so we can update the model, etc.
   linearGradientMakerWidget.prototype.registerAddColorStopButtonClickHandler = function(){
 		var self = this;//for callbacks to have reference to this.
@@ -105,6 +111,7 @@ define([
 	}
 	
 	
+//=================================================================== Model Events ===============================================
 	linearGradientMakerWidget.prototype.subscribeToLinearGradientModelUpdate = function(){
 		var self = this;//so call back functions can access method of this.
 		
@@ -219,7 +226,7 @@ define([
 		return null;
 	}
 	
-	
+//==================================================== Widget Creation ========================================
 	//creates colorStopWidgets by constructing the jquery wrapper $colorStop
 	linearGradientMakerWidget.prototype.createColorStopWidgets = function(){
 		var colorStopModels = this.options.linearGradientModel.options.colorStops;
@@ -241,6 +248,7 @@ define([
 			return newColorStopWidget;
 	};
 	
+//==================================================== HTML Generation ========================================
 	//convenience function for refreshing both the gradient output and generated css text area
 	//by having them call their respective templates to generated new html & css
 	linearGradientMakerWidget.prototype.refreshGeneratedOutput = function(){
@@ -264,6 +272,8 @@ define([
 		this.$generatedLinearGradientCssOutputTextArea.val(newLinearGradientCssText);
 	};
 	
+
+//===================================================== Polyfill Creation =====================================
 	//called by the callback function of Modernizr.load for the fdslider input range polyfill
 	linearGradientMakerWidget.prototype.polyfillInputRangeForAllColorStops = function(){
 		for(var i = 0; i < this.colorStopWidgets.length; ++i){
@@ -271,6 +281,8 @@ define([
 		}
 	}
 	
+	
+//===================================================== Export =================================================
 	return linearGradientMakerWidget;
 
 });//end requirejs

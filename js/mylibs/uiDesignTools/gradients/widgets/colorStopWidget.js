@@ -11,8 +11,10 @@ define([                 //todo: fsslider requirement
 	'mylibs/uiDesignTools/uiDesignTools',
 	'libs/jquery/jqueryModule',
 	'mylibs/uiDesignTools/gradients/templates/colorStopTemplateModule',
-	'mylibs/uiDesignTools/gradients/models/colorStop'
-	], function(uiDesignTools, $, colorStopTemplate){
+	'mylibs/uiDesignTools/gradients/models/colorStop',
+	'mylibs/uiDesignTools/colorPicker/widgets/colorPickerWidget', //each colorStopWidget has a colorPickerWidget
+	'mylibs/uiDesignTools/colorPicker/models/colorPicker'
+	], function(uiDesignTools, $, colorStopTemplate, colorStop, colorPickerWidget, colorPicker){
 	/**
 	 * colorStopWidget constructor function
 	 * calling this constructor will return a new colorStopWidget (when new keyword is used)
@@ -20,66 +22,88 @@ define([                 //todo: fsslider requirement
 	 * @requires @param colorStopModel model representation of a color stop (has rgba)
 	 * @requires @param $colorStop the jquery wrapper for the element that this widget resides in.
 	 * 
-	 */
+	 */ 
+	 
+	var uniqueId = 0;//sweet! local functional variables! they don't pollute global scope, but behave like static! 
+	
 	function colorStopWidget(optionsParam){
 		
 		//default options
 		this.options = {
+			myUniqueId : uniqueId++,//increment our static variable.  I need the uniqueId for event filtering. also maybe for html id generation
 			colorStopModel : {}, //model used to dictate rgba values
 			colorStopTemplate : colorStopTemplate.colorStopTemplate, //<div id="colorStopX"> + inner content + </div> <--NOT NEEDED. TODO: DELETE. ONLY NEED INNERCONTENTS TEMPLATE
 			colorStopInnerContentTemplate : colorStopTemplate.colorStopInnerContentTemplate, //red, green, blue, alpha sliders html generator 
 			$colorStop : false //jquery representation must be given.
+			
 		};
 		$.extend(this.options, optionsParam);//merge default options with passed in options.
-	
-	 var self = this;
-	//JQuery Object Initialization
-		//this.polyfillInputRanges();//only executes if needed
-		// Modernizr.load({
-			  // test: Modernizr.inputtypes.range,
-			  // nope: ['js/libs/polyfills/fd-slider.js', 'css/inputRangePolyfill/fd-slider.css'],//older browser performance hit for not supporting cool stuff. that'll teach em.
-			  // callback: function(id, testResult) {
-	        // // If the slider file has loaded then fire the onDomReady event        
-	        // if("fdSlider" in window && typeof (fdSlider.onDomReady) != "undefined") {
-	                // try { fdSlider.onDomReady(); } catch(err) {};
-	                // self.polyfillInputRanges();
-	        // };
-	//         
-	        // //linearGradientMakerWidget.polyfillInputRangeForAllColorStops();//lame i hate this stupid polyfill
-	    	// }
-			// });
 		
+		console.log('uniqueId is : ' + this.options.myUniqueId);
+
+//Jquery Objects
+		this.$colorPicker = $("#colorPicker", this.options.$colorStop); //colorPicker id is hardcoded into the colorStop template	
+	
+//Widget Creation
+		this.colorPickerWidget = this.createColorPickerWidget();
+	
+//UI Event Registry
 		//click handlers
 		this.registerDeleteColorStopButtonClickHandler();
 	
 		//listen for change events emitted by the red,green,blue, alpha sliders/range inputs.
 		this.registerSliderChangeHandlers();
+
+//Model Event Registry
+		//when a colorBox is selected/clicked from the colorPicker, we need to update colorStops to reflect the newly selected color, and regen the 
+		this.registerColorPickerNewColorSelectedHandler();
 		
 		
 	}
 	
-	//only initializes if Modernizr.inputtypes.range == false
-	//we need to register the input range polyfill (to get support in firefox & ie)
-	colorStopWidget.prototype.polyfillInputRanges = function(){	
-		if(Modernizr.inputtypes.range){return;}
+//======================================================= Widget Creation ===========================================
+	
+	//the colorPickerWidget will wire the needed events to the html emitted by it's template.
+	colorStopWidget.prototype.createColorPickerWidget = function(){
+		var newColorPickerWidget = new colorPickerWidget({
+			$colorPicker : this.$colorPicker,
+			colorPickerModel: this.options.colorStopModel.options.colorPickerModel
+		});
 		
-		//WE ONLY NEED THESE IF THE BROWSER DOESN'T SUPPORT INPUT TYPE="RANGE": TO DO : optimize by not querying for these if range type is supported?
-		this.$redRange = $("#" + this.options.colorStopModel.options.colorStopId + "redRange", this.options.$colorStop);
-		this.$greenRange = $("#" + this.options.colorStopModel.options.colorStopId + "greenRange", this.options.$colorStop);
-		this.$blueRange = $("#" + this.options.colorStopModel.options.colorStopId + "blueRange", this.options.$colorStop);
-		this.$alphaRange = $("#" + this.options.colorStopModel.options.colorStopId + "alphaRange", this.options.$colorStop);
-		this.$positionRange = $("#" + this.options.colorStopModel.options.colorStopId + "positionRange", this.options.$colorStop);
+		return newColorPickerWidget;
+	};
 	
 	
-		//these will only execute if the input doesn't support type="range"
-		fdSlider.createSlider({html5Shim :true, inp:this.$redRange[0], animation:"tween", min:1, max:100, step:1});
-		fdSlider.createSlider({ html5Shim :true, inp:this.$greenRange[0], animation:"tween", min:1, max:100, step:1});
-		fdSlider.createSlider({ html5Shim :true, inp:this.$blueRange[0], animation:"tween", min:1, max:100, step:1});
-		fdSlider.createSlider({ html5Shim :true, inp:this.$alphaRange[0], animation:"tween", min:1, max:100, step:1});
-		fdSlider.createSlider({ html5Shim :true, inp:this.$positionRange[0], animation:"tween", min:1, max:100, step:1});
+//======================================================= Model Event Handling ======================================
+
+	//when a colorBox is clicked in the colorPicker Modal, we want to update the colorStop that it was clicked for.
+	colorStopWidget.prototype.registerColorPickerNewColorSelectedHandler = function(){
+		var self = this;
+		
+		function handleColorPickerNewColorSelected(event){
+			var newRGBA = event.data.selectedRGBA;
 			
-	}
+			//don't update position or alpha though!
+			self.options.colorStopModel.options.rgba.red = newRGBA.red;
+			self.options.colorStopModel.options.rgba.green = newRGBA.green;
+			self.options.colorStopModel.options.rgba.blue = newRGBA.blue;
+			
+			//update the input range sliders to reflect the rgba of what the user selected. 
+			self.refreshUI();
+		}
+		
+		//subscribe to the event.
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!! THIS DOES NOT WORK. WE NEED OUR OWN INSTANCE OF THE EVENT...OR WE NEED TO FILTER INCOMING EVENTS....
+		uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].subscribe(  //<---- use our myUniqueId to filter event
+			handleColorPickerNewColorSelected, //point callback to our handler
+			function(myExtraDataParameter){ return myExtraDataParameter.myUniqueId === self.options.myUniqueId;},//only call our handler when this criteria is matched (this is not so great. because of the way eventManager is designed, every callback will get fired. it could be worse...)
+			{myUniqueId : this.options.myUniqueId} //any extra data you want passed to the criteria function defined up above ^
+		);
+		
+	};
+
 	
+//========================================================= UI Event Handling ==============================================
 	//define and register handler for when the delete color stop button is clicked
 	colorStopWidget.prototype.registerDeleteColorStopButtonClickHandler = function(){
 		var self = this;//for callbacks
@@ -144,12 +168,41 @@ define([                 //todo: fsslider requirement
 		registerColorStopRangeChangeHandlerFor("#" + rangeIdPrepend + "positionRange", 0, "position");
 	}
 	
+//============================================================= HTML Generation =====================================
 	//just update the inner contents.
 	colorStopWidget.prototype.refreshUI = function(){
 		var newHtmlText = this.options.colorStopInnerContentTemplate({colorStop:this.options.colorStopModel});
-		this.$colorStopDiv[0].innerHTML = newHtmlText;
+		this.options.$colorStop[0].innerHTML = newHtmlText;
 	}
   
-  //our define export
+//============================================================== Export =============================================
   return colorStopWidget;
 });//end requirejs
+
+
+	
+//======================================================== Polyfill Creation =============================================
+	//only initializes if Modernizr.inputtypes.range == false
+	//we need to register the input range polyfill (to get support in firefox & ie)
+	// colorStopWidget.prototype.polyfillInputRanges = function(){	
+		// if(Modernizr.inputtypes.range){return;}
+// 		
+		// //WE ONLY NEED THESE IF THE BROWSER DOESN'T SUPPORT INPUT TYPE="RANGE": TO DO : optimize by not querying for these if range type is supported?
+		// this.$redRange = $("#" + this.options.colorStopModel.options.colorStopId + "redRange", this.options.$colorStop);
+		// this.$greenRange = $("#" + this.options.colorStopModel.options.colorStopId + "greenRange", this.options.$colorStop);
+		// this.$blueRange = $("#" + this.options.colorStopModel.options.colorStopId + "blueRange", this.options.$colorStop);
+		// this.$alphaRange = $("#" + this.options.colorStopModel.options.colorStopId + "alphaRange", this.options.$colorStop);
+		// this.$positionRange = $("#" + this.options.colorStopModel.options.colorStopId + "positionRange", this.options.$colorStop);
+// 	
+// 	
+		// //these will only execute if the input doesn't support type="range"
+		// fdSlider.createSlider({html5Shim :true, inp:this.$redRange[0], animation:"tween", min:1, max:100, step:1});
+		// fdSlider.createSlider({ html5Shim :true, inp:this.$greenRange[0], animation:"tween", min:1, max:100, step:1});
+		// fdSlider.createSlider({ html5Shim :true, inp:this.$blueRange[0], animation:"tween", min:1, max:100, step:1});
+		// fdSlider.createSlider({ html5Shim :true, inp:this.$alphaRange[0], animation:"tween", min:1, max:100, step:1});
+		// fdSlider.createSlider({ html5Shim :true, inp:this.$positionRange[0], animation:"tween", min:1, max:100, step:1});
+// 			
+	// }
+
+
+

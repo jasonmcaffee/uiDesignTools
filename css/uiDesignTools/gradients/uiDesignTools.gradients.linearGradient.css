@@ -156,4 +156,12 @@ html{
 	display:inline-block;
 }
 
+/* this is held by the colorstop. maybe it should go there instead
+ * colorPicker-minimized goes in here, but is defined in the colorPicker css.
+ * */
+.linearGradient-colorStop-colorPicker{
+	width:100px;
+	height:100px;
+}
+
 

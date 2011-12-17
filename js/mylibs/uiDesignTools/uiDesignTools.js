@@ -31,5 +31,7 @@ define([
 	
 	uiDesignTools.events.eventManager.events['colorPickerModelChanged'] = new uiDesignToolsEvent({type:'colorPickerModelChanged'});
 
+	uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'] = new uiDesignToolsEvent({type:'colorPickerNewColorSelected'});//fires when a colorBox is clicked
+	
 	return uiDesignTools;//todo: stop global namespage polution and declare this as a local var. looks like it's already behaving that way.
 });//end require

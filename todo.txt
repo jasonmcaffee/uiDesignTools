@@ -5,11 +5,11 @@ finish css3 gradient generation.
 color picker
  x tiny boxes. each box N px in height&width
  x hue color slider - requires refactor of template..
- - click event registry is bad approach for colorBoxes. fix it! (duplicate event listens, etc)
+ x click event registry is bad approach for colorBoxes. fix it! (duplicate event listens, etc)
+ - modal popup
+
 
 colorBoxes has an extra row - get rid of it.
-
-
 
 linearGradientMakerWidget - needs inheritance. outputs go to gradientMakerWidget?
 

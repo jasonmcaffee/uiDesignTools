@@ -1,5 +1,20 @@
 
-.colorPicker {
+/* Always shown colored square/box/div which represents the color picker*/
+.colorPicker-minimized{
+  width: 100%; /* fill the space we've been given by our container.*/
+	height: 100%;
+	/*background-color: rgba(1,1,1,1);*/  /* background color is set via the element's style element, as it is a dynamic styling */
+}
+
+/* When the colorPicker-minimized element is clicked, the element with this class will be displayed
+ * this is a modal that will fill the entire screen? perhaps just a portion so that the generated css and gradient can be seen.
+ * */
+.colorPicker-expanded{
+	display: none;
+}
+
+
+.colorPicker-experimental-only {
 	width:50%;
 	height:50%;
 	background-color: rgba(1,1,1,1);
@@ -10,6 +25,7 @@
 	width:100%;
 	height:100%;
 }
+
 .colorBoxRow{
 	width:100%;
 	height:3%;
@@ -40,3 +56,4 @@
 	display:inline-block;
 	background-color: rgba(29, 77, 123, 1);
 }
+

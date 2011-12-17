@@ -3,22 +3,36 @@
 /**
 * 
 * @param colorPickerModel
+* @param colorPickerMinimizedDivId id for the small representation of the colorPicker
+* @param colorPickerExpandedDivId id for the expanded representation of the colorPicker
 * @param colorBoxesDivId id for the div the colorBoxes will go in.
 */
 {template .colorPickerInnerContentsTemplate}
+  
+  //this element will always be shown. it is the html representation of the color picker in its minimal/non-expanded size.
+  //css will make this a colored box
+  //use the passed in currentSelectedColor model to style this element's background.
+	<div id="{$colorPickerMinimizedDivId}" class="colorPicker-minimized" style="background-color: rgba(1,1,1,1);">
+		&nbsp;
+	</div>
 
- <div id="{$colorBoxesDivId}" class="colorPicker-colorBoxes">
-  //first generate each variation of the color (variances are in saturation and brightness, but the hue color remains constant)
-  {call .colorBoxesTemplate}
-  	{param colorPickerModel : $colorPickerModel /}
-  	{param colorBoxesDivId : $colorBoxesDivId /}
-  {/call}
- </div>
- 
-  //the slider for changing the hue color
-  {call .hueRangeTemplate}
-  	//{param colorPickerModel : $colorPickerModel /}
-  {/call}
+  //only displayed when the colorPicker-minimized is clicked
+  <div id="{$colorPickerExpandedDivId}" class="colorPicker-expanded">
+  
+   <div id="{$colorBoxesDivId}" class="colorPicker-colorBoxes">
+    //first generate each variation of the color (variances are in saturation and brightness, but the hue color remains constant)
+    {call .colorBoxesTemplate}
+  	  {param colorPickerModel : $colorPickerModel /}
+  	  {param colorBoxesDivId : $colorBoxesDivId /}
+    {/call}
+   </div>
+
+    //the slider for changing the hue color
+    {call .hueRangeTemplate}
+  	  //{param colorPickerModel : $colorPickerModel /}
+    {/call}
+  
+  </div><!-- end colorPickerDivIdExpanded -->
  
 {/template}
 

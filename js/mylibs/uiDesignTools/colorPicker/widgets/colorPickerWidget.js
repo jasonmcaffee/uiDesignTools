@@ -9,7 +9,8 @@
 define([
 	'mylibs/uiDesignTools/uiDesignTools',
 	'libs/jquery/jqueryModule',
-	'mylibs/uiDesignTools/colorPicker/templates/colorBoxTemplateModule'
+	'mylibs/uiDesignTools/colorPicker/templates/colorBoxTemplateModule',
+	'mylibs/uiDesignTools/colorPicker/models/colorPicker'
 ], function(uiDesignTools, $, colorBoxTemplate){
 	
 	function colorPickerWidget(optionsParam){
@@ -17,20 +18,21 @@ define([
 			$colorPicker : false,
 			colorPickerModel : {}, //model used to drive this colorPickerWidget
 			colorBoxesTemplate : colorBoxTemplate.colorBoxesTemplate, //need this separate so we can just refresh the html for the colorboxes, but not for the hue input range
-			colorPickerInnerContentsTemplate : colorBoxTemplate.colorPickerInnerContentsTemplate, //all the inner html
-			colorBoxesDivId: "colorBoxesDiv"
+			colorPickerInnerContentsTemplate : colorBoxTemplate.colorPickerInnerContentsTemplate, //all the inner html of this widget. template should call color picker template
+			colorBoxesDivId: "colorBoxesDiv", //this div is inside of the colorPickerExpanded div, and is the container for all the colorBoxes (all variances in saturation and brightness for a given hue color)
+			colorPickerMinimizedDivId : "colorPickerMinimized",
+			colorPickerExpandedDivId : "colorPickerExpanded"
 		};
 		
 		$.extend(this.options, optionsParam);
-		
-		//when the user clicks a colorBox, this model will be set
-		this.currentlySelectedRGB = {red:1, green: 1, blue:1};
 		
 //generate html for innerHtml of the colorPicker, including colorBoxes and hue range input
 		this.generateInnerHtmlAndAppend();
 
 //jquery objects
-		this.$colorBoxesDiv = $("#" + this.options.colorBoxesDivId, this.options.$colorPicker);	
+		this.$colorPickerMinimized = $("#" + this.options.colorPickerMinimizedDivId, this.options.$colorPicker);//always shown. when clicked, we will show the expanded modal.
+		this.$colorPickerExpanded = $("#" + this.options.colorPickerExpandedDivId, this.options.$colorPicker);//color picker modal which is shown when user clicks minimized representation. needed so we can show/hide this modal.
+		this.$colorBoxesDiv = $("#" + this.options.colorBoxesDivId, this.options.$colorPicker);	//lives inside of expanded ^. needed so we can refresh the color boxes when the hue color input range changes.
 		
 //setup ui listeners
 		this.registerClickHandlerForColorBoxes();
@@ -40,6 +42,12 @@ define([
 		this.registerColorPickerModelChangedListener();
 	};
 	
+//==================================================== UI Display ================================================
+	colorPickerWidget.prototype.expandUI = function(){
+		this.$colorPickerExpanded.show();
+	};
+	
+
 	
 //==================================================== Html Generation ===========================================
 	
@@ -48,7 +56,9 @@ define([
 		//call the template to get the colorBoxes Html
 		var innerHtml = this.options.colorPickerInnerContentsTemplate({
 			colorPickerModel:this.options.colorPickerModel, 
-			colorBoxesDivId: this.options.colorBoxesDivId
+			colorBoxesDivId: this.options.colorBoxesDivId,
+			colorPickerExpandedDivId: this.options.colorPickerExpandedDivId,
+			colorPickerMinimizedDivId : this.options.colorPickerMinimizedDivId
 		});
 		
 		//update the Dom
@@ -92,13 +102,20 @@ define([
 //==================================================== UI Event Registry ===========================================
 	
 	//when the user selects a color (ie clicks on a color box), we need to do something.
+	// * !! indirectly calls the colorStopWidget to refresh its UI via the colorPickerNewColorSelected event.
 	colorPickerWidget.prototype.registerClickHandlerForColorBoxes = function(){
 		var self = this;
 		
 		function handleColorBoxClick(e){
 			var selectedColorBox = e.data.colorBox;
 			alert("color box clicked " + selectedColorBox.options.colorBoxId);
-			e.preventDefault();//no reason in particular.
+			
+			//update our colorPickerModel's currently selected rgba property to reflect what the user just clicked.
+			self.options.colorPickerModel.currentlySelectedRGBA = selectedColorBox.options.rgba;
+			
+			//the colorStopWidget listens for this event so it can make updates to its UI.
+			uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].publish({selectedRGBA : selectedColorBox.options.rgba});
+			
 			return false;
 		}
 		

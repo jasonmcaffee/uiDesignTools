@@ -48,5 +48,12 @@
  <input id="{$colorStop.options.colorStopId}positionRange" type="range" min="0" max="100" step="1" value="{$colorStop.options.position}" />
  
  <input id="deleteColorStopButton{$colorStop.options.colorStopId}" type="button" value="Delete"/>
+ 
+ <div id="colorPicker" class="linearGradient-colorStop-colorPicker">
+	 {call uiDesignTools.colorPicker.templates.colorBox.colorPickerInnerContents}
+	 	{param colorPickerModel : $colorStop.options.colorPickerModel /}
+	 {/call}
+ </div>
+ 
 {/template}
 

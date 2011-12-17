@@ -30,6 +30,9 @@ define([
 		
 		$.extend(this.options, optionsParam);
 		
+		//when the user clicks a colorBox, this model will be set
+		this.currentlySelectedRGBA = this.calculateRgbColorsUsingHsv(this.options.hueColor, 100, 100);//needed for generating the template, as the background color of colorPicker-minimized depends on this value.
+		
 		//create all the rows for a given hue color
 		this.createColorBoxRows(this.options.hueColor, this.options.numberOfRows,this.options.numberOfColumns);
 		
