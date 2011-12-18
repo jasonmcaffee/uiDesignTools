@@ -6,8 +6,11 @@ color picker
  x tiny boxes. each box N px in height&width
  x hue color slider - requires refactor of template..
  x click event registry is bad approach for colorBoxes. fix it! (duplicate event listens, etc)
- - modal popup
-
+ - modal popup - kind of complete
+ - when hue range color changes, change minimized of colorPicker to match color.
+ - reverse hsv from rgb calculation.
+ - set hue color of slider when input ranges for rgb change?
+ - alpha value of color stop is getting changed when clicking colorBox
 
 colorBoxes has an extra row - get rid of it.
 
