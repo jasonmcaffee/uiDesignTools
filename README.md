@@ -9,7 +9,7 @@ Demo of the final result of this code can be found here: (currently works best i
 
 ##Site Design
 ###Wireframe for the Gradient Maker
-<img src="github.com/downloads/jasonmcaffee/uiDesignTools/wireframe.png" alt="Gradient Maker Wireframe"/>
+<img src="http://github.com/downloads/jasonmcaffee/uiDesignTools/wireframe.png" alt="Gradient Maker Wireframe"/>
 
 ##Goals
 ### Create a set of useful ui tools that you can use to generate css, html, etc.
