@@ -7,6 +7,10 @@ The goal is to have a completely open source page/element designer which can be 
 Demo of the final result of this code can be found here: (currently works best in chrome or opera)
 [uiDesignTools](http://jasonmcaffee.com/uiDesignTools/index.html)
 
+##Site Design
+###Wireframe for the Gradient Maker
+<img src="github.com/downloads/jasonmcaffee/uiDesignTools/wireframe.png" alt="Gradient Maker Wireframe"/>
+
 ##Goals
 ### Create a set of useful ui tools that you can use to generate css, html, etc.
 Compete against the few existing sites that offer similar functionality.
