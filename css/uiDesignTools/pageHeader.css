@@ -1,0 +1,44 @@
+
+.header{
+	background-image: -moz-linear-gradient(top,rgba(247, 248, 255, 100) 1%, rgba(196, 196, 196, 100) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(247, 248, 255, 100) 1%, rgba(196, 196, 196, 100) 100%);
+	background-image: -o-linear-gradient(top,rgba(247, 248, 255, 100) 1%, rgba(196, 196, 196, 100) 100%);
+	background-image: -ms-linear-gradient(top,rgba(247, 248, 255, 100) 1%, rgba(196, 196, 196, 100) 100%);
+	background-image: -linear-gradient(top,rgba(247, 248, 255, 100) 1%, rgba(196, 196, 196, 100) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(247, 248, 255, 100)), color-stop(100%,rgba(196, 196, 196, 100)));
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
+	padding-top: 1%;
+	padding-bottom: 1%;
+	padding-left: 3%;
+	padding-right 3%;
+	
+	color: white;
+	text-shadow: 1px 1px 1px rgba(187, 187, 187, 1);
+	filter: dropshadow(color=#0372fa, offx=1, offy=1);
+	
+	
+}
+
+.top-level-tab-group{
+	margin-left:3%;
+}
+
+.top-level-tab{
+	margin-right:1%;
+}
+
+.top-level-tab:hover{
+	text-shadow: 1px 1px 2px #2b2c2e;
+	filter: dropshadow(color=#2b2c2e, offx=1, offy=1);
+	
+	cursor: pointer;
+}
+
+.generated-css-tab{
+	color: green;
+	float: right;
+}

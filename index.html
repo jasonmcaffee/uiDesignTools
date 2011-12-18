@@ -22,8 +22,9 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/uiDesignTools/gradients/uiDesignTools.gradients.linearGradient.css">
-  <link rel="stylesheet" href="css/uiDesignTools/colorPicker/uiDesignTools.colorPicker.colorPicker.css">
+  <link rel="stylesheet" href="css/uiDesignTools/gradients/linearGradient.css">
+  <link rel="stylesheet" href="css/uiDesignTools/colorPicker/colorPicker.css">
+  <link rel="stylesheet" href="css/uiDesignTools/pageHeader.css">
 
 	<!-- Load the script "js/main.js" as our entry point, along with requirejs -->
 	<script data-main="js/main" src="js/libs/require/require.js"></script>
@@ -57,14 +58,27 @@
 </head>
 
 <body>
-  <header>
-		<h1>UI Design Tools</h1>
+  <header class="header">
+		<span class="logo">UI Design Tools</span>
+		
+		<span id="topLevelTabGroup" class="top-level-tab-group">
+			<span id="gradientsTab" class="top-level-tab">Gradients</span>
+			<span id="dropShadowTab" class="top-level-tab">Drop Shadow</span>
+			<span id="textTab" class="top-level-tab">Text</span>
+			<span id="borderRadiusTab" class="top-level-tab">Border Radius</span>
+			<span id="generatedCssTab" class="top-level-tab generated-css-tab">Generated CSS</span>
+		</span>
   </header>
   
   <div role="main" class="main">
 		<div id="linearGradientMakerWidgetContainer">
 			generated content for the linearGradientMakerWidget goes here
 		</div>
+
+
+
+
+
 
 		<div id="colorPicker" class="colorPicker-experimental-only">
 

@@ -28,10 +28,10 @@ html{
 
 /* gradient output and css text area go here */
 .linearGradient-linearGradientMakerControlsColumn1{
-	width:30%;
+	width:10%;
 	display: inline-block;
 	vertical-align:top;
-  min-width:650px;
+  min-width:220px;
   padding-right: .5%;
 }
 
@@ -46,34 +46,100 @@ html{
 
 .linearGradient-generatedOutputsContainer{
 	padding: 2px;
-  text-align: right;
+  margin-left: 1%;
 }
-/*
- * where the user is shown the generated css
- */
-.linearGradient-generatedLinearGradientCssOutput{
-	font-size: 10px;
-	display: inline-block;
-	vertical-align: top;
-	
-	border-radius: 6px 9px 5px 9px; 
-	-moz-border-radius: 6px 9px 5px 9px; 
-	-webkit-border-radius: 6px 9px 5px 9px; 
-	-o-border-radius: 6px 9px 5px 9px; 
-	border: 3px solid #C7C7C7;
-}
+
 .linearGradient-gradientOutput{
 	height: 200px;
-	width: 200px;
-	display: inline-block;
-	margin-left: 1%;
+	width: 97%;
+	display: block;
+	
+	border: 3px solid #C7C7C7;
 	
 	border-radius: 6px 9px 5px 9px; 
 	-moz-border-radius: 6px 9px 5px 9px; 
 	-webkit-border-radius: 6px 9px 5px 9px; 
 	-o-border-radius: 6px 9px 5px 9px; 
-	border: 3px solid #C7C7C7;
+	
 }
+
+/* css text preview - highest level container */
+.linearGradient-generatedLinearGradientCssPreviewContainer{
+	width: 100%;
+	display: block;
+	margin-top: 3%;
+	
+	background-image: -moz-linear-gradient(top,rgba(66, 67, 68, 100) 1%, rgba(25, 25, 26, 100) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(66, 67, 68, 100) 1%, rgba(25, 25, 26, 100) 100%);
+	background-image: -o-linear-gradient(top,rgba(66, 67, 68, 100) 1%, rgba(25, 25, 26, 100) 100%);
+	background-image: -ms-linear-gradient(top,rgba(66, 67, 68, 100) 1%, rgba(25, 25, 26, 100) 100%);
+	background-image: -linear-gradient(top,rgba(66, 67, 68, 100) 1%, rgba(25, 25, 26, 100) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(66, 67, 68, 100)), color-stop(100%,rgba(25, 25, 26, 100)));
+
+  border-radius: 6px 6px 6px 6px;
+	-moz-border-radius: 6px 6px 6px 6px;
+	-webkit-border-radius: 6px 6px 6px 6px;
+	-o-border-radius: 6px 6px 6px 6px;
+}
+
+/* toolbar which contains the button to show/hide css preview text*/
+.css-text-preview-toolbar{
+	width:96.3%;
+	padding: 2%;
+	display: inline-block;
+	background: rgb(235,241,246);
+	background-image: -moz-linear-gradient(top,  rgba(235,241,246,1) 0%, rgba(206,206,206,1) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,241,246,1)), color-stop(100%,rgba(206,206,206,1)));
+	background-image: -webkit-linear-gradient(top,  rgba(235,241,246,1) 0%,rgba(206,206,206,1) 100%);
+	background-image: -o-linear-gradient(top,  rgba(235,241,246,1) 0%,rgba(206,206,206,1) 100%);
+	background-image: -ms-linear-gradient(top,  rgba(235,241,246,1) 0%,rgba(206,206,206,1) 100%);
+	background-image: linear-gradient(top,  rgba(235,241,246,1) 0%,rgba(206,206,206,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#cecece',GradientType=0 );
+
+	 border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+}
+
+.css-text-preview-toolbar-button{
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+/*	background-image: -moz-linear-gradient(top,rgba(40, 41, 43, 100) 1%, rgba(31, 32, 34, 100) 100%);
+background-image: -webkit-linear-gradient(top,rgba(40, 41, 43, 100) 1%, rgba(31, 32, 34, 100) 100%);
+background-image: -o-linear-gradient(top,rgba(40, 41, 43, 100) 1%, rgba(31, 32, 34, 100) 100%);
+background-image: -ms-linear-gradient(top,rgba(40, 41, 43, 100) 1%, rgba(31, 32, 34, 100) 100%);
+background-image: -linear-gradient(top,rgba(40, 41, 43, 100) 1%, rgba(31, 32, 34, 100) 100%);
+background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(40, 41, 43, 100)), color-stop(100%,rgba(31, 32, 34, 100)));*/
+}
+
+
+/*
+ * just under toolbar, this is displayed/hidden when preview button is clicked
+ */
+.linearGradient-generatedLinearGradientCssOutput{
+	width:100%;
+	font-size: 10px;
+	display: none;  /*inline-block;*/
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+  padding-right: 2%;
+
+	
+}
+
+.lg-css-output-textarea{
+	width:90%;
+	border-radius: 6px 9px 5px 9px; 
+	-moz-border-radius: 6px 9px 5px 9px; 
+	-webkit-border-radius: 6px 9px 5px 9px; 
+	-o-border-radius: 6px 9px 5px 9px; 
+	border: 3px solid #C7C7C7;
+	
+}
+
 
 /* --------------------------------------------------------------  controls & inputs */
 /*

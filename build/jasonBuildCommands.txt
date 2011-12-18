@@ -5,7 +5,7 @@ java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPat
 //colorStop
 java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/gradients/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.gradients.templates.colorStop.soy
 //linearGradientMaker
-java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/gradients/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.gradients.templates.linearGradientMaker.soy
+java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/gradients/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.gradients.templates.linearGradientMaker.html
 
 //colorBox
 java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/colorPicker/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/uiDesignTools.colorPicker.templates.colorBox.so

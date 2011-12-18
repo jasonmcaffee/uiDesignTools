@@ -30,12 +30,15 @@ define([
 		//merge default options with passed in options
 		$.extend(this.options, optionsParam);
 		
-		//initialize jquery objects
+//jquery objects
 		this.$linearGradientMakerControls = $('#linearGradientMakerControls', this.options.$linearGradientMaker);//controls hold the colorStops, and any other widget which allows us to tweak the output
 		this.$colorStopsComponent = $('#colorStopsComponent', this.$linearGradientMakerControls);//holds everything related to adjusting color stops
 		this.$colorStops = $('#colorStops', this.$colorStopsComponent);//colorstops allow us to tweak the output (generated gradient)
+		
 		this.$gradientOutput = $('#gradientOutput', this.options.$linearGradientMaker);//the final result of users modification. updated as user interacts with controls.
 		this.$generatedLinearGradientCssOutputTextArea = $('#generatedLinearGradientCssOutputTextArea', this.options.$linearGradientMaker);//where we will display generated css for the linear gradient
+		this.$generatedLinearGradientCssOutput = $("#generatedLinearGradientCssOutput", this.options.$linearGradientMaker);//show hide this when css preview button is clicked
+		
 		//i don't know that i need this yet... this.$linearGradientSideOrCornerSelect = $('#linearGradientSideOrCorner', this.options.$linearGradientMaker);//user can pick which way the linear gradient should go.
 		
 //Widget Creation
@@ -55,17 +58,34 @@ define([
 		this.subscribeToLinearGradientModelUpdate();
 		
 //UI Events Registry
-		//listen for on click so we can add a new colorStop
-		this.registerAddColorStopButtonClickHandler();
+		this.registerCssPreviewButtonClickHandler();//expand css preview when button is clicked.
+		this.registerAddColorStopButtonClickHandler();//listen for on click so we can add a new colorStop
 		this.registerLinearGradientSideOrCornerSelectChangeHandler();
 		
-		//gradientOutput and textarea should be refreshed to reflect the current model
-		this.refreshGeneratedOutput();
+//HTML Generation
+		this.refreshGeneratedOutput();//gradientOutput and textarea should be refreshed to reflect the current model
 		
 	};//end linearGradientMakerWidget
 	
 
 //=================================================================== UI Events ===============================================
+	linearGradientMakerWidget.prototype.registerCssPreviewButtonClickHandler = function(){
+		var self = this;
+		var isCurrentlyDisplayed = false;//start off without display showing.
+		//called when button is clicked
+		function handleCssPreviewButtonClick(event){
+			if(!isCurrentlyDisplayed){
+				self.$generatedLinearGradientCssOutput.show();
+				isCurrentlyDisplayed = true;
+			}else{
+				self.$generatedLinearGradientCssOutput.hide();
+				isCurrentlyDisplayed = false;
+			}
+		}
+		//register the event
+		this.options.$linearGradientMaker.on('click', '#cssTextPreviewButton', handleCssPreviewButtonClick);
+	};
+
 	//when user selects which direction the gradient should go
 	linearGradientMakerWidget.prototype.registerLinearGradientSideOrCornerSelectChangeHandler = function(){
 		var self = this;
