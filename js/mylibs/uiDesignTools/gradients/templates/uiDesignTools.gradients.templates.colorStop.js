@@ -1,4 +1,4 @@
-// This file was automatically generated from uiDesignTools.gradients.templates.colorStop.soy.
+// This file was automatically generated from uiDesignTools.gradients.templates.colorStop.html.
 // Please don't edit this file by hand.
 
 if (typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; }
@@ -23,9 +23,9 @@ uiDesignTools.gradients.templates.colorStop.colorStopsTemplate = function(opt_da
 
 uiDesignTools.gradients.templates.colorStop.colorStopTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="', soy.$$escapeHtml(opt_data.colorStop.options.colorStopId), '" class="linearGradient-colorStop"><div id="', soy.$$escapeHtml(opt_data.colorStop.options.colorStopId), 'InputRanges" class="linearGradient-colorStop-inputRanges">');
+  output.append('<div id="', soy.$$escapeHtml(opt_data.colorStop.options.colorStopId), '" class="linearGradient-colorStop"><div id="colorPicker" class="linearGradient-colorStop-colorPicker"></div><div id="', soy.$$escapeHtml(opt_data.colorStop.options.colorStopId), 'InputRanges" class="linearGradient-colorStop-inputRanges">');
   uiDesignTools.gradients.templates.colorStop.colorStopInnerContentTemplate(opt_data, output);
-  output.append('</div><div id="colorPicker" class="linearGradient-colorStop-colorPicker"></div></div>');
+  output.append('</div></div>');
   return opt_sb ? '' : output.toString();
 };
 

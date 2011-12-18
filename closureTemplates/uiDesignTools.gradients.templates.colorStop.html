@@ -21,19 +21,19 @@
 {template .colorStopTemplate}
  <div id="{$colorStop.options.colorStopId}" class="linearGradient-colorStop">
  
+ 	 <div id="colorPicker" class="linearGradient-colorStop-colorPicker">
+     //don't do this. the widget will create the html
+	   //{call uiDesignTools.colorPicker.templates.colorBox.colorPickerInnerContentsTemplate}
+	 	   //{param colorPickerModel : $colorStop.options.colorPickerModel /}
+	   //{/call}
+   </div>
+   
    //need this separate so we can regen inner contents without messing with the colorPicker
    <div id="{$colorStop.options.colorStopId}InputRanges" class="linearGradient-colorStop-inputRanges">
 	  {call .colorStopInnerContentTemplate}
 		  {param colorStop : $colorStop /}
 	  {/call}
 	 </div>
-	 
-   <div id="colorPicker" class="linearGradient-colorStop-colorPicker">
-     //don't do this. the widget will create the html
-	   //{call uiDesignTools.colorPicker.templates.colorBox.colorPickerInnerContentsTemplate}
-	 	   //{param colorPickerModel : $colorStop.options.colorPickerModel /}
-	   //{/call}
-   </div>
 	 
  </div>
 {/template}

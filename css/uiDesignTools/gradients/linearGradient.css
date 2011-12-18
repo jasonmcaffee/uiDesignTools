@@ -142,18 +142,16 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 
 
 /* --------------------------------------------------------------  controls & inputs */
-/*
- * container for colorStops, etc.
+
+
+
+/* page options container for linearGradient.
+ * container for colorStops, direction, gradient type
  * all controls the user interacts with will be in this container.
  */
 .linearGradient-controls{
-
-
-}
-
-.linearGradient-colorStopsComponent{
-  width:99%;
-	padding:1%;
+	border:solid 1px #000000;
+	
 	background-image: -moz-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 	background-image: -webkit-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 	background-image: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
@@ -161,19 +159,102 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 	background-image: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(226, 226, 233, 1)), color-stop(100%,rgba(183, 189, 198, 1)));
 
-	border-radius: 6px 9px 5px 9px; 
-	-moz-border-radius: 6px 9px 5px 9px; 
-	-webkit-border-radius: 6px 9px 5px 9px; 
-	-o-border-radius: 6px 9px 5px 9px; 
-	border: 3px solid #C7C7C7;
+	border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-o-border-radius: 5px; 
 }
+
+/* ColorStop Direction GradientType   Tab Bar*/
+.lg-options-tab-bar{
+	width:98%;
+	display: inline-block;
+	margin-left:-1%;
+	margin-top:.5%;
+	padding: 2%;
+	
+	border:solid 1px #000000;
+	
+	background-image: -moz-linear-gradient(top,rgba(77, 77, 77, 100) 1%, rgba(51, 51, 51, 100) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(77, 77, 77, 100) 1%, rgba(51, 51, 51, 100) 100%);
+	background-image: -o-linear-gradient(top,rgba(77, 77, 77, 100) 1%, rgba(51, 51, 51, 100) 100%);
+	background-image: -ms-linear-gradient(top,rgba(77, 77, 77, 100) 1%, rgba(51, 51, 51, 100) 100%);
+	background-image: -linear-gradient(top,rgba(77, 77, 77, 100) 1%, rgba(51, 51, 51, 100) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(77, 77, 77, 100)), color-stop(100%,rgba(51, 51, 51, 100)));
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/* Color Stops, Direction, Gradient Type are tabs*/
+.lg-options-tab{
+	display: inline-block;
+	width: 33%;
+	cursor: pointer;
+	
+	text-shadow: 1px 1px 2px #2b2c2e;
+	filter: dropshadow(color=#2b2c2e, offx=1, offy=1);
+	color:white;
+	text-align: center;
+}
+
+.lg-options-tab:hover{
+	color: rgb(119, 156, 179);
+}
+
+/* --------------------------------------------------------------  Color Stops --------------------------------------------------------------------------------------------------------- */
+
+/* tab screen for color stops*/
+.linearGradient-colorStopsComponent{
+  width:98%;
+	padding:1%;
+	/*border: 3px solid #C7C7C7;*/
+}
+
+
+/* toolbar for color stops  */
+.linearGradient-colorStopsButtonPanel{
+	width: 98%;
+	padding : 1%;
+	
+	background-image: -moz-linear-gradient(top, rgba(235, 241, 246, 1) 0%, rgba(206, 206, 206, 1) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235, 241, 246, 1)), color-stop(100%,rgba(206, 206, 206, 1)));
+	background-image: -webkit-linear-gradient(top, rgba(235, 241, 246, 1) 0%,rgba(206, 206, 206, 1) 100%);
+	background-image: -o-linear-gradient(top, rgba(235, 241, 246, 1) 0%,rgba(206, 206, 206, 1) 100%);
+	background-image: -ms-linear-gradient(top, rgba(235, 241, 246, 1) 0%,rgba(206, 206, 206, 1) 100%);
+	background-image: linear-gradient(top, rgba(235, 241, 246, 1) 0%,rgba(206, 206, 206, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#cecece',GradientType=0 );
+
+	border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-o-border-radius: 5px; 
+	border:solid 1px #000000;
+}
+
+
+
 
 /*
  * the linear gradient maker has a colorStops container which holds each individual colorStop used in
  * formulating the gradientOutput generated css style.
  */
 .linearGradient-colorStops{
+	/*padding: 1%;*/
+	margin-top: 1%;
+	
+}
+
+/* 
+ * entire container for red, green, blue, etc slider controls
+ * dark background gradient
+ * */
+.linearGradient-colorStop{
+	min-height: 25px;
+	margin-bottom: 1%;
 	padding: 1%;
+	
 	background-image: -moz-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
 	background-image: -webkit-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
 	background-image: -o-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
@@ -181,37 +262,29 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 	background-image: -linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(72, 74, 72, 1)), color-stop(100%,rgba(57, 57, 63, 1)));
 
-  border-radius: 6px 9px 5px 9px; 
-	-moz-border-radius: 6px 9px 5px 9px; 
-	-webkit-border-radius: 6px 9px 5px 9px; 
-	-o-border-radius: 6px 9px 5px 9px; 
+  border-radius: 6px 6px 6px 6px; 
+	-moz-border-radius: 6px 6px 6px 6px; 
+	-webkit-border-radius: 6px 6px 6px 6px; 
+	-o-border-radius: 6px 6px 6px 6px; 
 }
 
-/* 
- * entire container for red, green, blue, etc slider controls
+/* contains each input type="range" that the colorStop uses. 
+ * white background gradient
  * */
-.linearGradient-colorStop{
-	min-height: 25px;
-	margin-bottom: 1%;
-	
-	background: rgb(255,255,255); /* Old browsers */
-	background-image: -moz-linear-gradient(left,  rgba(255,255,255,1) 1%, rgba(237,239,242,1) 100%); /* FF3.6+ */
-	background-image: -webkit-gradient(linear, left top, right top, color-stop(1%,rgba(255,255,255,1)), color-stop(100%,rgba(237,239,242,1))); /* Chrome,Safari4+ */
-	background-image: -webkit-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Chrome10+,Safari5.1+ */
-	background-image: -o-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* Opera 11.10+ */
-	background-image: -ms-linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* IE10+ */
-	background-image: linear-gradient(left,  rgba(255,255,255,1) 1%,rgba(237,239,242,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#edeff2',GradientType=1 ); /* IE6-9 */
-	
-	border-radius: 2px; 
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px; 
-	-o-border-radius: 2px;
-}
-
-/* contains each input type="range" that the colorStop uses. */
 .linearGradient-colorStop-inputRanges{
+	margin-top: 1%;
 	
+	border-radius: 4px 4px 4px 4px; 
+	-moz-border-radius: 4px 4px 4px 4px; 
+	-webkit-border-radius: 4px 4px 4px 4px; 
+	-o-border-radius: 4px 4px 4px 4px; 
+	
+	background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 100) 60%, rgba(213, 213, 213, 100) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 100) 60%, rgba(213, 213, 213, 100) 100%);
+	background-image: -o-linear-gradient(top,rgba(255, 255, 255, 100) 60%, rgba(213, 213, 213, 100) 100%);
+	background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 100) 60%, rgba(213, 213, 213, 100) 100%);
+	background-image: -linear-gradient(top,rgba(255, 255, 255, 100) 60%, rgba(213, 213, 213, 100) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(60%,rgba(255, 255, 255, 100)), color-stop(100%,rgba(213, 213, 213, 100)));
 }
 
 .linearGradient-colorStop label{
@@ -232,6 +305,21 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
  * */
 .linearGradient-colorStop-colorPicker{
 	
+}
+
+.linearGradient-colorStop .colorPicker-minimized{
+	border-radius: 4px 4px 4px 4px; 
+	-moz-border-radius: 4px 4px 4px 4px; 
+	-webkit-border-radius: 4px 4px 4px 4px; 
+	-o-border-radius: 4px 4px 4px 4px; 
+}
+
+/* --------------------------------------------------------------  Direction --------------------------------------------------------------------------------------------------------- */
+/* tab screen for direction*/
+.lg-gradient-direction-screen{
+  width:98%;
+	padding:1%;
+	/*border: 3px solid #C7C7C7;*/
 }
 
 
