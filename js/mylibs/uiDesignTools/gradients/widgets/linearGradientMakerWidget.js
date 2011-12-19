@@ -90,12 +90,13 @@ define([
 		var $lastTabSelected = this.$linearGradientColorStopsTab;
 		
 		function handleOptionTabClick($screenToDisplay, $tabWhichIsSelected){
+			//mark selected tab. unmark last tab so it's not highlighted
 			$lastTabSelected.removeClass('lg-options-tab-selected');
 			$tabWhichIsSelected.addClass('lg-options-tab-selected');
-
+			//show/hide screens
 			$lastScreenShown.hide();
 			$screenToDisplay.show();
-			
+			//scope variables for next time tab is clicked.
 			$lastScreenShown = $screenToDisplay;
 			$lastTabSelected = $tabWhichIsSelected;
 		}

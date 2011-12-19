@@ -20,23 +20,23 @@ uiDesignTools.colorPicker.templates.colorBox.colorPickerInnerContentsTemplate = 
 
 uiDesignTools.colorPicker.templates.colorBox.colorPickerMinimizedTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="', soy.$$escapeHtml(opt_data.colorPickerMinimizedDivId), '" class="colorPicker-minimized" style="background-color: rgba(', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.red), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.green), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.blue), ', 1);">&nbsp;</div>');
+  output.append('<div id="', soy.$$escapeHtml(opt_data.colorPickerMinimizedDivId), '" class="colorPicker-minimized" style="background-color: rgba(', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.red), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.green), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.blue), ', 1);">rgb(', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.red), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.green), ',', soy.$$escapeHtml(opt_data.colorPickerModel.options.currentlySelectedRGBA.blue), ')</div>');
   return opt_sb ? '' : output.toString();
 };
 
 
 uiDesignTools.colorPicker.templates.colorBox.colorBoxesTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  var colorBoxRowList31 = opt_data.colorPickerModel.options.colorBoxRows;
-  var colorBoxRowListLen31 = colorBoxRowList31.length;
-  for (var colorBoxRowIndex31 = 0; colorBoxRowIndex31 < colorBoxRowListLen31; colorBoxRowIndex31++) {
-    var colorBoxRowData31 = colorBoxRowList31[colorBoxRowIndex31];
+  var colorBoxRowList37 = opt_data.colorPickerModel.options.colorBoxRows;
+  var colorBoxRowListLen37 = colorBoxRowList37.length;
+  for (var colorBoxRowIndex37 = 0; colorBoxRowIndex37 < colorBoxRowListLen37; colorBoxRowIndex37++) {
+    var colorBoxRowData37 = colorBoxRowList37[colorBoxRowIndex37];
     output.append('<div class="colorBoxRow">');
-    var colorBoxList33 = colorBoxRowData31.colorBoxes;
-    var colorBoxListLen33 = colorBoxList33.length;
-    for (var colorBoxIndex33 = 0; colorBoxIndex33 < colorBoxListLen33; colorBoxIndex33++) {
-      var colorBoxData33 = colorBoxList33[colorBoxIndex33];
-      output.append('<div id="', soy.$$escapeHtml(colorBoxData33.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData33.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData33.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData33.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData33.options.rgba.alpha), ');"><a href="javascript:return;" style="opacity:0.0">#</a></div>');
+    var colorBoxList39 = colorBoxRowData37.colorBoxes;
+    var colorBoxListLen39 = colorBoxList39.length;
+    for (var colorBoxIndex39 = 0; colorBoxIndex39 < colorBoxListLen39; colorBoxIndex39++) {
+      var colorBoxData39 = colorBoxList39[colorBoxIndex39];
+      output.append('<div id="', soy.$$escapeHtml(colorBoxData39.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData39.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData39.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData39.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData39.options.rgba.alpha), ');"><a href="javascript:return;" style="opacity:0.0">#</a></div>');
     }
     output.append('</div>');
   }

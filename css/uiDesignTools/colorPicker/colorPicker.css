@@ -9,6 +9,7 @@
 	height: 100%;
 	cursor: pointer;
 	/*background-color: rgba(1,1,1,1);*/  /* background color is set via the element's style element, as it is a dynamic styling */
+	text-align: right;/* rbga text goes to the right*/
 }
 
 /* When the colorPicker-minimized element is clicked, the element with this class will be displayed

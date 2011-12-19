@@ -164,6 +164,10 @@ define([                 //todo: fsslider requirement
 				uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].publish({
 					colorStop : colorStop
 				});
+				
+				//update the minimized colorPicker so it reflects the selected range
+				self.colorPickerWidget.setCurrentlySelectedRGBA(colorStop.options.rgba);
+				
 			}//end colorStopRangeChangeHandler
 			
 		}//end registerColorStopRangeChangeHandlerFor

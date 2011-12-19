@@ -50,13 +50,23 @@ define([
 //setup model listeners
 		this.registerColorPickerModelChangedListener();
 	};
+
+//==================================================== Functions - General ================================================
+	//when the user changes colorStop RGBA, it's nice to have this function to call so we can change the color
+	colorPickerWidget.prototype.setCurrentlySelectedRGBA = function(rgba){
+		this.options.colorPickerModel.options.currentlySelectedRGBA = rgba;
+		this.refreshColorPickerMinimizedContainerHtml();//regenerate the background color
+	}
+
 	
-//==================================================== UI Display ================================================
+//==================================================== UI Display ==========================================================
+	//show the colorPicker color boxes
 	colorPickerWidget.prototype.expandUI = function(){
 		this.isExpanded = true;
 		this.$colorPickerExpanded.show();
 	};
 	
+	//hide the colorPicker color boxes
 	colorPickerWidget.prototype.collapseUI = function(){
 		this.isExpanded = false;
 		this.$colorPickerExpanded.hide();	
@@ -72,8 +82,7 @@ define([
 		//this.isExpanded != this.isExpanded;//set this to the opposite of what it currently is
 	};
 
-	
-//==================================================== Html Generation ===========================================
+//==================================================== Html Generation ======================================================
 	
 	//when the user clicks a colorBox, we need to change the background color of minimized so it reflects the color which was chosen.
 	colorPickerWidget.prototype.refreshColorPickerMinimizedContainerHtml = function(){
@@ -212,6 +221,15 @@ define([
 			var newHueColor = $(this).val();
 			//update model. model will emit updated event, which we listen for in handleColorPickerModelChanged
 			self.options.colorPickerModel.setHueColor(newHueColor);
+			
+			//refresh the minimized background color to reflect what the user selected.
+			self.refreshColorPickerMinimizedContainerHtml();
+			
+			//the colorStopWidget listens for this event so it can make updates to its UI.
+			uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].publish({
+				selectedRGBA : self.options.colorPickerModel.options.currentlySelectedRGBA,
+				originatingColorPickerWidgetUniqueId : self.options.uniqueId	//so people can filter
+			});
 		}
 		
 		//register the on change handler

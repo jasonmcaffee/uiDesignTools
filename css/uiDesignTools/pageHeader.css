@@ -17,8 +17,9 @@
 	padding-right 3%;
 	
 	color: white;
-	text-shadow: 1px 1px 1px rgba(187, 187, 187, 1);
-	filter: dropshadow(color=#0372fa, offx=1, offy=1);
+	/*text-shadow: 1px 1px 1px rgba(187, 187, 187, 1);*/
+	text-shadow: 1px 1px 2px #2b2c2e;
+	filter: dropshadow(color=#2b2c2e, offx=1, offy=1);
 	
 	
 }
@@ -36,6 +37,7 @@
 	filter: dropshadow(color=#2b2c2e, offx=1, offy=1);
 	
 	cursor: pointer;
+	color: rgb(142,159,170);
 }
 
 .generated-css-tab{

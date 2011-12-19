@@ -47,7 +47,7 @@
 */
 {template .colorPickerMinimizedTemplate}
   <div id="{$colorPickerMinimizedDivId}" class="colorPicker-minimized" style="background-color: rgba({$colorPickerModel.options.currentlySelectedRGBA.red},{$colorPickerModel.options.currentlySelectedRGBA.green},{$colorPickerModel.options.currentlySelectedRGBA.blue}, 1);">
-		&nbsp;
+		rgb({$colorPickerModel.options.currentlySelectedRGBA.red},{$colorPickerModel.options.currentlySelectedRGBA.green},{$colorPickerModel.options.currentlySelectedRGBA.blue})
 	</div>
 {/template}
 
