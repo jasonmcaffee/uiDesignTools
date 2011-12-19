@@ -17,8 +17,9 @@
 define([
 	'mylibs/uiDesignTools/uiDesignTools', //core library
 	'libs/jquery/jqueryModule',
-	'mylibs/uiDesignTools/colorPicker/models/colorBox'
-], function(uiDesignTools, $, colorBox){
+	'mylibs/uiDesignTools/colorPicker/models/colorBox',
+	'mylibs/uiDesignTools/colorPicker/models/hueRangeSelectorBox'
+], function(uiDesignTools, $, colorBox, hueRangeSelectorBox){
 	
 	var uniqueIdCount = 0;
 	
@@ -29,7 +30,8 @@ define([
 			hueColor : 128, //color we are currently displaying in the colorPicker. 0-359
 			numberOfRows : 30, //the number of rows the colorPicker should have
 			numberOfColumns : 30,
-			currentlySelectedRGBA : false //will be calculated for you based off the hue color if not set. this quirk is due to us not having a formula to calculate hsv based off of rgba (we only have the other way around)
+			currentlySelectedRGBA : false, //will be calculated for you based off the hue color if not set. this quirk is due to us not having a formula to calculate hsv based off of rgba (we only have the other way around)
+			hueRangeSelectorBoxes : false  //when we generate the hue range selector, we will use this model to figure out the rgba of each select box
 		};
 		
 		$.extend(this.options, optionsParam);
@@ -38,9 +40,32 @@ define([
 		if(!this.options.currentlySelectedRGBA)
 			this.options.currentlySelectedRGBA = this.calculateRgbColorsUsingHsv(this.options.hueColor, 100, 100);//needed for generating the template, as the background color of colorPicker-minimized depends on this value.
 		
+		if(!this.options.hueRangeSelectorBoxes)
+			this.options.hueRangeSelectorBoxes = this.createHueRangeSelectorBoxes();
+			
 		//create all the rows for a given hue color
 		this.createColorBoxRows(this.options.hueColor, this.options.numberOfRows,this.options.numberOfColumns);
 		
+	}
+	
+	//for the hue range selector (used in expanded view), we need a model to dictate the html generated
+	colorPicker.prototype.createHueRangeSelectorBoxes = function(){
+		var hueRangeSelectorBoxes = [];
+		
+		//iterate over each hueColor and create a box model representation
+		for(var i = 0; i <=359; ++i){
+			var calculatedRgb = this.calculateRgbColorsUsingHsv(i, 100, 100);
+			calculatedRgb.alpha = 1;
+			
+			var newHueRangeSelectorBox = new hueRangeSelectorBox({
+				hueColor: i,
+				rgba : calculatedRgb
+			});
+			
+			hueRangeSelectorBoxes.push(newHueRangeSelectorBox);//add to our return array
+		}
+		
+		return hueRangeSelectorBoxes;
 	}
 	
   //model updates which emit events. regens colorBoxRows

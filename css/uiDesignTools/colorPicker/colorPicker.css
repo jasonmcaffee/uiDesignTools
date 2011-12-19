@@ -17,7 +17,9 @@
  * */
 .colorPicker-expanded{
 	display: none;
+	display:inline-block;
 	width:100%;
+	/*height: 200px;  NO Bad. Breaks things*/
 }
 
 
@@ -28,10 +30,30 @@
 	
 }
 
+/* left hand side of expanded */
 .colorPicker-colorBoxes{
-	width:100%;
-	height:100%;
+	width:85%;
+	/*height:100%;  has no effect*/
+	display:inline-block;
 }
+
+/* displayed to the right side of the colorPicker-colorBoxes 
+ * right hand side of expanded
+ * */
+.hueRangeContainer{
+	display:inline-block;
+	width:8%;
+	/*max-height:100px;  NO. Breaks shit.*/
+}
+
+/*a single box which is clickable and sets the hue color*/
+.hue-range-selector-box{
+	
+	width:100%;
+	cursor:pointer;
+	max-height: 2px;
+}
+
 
 .colorBoxRow{
 	width:100%;
@@ -62,4 +84,5 @@
 	display:inline-block;
 	background-color: rgba(29, 77, 123, 1);
 }
+
 

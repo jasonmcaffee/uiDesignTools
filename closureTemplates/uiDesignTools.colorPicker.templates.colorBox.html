@@ -33,7 +33,7 @@
 
     //the slider for changing the hue color
     {call .hueRangeTemplate}
-  	  //{param colorPickerModel : $colorPickerModel /}
+  	  {param colorPickerModel : $colorPickerModel /}
     {/call}
   
   </div><!-- end colorPickerDivIdExpanded -->
@@ -73,12 +73,18 @@
 
 /**
 * generates html for the hue color slider
-* //param colorPickerModel
+* @param colorPickerModel
 */
 {template .hueRangeTemplate}
-	<div class="hueRangeContainer">
-		<label for="hueRange">hue</label>
-		<input id="hueRange" type="range" max="359" min="0"/>
+	<div id="hueRangeContainer" class="hueRangeContainer">
+		<!-- <label for="hueRange">hue</label>
+		<input id="hueRange" type="range" max="359" min="0" value="{$colorPickerModel.options.hueColor}"/>
+		 -->
+		{foreach $hueRangeSelectorBox in $colorPickerModel.options.hueRangeSelectorBoxes}
+			<div id="hueRangeSelectorBox{$hueRangeSelectorBox.options.hueColor}" class="hue-range-selector-box" style="background-color: rgba({$hueRangeSelectorBox.options.rgba.red}, {$hueRangeSelectorBox.options.rgba.green}, {$hueRangeSelectorBox.options.rgba.blue}, {$hueRangeSelectorBox.options.rgba.alpha});">
+				&nbsp;
+			</div>
+		{/foreach}
 	</div>
 {/template}
 

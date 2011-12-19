@@ -44,9 +44,9 @@ define([
 		
 //setup ui listeners
 		this.registerClickHandlerForColorBoxes();//send events when a colorBox is clicked so we can do things like change the colorStop's input ranges to match what was selected by the user.
-		this.registerHueColorChangeHandler();//regenerate colorBoxes when the hue color changes
+												// no longer needed. this.registerHueColorChangeHandler();//regenerate colorBoxes when the hue color changes
 		this.registerClickHandlerForColorPickerMinimized();//expand when minimized is clicked
-		
+		this.registerClickHandlerForHueRangeSelector();//when the hue range selector box is clicked, it'll be handled here. (setHueColor)
 //setup model listeners
 		this.registerColorPickerModelChangedListener();
 	};
@@ -138,6 +138,7 @@ define([
 			self.refreshColorBoxes();
 		}
 		
+		//register the listener/handler
 		uiDesignTools.events.eventManager.events['colorPickerModelChanged'].subscribe(
 			handleColorPickerModelChanged,//callback to fire when the event is published
 			function(event, myExtraData){ //only call my callback when this returns true
@@ -148,6 +149,44 @@ define([
 	
 	
 //==================================================== UI Event Registry ===========================================
+	
+	//when expanded, we display colorboxes (left) and hue range selector (right)
+	//when a hueRangeSelectorBox is clicked, we must update the model, send events, calculate rgbs, etc.
+	colorPickerWidget.prototype.registerClickHandlerForHueRangeSelector = function(){
+		var self = this;
+		
+		//handle the event
+		function handleHueRangeSelectorBoxClick(event){
+			//get the hue color selected
+			var hueRangeSelectorBox = event.data.selectedHueRangeSelectorBox;
+			//xxx calculate rgb so colorStop can use it. <--no need already calculated.
+			
+			//update our model.
+			self.options.colorPickerModel.setHueColor(hueRangeSelectorBox.options.hueColor);
+			
+			//refresh the minimized background color to reflect what the user selected.
+			self.refreshColorPickerMinimizedContainerHtml();
+			
+			//the colorStopWidget listens for this event so it can make updates to its UI.
+			//changes gradientOutput and css text of linearGradientWidget
+			uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].publish({
+				selectedRGBA : self.options.colorPickerModel.options.currentlySelectedRGBA,
+				originatingColorPickerWidgetUniqueId : self.options.uniqueId	//so people can filter
+			});
+			
+		}
+		
+		
+		//iterate over each hueRangeSelectorBox models and setup up listener.
+		for(var i = 0; i < this.options.colorPickerModel.options.hueRangeSelectorBoxes.length; ++i){
+			var hueRangeSelectorBox = this.options.colorPickerModel.options.hueRangeSelectorBoxes[i];
+			//register the listener
+			this.options.$colorPicker.on('click', '#'+'hueRangeSelectorBox'+hueRangeSelectorBox.options.hueColor, 
+				{selectedHueRangeSelectorBox: hueRangeSelectorBox}, 
+				handleHueRangeSelectorBoxClick);
+		}
+	};
+	
 	
 	//when the minimized version (small box with background color) is clicked, we want to popup a modal (expanded) so the user can pick a color via clicking on the colorBox.
 	colorPickerWidget.prototype.registerClickHandlerForColorPickerMinimized = function(){
@@ -213,29 +252,29 @@ define([
 	};
 	
 	//when the ui input range changes, this will be used.
-	colorPickerWidget.prototype.registerHueColorChangeHandler = function(){
-		var self = this; //
-		
-		function handleHueColorChange(event){
-			//get the new value 
-			var newHueColor = $(this).val();
-			//update model. model will emit updated event, which we listen for in handleColorPickerModelChanged
-			self.options.colorPickerModel.setHueColor(newHueColor);
-			
-			//refresh the minimized background color to reflect what the user selected.
-			self.refreshColorPickerMinimizedContainerHtml();
-			
-			//the colorStopWidget listens for this event so it can make updates to its UI.
-			uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].publish({
-				selectedRGBA : self.options.colorPickerModel.options.currentlySelectedRGBA,
-				originatingColorPickerWidgetUniqueId : self.options.uniqueId	//so people can filter
-			});
-		}
-		
-		//register the on change handler
-		this.options.$colorPicker.on('change', '#hueRange', handleHueColorChange);
-		
-	};
+	// colorPickerWidget.prototype.registerHueColorChangeHandler = function(){
+		// var self = this; //
+// 		
+		// function handleHueColorChange(event){
+			// //get the new value 
+			// var newHueColor = $(this).val();
+			// //update model. model will emit updated event, which we listen for in handleColorPickerModelChanged
+			// self.options.colorPickerModel.setHueColor(newHueColor);
+// 			
+			// //refresh the minimized background color to reflect what the user selected.
+			// self.refreshColorPickerMinimizedContainerHtml();
+// 			
+			// //the colorStopWidget listens for this event so it can make updates to its UI.
+			// uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'].publish({
+				// selectedRGBA : self.options.colorPickerModel.options.currentlySelectedRGBA,
+				// originatingColorPickerWidgetUniqueId : self.options.uniqueId	//so people can filter
+			// });
+		// }
+// 		
+		// //register the on change handler
+		// this.options.$colorPicker.on('change', '#hueRange', handleHueColorChange);
+// 		
+	// };
 	
 	
 //=================================================== Export ============================================	
