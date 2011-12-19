@@ -7,6 +7,7 @@
 .colorPicker-minimized{
   width: 100%; /* fill the space we've been given by our container.*/
 	height: 100%;
+	cursor: pointer;
 	/*background-color: rgba(1,1,1,1);*/  /* background color is set via the element's style element, as it is a dynamic styling */
 }
 
@@ -34,7 +35,6 @@
 .colorBoxRow{
 	width:100%;
 	height:3%;
-	pointer:crosshair;
 }
 
 .colorBox {

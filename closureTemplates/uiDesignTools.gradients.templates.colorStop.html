@@ -20,19 +20,26 @@
 */
 {template .colorStopTemplate}
  <div id="{$colorStop.options.colorStopId}" class="linearGradient-colorStop">
- 
- 	 <div id="colorPicker" class="linearGradient-colorStop-colorPicker">
-     //don't do this. the widget will create the html
-	   //{call uiDesignTools.colorPicker.templates.colorBox.colorPickerInnerContentsTemplate}
-	 	   //{param colorPickerModel : $colorStop.options.colorPickerModel /}
-	   //{/call}
-   </div>
-   
-   //need this separate so we can regen inner contents without messing with the colorPicker
-   <div id="{$colorStop.options.colorStopId}InputRanges" class="linearGradient-colorStop-inputRanges">
-	  {call .colorStopInnerContentTemplate}
-		  {param colorStop : $colorStop /}
-	  {/call}
+ 	 
+ 	 //column1
+   <div id="colorStopColumn1" class="lg-color-stop-column-1">
+	 	 //spot for the colorPickerWidget to go. has minimized and expanded versions of itself (show/hide on click)
+	 	 <div id="colorPicker" class="linearGradient-colorStop-colorPicker">
+	   </div>
+	   
+	   //need this separate so we can regen inner contents without messing with the colorPicker
+	   <div id="{$colorStop.options.colorStopId}InputRanges" class="linearGradient-colorStop-inputRanges">
+		  {call .colorStopInnerContentTemplate}
+			  {param colorStop : $colorStop /}
+		  {/call}
+		 </div>
+	 </div>
+	 
+	 //column2
+   <div id="colorStopColumn2" class="lg-color-stop-column-2">
+	 	<div id="deleteColorStopButton{$colorStop.options.colorStopId}" class="lg-delete-color-stop-button">
+	 		<img src="img/deleteButton.png" alt="Delete color stop"/>
+	 	</div>	
 	 </div>
 	 
  </div>
@@ -59,9 +66,7 @@
  <label for="{$colorStop.options.colorStopId}positionRange">position</label>
  <input id="{$colorStop.options.colorStopId}positionRange" type="range" min="0" max="100" step="1" value="{$colorStop.options.position}" />
  
- <input id="deleteColorStopButton{$colorStop.options.colorStopId}" type="button" value="Delete"/>
- 
+ //<input id="deleteColorStopButton{$colorStop.options.colorStopId}" type="button" value="Delete"/>
 
- 
 {/template}
 

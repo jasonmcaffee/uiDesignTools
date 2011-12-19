@@ -152,12 +152,12 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 .linearGradient-controls{
 	border:solid 1px #000000;
 	
-	background-image: -moz-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background-image: -webkit-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background-image: -o-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background-image: -ms-linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background-image: -linear-gradient(top,rgba(226, 226, 233, 1) 1%, rgba(183, 189, 198, 1) 100%);
-	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(226, 226, 233, 1)), color-stop(100%,rgba(183, 189, 198, 1)));
+	background-image: -moz-linear-gradient(top,rgba(203, 203, 206, 100) 1%, rgba(203, 203, 201, 100) 100%);
+	background-image: -webkit-linear-gradient(top,rgba(203, 203, 206, 100) 1%, rgba(203, 203, 201, 100) 100%);
+	background-image: -o-linear-gradient(top,rgba(203, 203, 206, 100) 1%, rgba(203, 203, 201, 100) 100%);
+	background-image: -ms-linear-gradient(top,rgba(203, 203, 206, 100) 1%, rgba(203, 203, 201, 100) 100%);
+	background-image: -linear-gradient(top,rgba(203, 203, 206, 100) 1%, rgba(203, 203, 201, 100) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,rgba(203, 203, 206, 100)), color-stop(100%,rgba(203, 203, 201, 100)));
 
 	border-radius: 5px; 
 	-moz-border-radius: 5px; 
@@ -233,7 +233,10 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 	border:solid 1px #000000;
 }
 
-
+/*add color stop button*/
+.linearGradient-colorStopButtonContainer{
+	cursor: pointer;
+}
 
 
 /*
@@ -253,6 +256,15 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 .linearGradient-colorStop{
 	min-height: 25px;
 	margin-bottom: 1%;
+	
+	
+	
+}
+
+/* everything but the delete button */
+.lg-color-stop-column-1{
+	display: inline-block;
+	width:94%;
 	padding: 1%;
 	
 	background-image: -moz-linear-gradient(top,rgba(72, 74, 72, 1) 1%, rgba(57, 57, 63, 1) 100%);
@@ -266,6 +278,17 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 	-moz-border-radius: 6px 6px 6px 6px; 
 	-webkit-border-radius: 6px 6px 6px 6px; 
 	-o-border-radius: 6px 6px 6px 6px; 
+}
+
+.lg-color-stop-column-2{
+	display: inline-block;
+	width:3%;
+	padding-left:.5%;
+	vertical-align: top;
+}
+
+.lg-delete-color-stop-button{
+	cursor:pointer;
 }
 
 /* contains each input type="range" that the colorStop uses. 
