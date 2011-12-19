@@ -203,6 +203,10 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 	text-align: center;
 }
 
+.lg-options-tab-selected{
+	color: rgb(119, 156, 179);
+}
+
 .lg-options-tab:hover{
 	color: rgb(119, 156, 179);
 }
@@ -210,7 +214,7 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 /* --------------------------------------------------------------  Color Stops --------------------------------------------------------------------------------------------------------- */
 
 /* tab screen for color stops*/
-.linearGradient-colorStopsComponent{
+.lg-color-stops-screen{
   width:98%;
 	padding:1%;
 	/*border: 3px solid #C7C7C7;*/
@@ -346,7 +350,16 @@ background-image: -webkit-gradient(linear, left top, left bottom,color-stop(1%,r
 .lg-gradient-direction-screen{
   width:98%;
 	padding:1%;
+	display:none;
 	/*border: 3px solid #C7C7C7;*/
 }
 
+/* --------------------------------------------------------------  Gradient Type ------------------------------------------------------------------------------------------------------ */
+.lg-gradient-type-screen{
+	/*text-align: center;*/
+	display:none;
+}
 
+.lg-gradient-type-selection{
+	cursor: pointer;
+}

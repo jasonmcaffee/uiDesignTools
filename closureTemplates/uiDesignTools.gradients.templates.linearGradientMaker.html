@@ -82,13 +82,13 @@
 		
 		//tab bar for linear gradient
 		<div id="linearGradientOptionsTabBar" class="lg-options-tab-bar">
-			<div id="colorStopsTab" class="lg-options-tab">Color Stops</div>
+			<div id="colorStopsTab" class="lg-options-tab lg-options-tab-selected">Color Stops</div>
 			<div id="directionTab" class="lg-options-tab">Direction</div>
 			<div id="gradientTypeTab" class="lg-options-tab">Gradient Type</div>
 		</div>
 		
 		//colorStops container screen
-		<div id="colorStopsComponent" class="linearGradient-colorStopsComponent">
+		<div id="linearGradientColorStopsScreen" class="lg-color-stops-screen">
 
 			//colorStops Toolbar
 			<!-- write out colorStops button panel (add colorStop)-->
@@ -107,7 +107,7 @@
 		</div> //end colorStops container screen
 		
 		//direction container screen
-		<div id="lg-gradient-direction-screen" class="lg-gradient-direction-screen">
+		<div id="linearGradientDirectionScreen" class="lg-gradient-direction-screen">
 			//direction dropdown -- goes away soon.
 			<div id="linearGradientOptions" class="linearGradient-options">
 				<label for="linearGradientSideOrCorner">gradient direction</label>
@@ -123,6 +123,34 @@
 				</select>
 			</div>
 		</div>
+		
+		//gradient type screen
+		<div id="linearGradientGradientTypeScreen" class="lg-gradient-type-screen">
+			
+			<div id="gradientTypeSelectionContainer">
+				
+				<div id="linearGradientSelection" class="lg-gradient-type-selection">
+					<img src="img/plusButton.png" alt="Linear Gradient" />
+					<label>Linear Gradient</label>
+				</div>
+				<div id="circularGradientSelection" class="lg-gradient-type-selection">
+					<img src="img/plusButton.png" alt="Circular Gradient" />
+					<label>Circular Gradient</label>
+				</div>
+				<div id="elipticalGradientSelection" class="lg-gradient-type-selection">
+					<img src="img/plusButton.png" alt="Eliptical Gradient" />
+					<label>Eliptical Gradient</label>
+				</div>
+				<div id="repeatingGradientSelection" class="lg-gradient-type-selection">
+					<img src="img/plusButton.png" alt="Repeating Gradient" />
+					<label>Repeating Gradient</label>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
 		
   </div>
 {/template}

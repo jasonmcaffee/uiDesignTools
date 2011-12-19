@@ -32,14 +32,25 @@ define([
 		
 //jquery objects
 		this.$linearGradientMakerControls = $('#linearGradientMakerControls', this.options.$linearGradientMaker);//controls hold the colorStops, and any other widget which allows us to tweak the output
-		this.$colorStopsComponent = $('#colorStopsComponent', this.$linearGradientMakerControls);//holds everything related to adjusting color stops
-		this.$colorStops = $('#colorStops', this.$colorStopsComponent);//colorstops allow us to tweak the output (generated gradient)
+		
+		//tabs
+		this.$linearGradientColorStopsTab = $('#colorStopsTab', this.options.$linearGradientMaker); //need to change color when selected
+		this.$linearGradientDirectionTab = $('#directionTab', this.options.$linearGradientMaker); //need to change color when selected
+		this.$linearGradientGradientTypeTab = $('#gradientTypeTab', this.options.$linearGradientMaker); //need to change color when selected
+		
+		//screens
+		this.$linearGradientColorStopsScreen = $('#linearGradientColorStopsScreen', this.$linearGradientMakerControls);//holds everything related to adjusting color stops
+		this.$linearGradientDirectionScreen = $('#linearGradientDirectionScreen', this.$linearGradientMakerControls);//screen which holds selection option for direction
+		this.$linearGradientGradientTypeScreen = $('#linearGradientGradientTypeScreen', this.$linearGradientMakerControls);//holds screen which shows the selection for gradient type (cirular, linear, etc)
+		
+		this.$colorStops = $('#colorStops', this.$linearGradientColorStopsScreen);//colorstops allow us to tweak the output (generated gradient)
 		
 		this.$gradientOutput = $('#gradientOutput', this.options.$linearGradientMaker);//the final result of users modification. updated as user interacts with controls.
 		this.$generatedLinearGradientCssOutputTextArea = $('#generatedLinearGradientCssOutputTextArea', this.options.$linearGradientMaker);//where we will display generated css for the linear gradient
 		this.$generatedLinearGradientCssOutput = $("#generatedLinearGradientCssOutput", this.options.$linearGradientMaker);//show hide this when css preview button is clicked
 		
-		//i don't know that i need this yet... this.$linearGradientSideOrCornerSelect = $('#linearGradientSideOrCorner', this.options.$linearGradientMaker);//user can pick which way the linear gradient should go.
+		
+			//i don't know that i need this yet... this.$linearGradientSideOrCornerSelect = $('#linearGradientSideOrCorner', this.options.$linearGradientMaker);//user can pick which way the linear gradient should go.
 		
 //Widget Creation
 		this.colorStopWidgets = [];//array of colorStopWidgets which each represent a colorStop in this linear gradient
@@ -62,6 +73,8 @@ define([
 		this.registerAddColorStopButtonClickHandler();//listen for on click so we can add a new colorStop
 		this.registerLinearGradientSideOrCornerSelectChangeHandler();
 		
+		this.registerOptionsTabBarClickHandler();//show and hide screens when tabs are clicked.
+		
 //HTML Generation
 		this.refreshGeneratedOutput();//gradientOutput and textarea should be refreshed to reflect the current model
 		
@@ -69,6 +82,44 @@ define([
 	
 
 //=================================================================== UI Events ===============================================
+
+	//show/hide screens when tabs are clicked
+	linearGradientMakerWidget.prototype.registerOptionsTabBarClickHandler = function(){
+		var self = this;
+		var $lastScreenShown = this.$linearGradientColorStopsScreen;
+		var $lastTabSelected = this.$linearGradientColorStopsTab;
+		
+		function handleOptionTabClick($screenToDisplay, $tabWhichIsSelected){
+			$lastTabSelected.removeClass('lg-options-tab-selected');
+			$tabWhichIsSelected.addClass('lg-options-tab-selected');
+
+			$lastScreenShown.hide();
+			$screenToDisplay.show();
+			
+			$lastScreenShown = $screenToDisplay;
+			$lastTabSelected = $tabWhichIsSelected;
+		}
+		
+		function handleColorStopTabClick(event){
+			handleOptionTabClick(self.$linearGradientColorStopsScreen, self.$linearGradientColorStopsTab);
+		}
+		
+		function handleDirectionTabClick(event){
+			handleOptionTabClick(self.$linearGradientDirectionScreen, self.$linearGradientDirectionTab);
+		}
+		
+		function handleGradientTabClick(event){
+			handleOptionTabClick(self.$linearGradientGradientTypeScreen, self.$linearGradientGradientTypeTab);
+		}
+		
+		this.options.$linearGradientMaker.on('click', '#colorStopsTab', handleColorStopTabClick);//i could pass in event data, but i don't want to for some reason...kind of a pain.
+		this.options.$linearGradientMaker.on('click', '#directionTab',  handleDirectionTabClick);
+		this.options.$linearGradientMaker.on('click', '#gradientTypeTab', handleGradientTabClick);
+		
+	};
+
+
+  //show and hide the generated css text when the preview button is clicked
 	linearGradientMakerWidget.prototype.registerCssPreviewButtonClickHandler = function(){
 		var self = this;
 		var isCurrentlyDisplayed = false;//start off without display showing.
@@ -122,7 +173,7 @@ define([
 			self.options.linearGradientModel.addColorStop(newColorStop);
 		}
 		//listen for on click so we can add a new colorStop
-		this.$colorStopsComponent.on("click", "#addColorStopButton", addColorStopButtonClickHandler);
+		this.$linearGradientColorStopsScreen.on("click", "#addColorStopButton", addColorStopButtonClickHandler);
 	};
 	
 	//ensure all colorstops have a unique id so there are no conflicts when adding, deleting, adding, etc the color stops (click handlers break if not unique id.)
