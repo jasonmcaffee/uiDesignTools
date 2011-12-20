@@ -13,6 +13,13 @@ html{
 }
 
 
+.linearGradientMakerWidgetContainer{
+	height: 100%;
+}
+
+.linearGradientMaker{
+	height: 100%;
+}
 
 .linearGradient-linearGradientMakerControlsRow1{
 	padding: 5px;

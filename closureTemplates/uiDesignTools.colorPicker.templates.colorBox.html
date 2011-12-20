@@ -63,7 +63,10 @@
 		  {foreach $colorBox in $colorBoxRow.colorBoxes}
 		  	<div id="{$colorBox.options.colorBoxId}" class="colorBox" style="background-color: rgba({$colorBox.options.rgba.red}, {$colorBox.options.rgba.green}, {$colorBox.options.rgba.blue}, {$colorBox.options.rgba.alpha});">
 					//fixes chrome issue with &nbsp; here. chrome wouldn't recognize the area when really small.
-					<a href="javascript:return;" style="opacity:0.0">#</a>
+					//&nbsp;
+					//<a href="javascript:return;" style="">&#338;</a>
+					<input type="button" value="taco">
+					//opacity:0.0 
 		 		</div>
 		  {/foreach}
 		</div>

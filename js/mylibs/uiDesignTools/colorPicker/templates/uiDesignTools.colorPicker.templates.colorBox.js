@@ -38,7 +38,7 @@ uiDesignTools.colorPicker.templates.colorBox.colorBoxesTemplate = function(opt_d
     var colorBoxListLen40 = colorBoxList40.length;
     for (var colorBoxIndex40 = 0; colorBoxIndex40 < colorBoxListLen40; colorBoxIndex40++) {
       var colorBoxData40 = colorBoxList40[colorBoxIndex40];
-      output.append('<div id="', soy.$$escapeHtml(colorBoxData40.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData40.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData40.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData40.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData40.options.rgba.alpha), ');"><a href="javascript:return;" style="opacity:0.0">#</a></div>');
+      output.append('<div id="', soy.$$escapeHtml(colorBoxData40.options.colorBoxId), '" class="colorBox" style="background-color: rgba(', soy.$$escapeHtml(colorBoxData40.options.rgba.red), ', ', soy.$$escapeHtml(colorBoxData40.options.rgba.green), ', ', soy.$$escapeHtml(colorBoxData40.options.rgba.blue), ', ', soy.$$escapeHtml(colorBoxData40.options.rgba.alpha), ');"><input type="button" value="taco"></div>');
     }
     output.append('</div>');
   }

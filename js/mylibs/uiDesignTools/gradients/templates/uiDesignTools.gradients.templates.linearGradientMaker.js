@@ -9,7 +9,7 @@ if (typeof uiDesignTools.gradients.templates.linearGradientMaker == 'undefined')
 
 uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="linearGradientMaker">');
+  output.append('<div id="linearGradientMaker" class="linearGradientMaker">');
   uiDesignTools.gradients.templates.linearGradientMaker.linearGradientMakerInnerContentTemplate(opt_data, output);
   output.append('</div>');
   return opt_sb ? '' : output.toString();

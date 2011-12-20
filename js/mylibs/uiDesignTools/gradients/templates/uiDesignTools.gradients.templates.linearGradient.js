@@ -1,4 +1,4 @@
-// This file was automatically generated from uiDesignTools.gradients.templates.linearGradient.soy.
+// This file was automatically generated from uiDesignTools.gradients.templates.linearGradient.html.
 // Please don't edit this file by hand.
 
 if (typeof uiDesignTools == 'undefined') { var uiDesignTools = {}; }
