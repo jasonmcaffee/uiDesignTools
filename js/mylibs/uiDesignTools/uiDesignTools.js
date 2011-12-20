@@ -19,7 +19,9 @@ define([
 	//create the event manager
 	uiDesignTools.events.eventManager = new eventManager();
 	
-	//create events
+//create events
+	
+	//color stops
 	uiDesignTools.events.eventManager.events['colorStopModelHasChanged'] = new uiDesignToolsEvent({type:'colorStopModelHasChanged'});
 	uiDesignTools.events.eventManager.events['colorStopModelHasBeenAdded'] = new uiDesignToolsEvent({type:'colorStopModelHasBeenAdded'});
 	//color stop widget cant delete the model, so fires this event when the delete button is clicked
@@ -27,11 +29,18 @@ define([
 	//not sure if this should be used...probably
 	uiDesignTools.events.eventManager.events['colorStopModelHasBeenDeleted'] = new uiDesignToolsEvent({type:'colorStopModelHasBeenDeleted'});
 	
+	//linearGradient
 	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'] = new uiDesignToolsEvent({type:'linearGradientModelHasChanged'});
 	
+	//colorpicker
 	uiDesignTools.events.eventManager.events['colorPickerModelChanged'] = new uiDesignToolsEvent({type:'colorPickerModelChanged'});
-
 	uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'] = new uiDesignToolsEvent({type:'colorPickerNewColorSelected'});//fires when a colorBox is clicked
 	
-	return uiDesignTools;//todo: stop global namespage polution and declare this as a local var. looks like it's already behaving that way.
+	//inputs 
+	uiDesignTools.events.eventManager.events['radioButtonSelected'] = new uiDesignToolsEvent({type:'radioButtonSelected'});
+	//example uiDesignTools.events.eventManager.events['radioButtonSelected'].publish({
+				//eventOriginatorId: self.options.uniqueId, //so people can filter event listeners
+				 //selectedRadioButton: selectedRadioButtonModel});
+	
+	return uiDesignTools;
 });//end require

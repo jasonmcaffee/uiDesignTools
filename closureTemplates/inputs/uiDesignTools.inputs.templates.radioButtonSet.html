@@ -1,0 +1,31 @@
+{namespace uiDesignTools.inputs.templates.radioButtonSet}
+
+/**
+* @param radioButtonSetModel 
+* 
+*/
+{template .radioButtonSetTemplate}
+  
+<div id="{$radioButtonSetModel.options.radioButtonSetId}">
+	//iterate over each radioButton and generate corresponding html
+	{foreach $radioButtonModel in $radioButtonSetModel.options.radioButtonModels}
+		{call .radioButtonTemplate}
+			{param radioButtonModel : $radioButtonModel /}
+		{/call}
+	{/foreach}
+</div>
+{/template}
+
+/**
+* @param radioButtonModel 
+* 
+*/
+{template .radioButtonTemplate}
+	<div id="{$radioButtonModel.options.radioButtonId}" class="inputs-radio-button">
+		{if $radioButtonModel.options.isSelected}
+		  <img src="img/plusButton.png" alt="Selection Image"><label>{$radioButtonModel.options.displayText}</label>
+		{else}
+		  <img src="img/emptyButton.png" alt="Selection Image"><label>{$radioButtonModel.options.displayText}</label>
+		{/if}
+	</div>
+{/template}

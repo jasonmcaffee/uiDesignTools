@@ -12,8 +12,11 @@ define([
 	'mylibs/uiDesignTools/gradients/templates/linearGradientTemplateModule',
 	'mylibs/uiDesignTools/gradients/widgets/colorStopWidget', 
 	'mylibs/uiDesignTools/gradients/templates/colorStopTemplateModule',
-	'mylibs/uiDesignTools/gradients/models/colorStop'
-], function(uiDesignTools, $, linearGradientTemplate, colorStopWidget, colorStopTemplate, colorStop){
+	'mylibs/uiDesignTools/gradients/models/colorStop',
+	'mylibs/uiDesignTools/inputs/models/radioButton',
+	'mylibs/uiDesignTools/inputs/models/radioButtonSet',
+	'mylibs/uiDesignTools/inputs/widgets/radioButtonSetWidget'
+], function(uiDesignTools, $, linearGradientTemplate, colorStopWidget, colorStopTemplate, colorStop, radioButton, radioButtonSet, radioButtonSetWidget){
 	
 	//widget for making gradients. don't call this before the document is ready.
 	 function linearGradientMakerWidget(optionsParam){
@@ -43,8 +46,13 @@ define([
 		this.$linearGradientDirectionScreen = $('#linearGradientDirectionScreen', this.$linearGradientMakerControls);//screen which holds selection option for direction
 		this.$linearGradientGradientTypeScreen = $('#linearGradientGradientTypeScreen', this.$linearGradientMakerControls);//holds screen which shows the selection for gradient type (cirular, linear, etc)
 		
+		//colorstops
 		this.$colorStops = $('#colorStops', this.$linearGradientColorStopsScreen);//colorstops allow us to tweak the output (generated gradient)
 		
+		//direction
+		this.$gradientDirectionRadioButtonSetContainer = $("#gradientDirectionRadioButtonSetContainer", this.options.$linearGradientMaker);
+		
+		//output/generated
 		this.$gradientOutput = $('#gradientOutput', this.options.$linearGradientMaker);//the final result of users modification. updated as user interacts with controls.
 		this.$generatedLinearGradientCssOutputTextArea = $('#generatedLinearGradientCssOutputTextArea', this.options.$linearGradientMaker);//where we will display generated css for the linear gradient
 		this.$generatedLinearGradientCssOutput = $("#generatedLinearGradientCssOutput", this.options.$linearGradientMaker);//show hide this when css preview button is clicked
@@ -59,6 +67,11 @@ define([
 		//used for generating unique color stop ids
 		this.totalColorStopCount = this.options.linearGradientModel.options.colorStops.length + 1;//start count with unique
 		
+		//gradient direction radio widget
+		this.gradientDirectionRadioButtonSetWidget = null;
+		this.createDirectionRadioButtonSetWidget();
+		
+		
 //Model Events Registry
 		//subscribe to colorstop changed events so we can re-render our output
 		this.subscribeToColorStopModelUpdate();//refresh the gradientOutput, user has moved ui control
@@ -67,11 +80,12 @@ define([
 		this.subscribeToColorStopModelShouldBeDeleted();//colorStopWidget fires this event when user clicks delete button
 		//subscribe to linearGradientModel events
 		this.subscribeToLinearGradientModelUpdate();
+		this.subscribeToGradientDirectionRadioButtonSetModelUpdated();//direction radio button set changed
 		
 //UI Events Registry
 		this.registerCssPreviewButtonClickHandler();//expand css preview when button is clicked.
 		this.registerAddColorStopButtonClickHandler();//listen for on click so we can add a new colorStop
-		this.registerLinearGradientSideOrCornerSelectChangeHandler();
+		//this.registerLinearGradientSideOrCornerSelectChangeHandler(); //replaced by radiobutton set
 		
 		this.registerOptionsTabBarClickHandler();//show and hide screens when tabs are clicked.
 		
@@ -82,6 +96,7 @@ define([
 	
 
 //=================================================================== UI Events ===============================================
+	
 
 	//show/hide screens when tabs are clicked
 	linearGradientMakerWidget.prototype.registerOptionsTabBarClickHandler = function(){
@@ -138,23 +153,6 @@ define([
 		this.options.$linearGradientMaker.on('click', '#cssTextPreviewButton', handleCssPreviewButtonClick);
 	};
 
-	//when user selects which direction the gradient should go
-	linearGradientMakerWidget.prototype.registerLinearGradientSideOrCornerSelectChangeHandler = function(){
-		var self = this;
-		
-		function linearGradientSideOrCornerSelectChangeHandler(event){
-			//this.value is the value of the selected option
-			
-			//update the model and emit the event for linearGradientModelUpdated
-			//i'm emitting events rather than just calling refreshUI here because i think this widget could be broken down into smaller parts.
-			//also something else could change the model, and i want this widget to react (not realistic, but this project is about principles in enterprise dev)
-			self.options.linearGradientModel.setSideOrCorner(this.value);
-		}
-		
-		this.$linearGradientMakerControls.on("change", "#linearGradientSideOrCorner", linearGradientSideOrCornerSelectChangeHandler);
-	};
-	
-
 	//when user clicks 'Add Color Stop', this function will be fired so we can update the model, etc.
   linearGradientMakerWidget.prototype.registerAddColorStopButtonClickHandler = function(){
 		var self = this;//for callbacks to have reference to this.
@@ -184,6 +182,26 @@ define([
 	
 	
 //=================================================================== Model Events ===============================================
+	
+	//gradient direction radio button model handling
+	linearGradientMakerWidget.prototype.subscribeToGradientDirectionRadioButtonSetModelUpdated = function(){
+		var self = this;
+		function handleDirectionRadioButtonSelected(event){
+				//alert('now toca are heap');
+				var selectedRadioButton = event.data.selectedRadioButton;
+				
+				//emits event so that generated gradient and css get updated/refreshed
+				self.options.linearGradientModel.setSideOrCorner(selectedRadioButton.options.value);
+		}
+		
+		uiDesignTools.events.eventManager.events['radioButtonSelected'].subscribe(
+			handleDirectionRadioButtonSelected,
+			function(event){//filter event function. 
+				return event.data.eventOriginatorId == self.gradientDirectionRadioButtonSetWidget.options.uniqueId;
+			});//
+	}
+	
+	
 	linearGradientMakerWidget.prototype.subscribeToLinearGradientModelUpdate = function(){
 		var self = this;//so call back functions can access method of this.
 		
@@ -299,6 +317,26 @@ define([
 	}
 	
 //==================================================== Widget Creation ========================================
+
+	linearGradientMakerWidget.prototype.createDirectionRadioButtonSetWidget = function(){
+		//generate the innerhtml of gradientDirectionRadioButtonSetContainer
+		this.gradientDirectionRadioButtonSetWidget = new radioButtonSetWidget({
+			$radioButtonSetContainer : this.$gradientDirectionRadioButtonSetContainer,
+			radioButtonSetModel : new radioButtonSet({
+				radioButtonModels : [
+					new radioButton({displayText : 'top', value : 'top', isSelected : true}),
+					new radioButton({displayText : 'top left', value : 'top left'}),
+					new radioButton({displayText : 'top right', value : 'top right'}),
+					new radioButton({displayText : 'bottom', value : 'bottom'}),
+					new radioButton({displayText : 'bottom left', value : 'bottom left'}),
+					new radioButton({displayText : 'bottom right', value : 'bottom right'}),
+					new radioButton({displayText : 'right', value : 'right'}),
+					new radioButton({displayText : 'left', value : 'left'})
+				]
+			})
+		});
+	};
+
 	//creates colorStopWidgets by constructing the jquery wrapper $colorStop
 	linearGradientMakerWidget.prototype.createColorStopWidgets = function(){
 		var colorStopModels = this.options.linearGradientModel.options.colorStops;
@@ -359,3 +397,24 @@ define([
 
 });//end requirejs
 
+
+
+
+
+
+	//replaced by radioButtonSetWidget
+	//when user selects which direction the gradient should go
+	// linearGradientMakerWidget.prototype.registerLinearGradientSideOrCornerSelectChangeHandler = function(){
+		// var self = this;
+// 		
+		// function linearGradientSideOrCornerSelectChangeHandler(event){
+			// //this.value is the value of the selected option
+// 			
+			// //update the model and emit the event for linearGradientModelUpdated
+			// //i'm emitting events rather than just calling refreshUI here because i think this widget could be broken down into smaller parts.
+			// //also something else could change the model, and i want this widget to react (not realistic, but this project is about principles in enterprise dev)
+			// self.options.linearGradientModel.setSideOrCorner(this.value);
+		// }
+// 		
+		// this.$linearGradientMakerControls.on("change", "#linearGradientSideOrCorner", linearGradientSideOrCornerSelectChangeHandler);
+	// };
