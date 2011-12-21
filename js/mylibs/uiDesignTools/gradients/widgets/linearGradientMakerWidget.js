@@ -51,6 +51,7 @@ define([
 		
 		//direction
 		this.$gradientDirectionRadioButtonSetContainer = $("#gradientDirectionRadioButtonSetContainer", this.options.$linearGradientMaker);
+		this.$gradientTypeRadioButtonSetContainer = $("#gradientTypeRadioButtonSetContainer", this.options.$linearGradientMaker);
 		
 		//output/generated
 		this.$gradientOutput = $('#gradientOutput', this.options.$linearGradientMaker);//the final result of users modification. updated as user interacts with controls.
@@ -71,6 +72,10 @@ define([
 		this.gradientDirectionRadioButtonSetWidget = null;
 		this.createDirectionRadioButtonSetWidget();
 		
+		//gradient type radio widget (linear, circular, etc)
+		this.gradientTypeRadioButtonSetWidget = null; 
+		this.createGradientTypeRadioButtonSetWidget();
+		
 		
 //Model Events Registry
 		//subscribe to colorstop changed events so we can re-render our output
@@ -81,6 +86,7 @@ define([
 		//subscribe to linearGradientModel events
 		this.subscribeToLinearGradientModelUpdate();
 		this.subscribeToGradientDirectionRadioButtonSetModelUpdated();//direction radio button set changed
+		this.subscribeToGradientTypeRadioButtonSetModelUpdated();//gradient type radio button set changed
 		
 //UI Events Registry
 		this.registerCssPreviewButtonClickHandler();//expand css preview when button is clicked.
@@ -178,10 +184,35 @@ define([
 	//ensure all colorstops have a unique id so there are no conflicts when adding, deleting, adding, etc the color stops (click handlers break if not unique id.)
 	linearGradientMakerWidget.prototype.generateColorStopId = function(){
 		return 'colorStop' + this.totalColorStopCount++;
-	}
+	};
 	
 	
 //=================================================================== Model Events ===============================================
+	
+	//gradient type radio button model handling
+	linearGradientMakerWidget.prototype.subscribeToGradientTypeRadioButtonSetModelUpdated = function(){
+		var self = this;
+		
+		function handleGradientTypeRadioButtonSelected(event){
+			var selectedRadioButton = event.data.selectedRadioButton;
+			
+			//set gradient type on linearGradient.
+			//emits an event for gradient output to update/refresh its css
+			self.options.linearGradientModel.setGradientType(selectedRadioButton.options.value);
+			
+			//? refresh generated gradient & css outputs
+			self.refreshGeneratedOutput();
+			
+			alert('this feature is not yet supported!');
+		}
+		
+		uiDesignTools.events.eventManager.events['radioButtonSelected'].subscribe(
+			handleGradientTypeRadioButtonSelected,
+			function(event){//filter event function. 
+				return event.data.eventOriginatorId == self.gradientTypeRadioButtonSetWidget.options.uniqueId;
+			});//
+		
+	};
 	
 	//gradient direction radio button model handling
 	linearGradientMakerWidget.prototype.subscribeToGradientDirectionRadioButtonSetModelUpdated = function(){
@@ -199,7 +230,7 @@ define([
 			function(event){//filter event function. 
 				return event.data.eventOriginatorId == self.gradientDirectionRadioButtonSetWidget.options.uniqueId;
 			});//
-	}
+	};
 	
 	
 	linearGradientMakerWidget.prototype.subscribeToLinearGradientModelUpdate = function(){
@@ -317,7 +348,24 @@ define([
 	}
 	
 //==================================================== Widget Creation ========================================
+	
+	//gradient type radiobuttonset widget
+	linearGradientMakerWidget.prototype.createGradientTypeRadioButtonSetWidget = function(){
+		this.gradientTypeRadioButtonSetWidget = new radioButtonSetWidget({
+			$radioButtonSetContainer : this.$gradientTypeRadioButtonSetContainer,
+			radioButtonSetModel : new radioButtonSet({
+				radioButtonModels : [
+					new radioButton({displayText : 'Linear Gradient', value : 'linear', isSelected : true}),
+					new radioButton({displayText : 'Circular Gradient', value : 'circular'}),
+					new radioButton({displayText : 'Eliptical Gradient', value : 'eliptical'}),
+					new radioButton({displayText : 'Repeating Gradient', value : 'repeating'})
+				]
+			})
+		});
+	};
 
+
+	//direction radiobuttonset widget
 	linearGradientMakerWidget.prototype.createDirectionRadioButtonSetWidget = function(){
 		//generate the innerhtml of gradientDirectionRadioButtonSetContainer
 		this.gradientDirectionRadioButtonSetWidget = new radioButtonSetWidget({

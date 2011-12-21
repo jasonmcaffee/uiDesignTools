@@ -42,5 +42,8 @@ define([
 				//eventOriginatorId: self.options.uniqueId, //so people can filter event listeners
 				 //selectedRadioButton: selectedRadioButtonModel});
 	
+	//let the generated output & css be updated when the gradient type has been changed.
+	uiDesignTools.events.eventManager.events['gradientTypeHasBeenUpdated'] = new uiDesignToolsEvent({type:'gradientTypeHasBeenUpdated'});
+	
 	return uiDesignTools;
 });//end require

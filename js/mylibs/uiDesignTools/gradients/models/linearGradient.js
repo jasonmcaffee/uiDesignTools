@@ -24,7 +24,8 @@ define([
 			oldWebKitSideOrCorner : { //right top | left top | right bottom | right top
 				startPosition : 'left top',
 				endPosition : 'left bottom'
-			}
+			},
+			gradientType : 'linear' //linear circular eliptical repeating
 		};
 		
 		//merge passed in options with default options
@@ -37,6 +38,15 @@ define([
 	
 	//linearGradient extends gradient
 	linearGradient.prototype = new gradient({});
+	
+	
+	
+	linearGradient.prototype.setGradientType = function(gradientType){
+		this.options.gradientType = gradientType;
+		
+		//uiDesignTools.events.eventManager.events['gradientTypeHasBeenUpdated'].publish({colorStop:colorStopToAdd});  ???
+		
+	};
 	
 	//adds the colorstop and emits event colorStopModelHasBeenAdded
 	linearGradient.prototype.addColorStop = function(colorStopToAdd){
