@@ -72,10 +72,12 @@
   
   <div role="main" class="main">
   	
-		<div id="linearGradientMakerWidgetContainer" class="linearGradientMakerWidgetContainer">
-			generated content for the linearGradientMakerWidget goes here
+  	<!-- -->
+  	<div id="gradientsPageContainer">
+	  	Loading gradients page html...
 		</div>
-
+		
+		
   </div>
   
   <footer>
@@ -93,42 +95,32 @@
 
   <script type="text/javascript">
 
-//drawing board for the colorPickerWidget (work in progress)
+//gradients page
 require([
-	'mylibs/uiDesignTools/uiDesignTools',
-	'libs/jquery/jqueryModule', //if you don't use this passed in param you will be using the global $ object
-	'mylibs/uiDesignTools/colorPicker/models/colorPicker',
-	'mylibs/uiDesignTools/colorPicker/widgets/colorPickerWidget',
-], function(uiDesignTools, $, colorPicker, colorPickerWidget){
-	
-	return; //for now
-	//on document ready
-	$(function(){
-			//lose scope inside of this function, therefore must pass in require-scope parameters
-			createColorPickerModelAndWidget(colorPicker, colorPickerWidget);
-			
-			//================================================== colorPickerWidget - Legacy approach. soon to be gone.
-			function createColorPickerModelAndWidget(colorPicker, colorPickerWidget){
-	  		var colorPickerModel = new colorPicker({
-	  			
-	  		});
-	  		
-	  		//jquery representation
-	  		var $colorPicker = $("#colorPicker");
-	  		
-	  		//create the widget, passing it the jquery rep and model
-	  		var colorPickerWidget = new colorPickerWidget({
-	  			colorPickerModel : colorPickerModel,
-	  			$colorPicker : $colorPicker
-	  		});
-	  		
-	  		//expand it.
-	  		colorPickerWidget.expandUI();
-	  	}//end createColorPickerModelAndWidget
-	  });//end document ready
-});//end require
-
-
+  'mylibs/uiDesignTools/uiDesignTools',
+  'libs/jquery/jqueryModule',
+  'mylibs/uiDesignTools/pages/gradientsPage/widgets/gradientsPageWidget',
+  'mylibs/uiDesignTools/pages/gradientsPage/models/gradientsPage',
+  'mylibs/uiDesignTools/pages/gradientsPage/templates/gradientsPageTemplateModule'
+], function(uiDesignTools, $, gradientsPageWidget, gradientsPage, gradientsPageTemplateModule){
+  
+  //on dom ready, create the gradientsPageWidget
+  $(function(){
+    var $gradientsPageContainer =  $('#gradientsPageContainer');
+    var gradientsPageModel = new gradientsPage();
+    var gradientsPageHtml = gradientsPageTemplateModule.gradientsPageTemplate({gradientsPageModel : gradientsPageModel});
+    $gradientsPageContainer[0].innerHTML = gradientsPageHtml;
+    
+    //create the page
+    var gradientsPageWidg = new gradientsPageWidget({
+      gradientsPageModel : gradientsPageModel,
+      $gradientsPageContainer : $gradientsPageContainer //pass in the container the widget will go in.
+    });
+    
+    
+  });//end dom ready
+  
+});
 
 //probably should move this to main.js
 //creates the colo
@@ -141,6 +133,8 @@ require([
 	'mylibs/uiDesignTools/gradients/widgets/linearGradientMakerWidget'
 	], function(uiDesignTools, $, linearGradient, colorStop, linearGradientMakerTemplate, linearGradientMakerWidget){
 
+    return;//for now
+    
 		//on document ready.
 		$(function(){
 			//lose scope inside of this function, therefore must pass in require-scope parameters
@@ -168,11 +162,11 @@ require([
 	  			]
 				});
 				
-	
 				//use the template to generate html reflective of the model.
 				var linearGradientMakerHtml = linearGradientMakerTemplate.linearGradientMakerTemplate({linearGradient:linearGradientModel});
 				//grab where we will place the newly created html
 				var $linearGradientMakerWidgetContainer = $('#linearGradientMakerWidgetContainer');
+				
 				//insert the html into the dom
 				$linearGradientMakerWidgetContainer[0].innerHTML = linearGradientMakerHtml;
 				
@@ -185,6 +179,8 @@ require([
 					$linearGradientMaker : $linearGradientMaker //the widget needs its jquery wrapper for the html it represents.
 				});
 	  	}//end createLinearGradientModelAndWidget
+	  	
+	  	
 		});
   	
   	

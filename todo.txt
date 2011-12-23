@@ -2,15 +2,10 @@ finish css3 gradient generation.
 
 - for more options
 
-color picker
- x tiny boxes. each box N px in height&width
- x hue color slider - requires refactor of template..
- x click event registry is bad approach for colorBoxes. fix it! (duplicate event listens, etc)
- - modal popup - kind of complete
- - when hue range color changes, change minimized of colorPicker to match color. pick 50 for saturation and brightness.
- - reverse hsv from rgb calculation.
- - set hue color of slider when input ranges for rgb change?
- x alpha value of color stop is getting changed when clicking colorBox
+final output view???
+
+
+gradientsPageWidget has html generated, modifies dom,  and then geneerates html for linear gradient, and then modifies dom. do it all at once if possible.
 
 colorBoxes has an extra row - get rid of it.
 
@@ -38,6 +33,20 @@ share palletes
 
 
 - for various browsers x kind of done
+
+
+
+
+================== ALMOST DONE ================================
+color picker
+ x tiny boxes. each box N px in height&width
+ x hue color slider - requires refactor of template..
+ x click event registry is bad approach for colorBoxes. fix it! (duplicate event listens, etc)
+ x modal popup - not a popup any more. simply expands
+ x when hue range color changes, change minimized of colorPicker to match color. pick 50 for saturation and brightness.
+ - reverse hsv from rgb calculation.
+ - set hue color of slider when input ranges for rgb change?
+ x alpha value of color stop is getting changed when clicking colorBox
 
 
 ============= DONE ========================================
