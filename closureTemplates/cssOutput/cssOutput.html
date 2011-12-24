@@ -1,0 +1,32 @@
+{namespace uiDesignTools.cssOutput.templates.cssOutput}
+
+
+/**
+ * 
+ */
+{template .cssOutputTemplate}
+
+  //Final result of what gradient looks like (after user modifies using sliders,etc) will go here.
+  <div id="gradientOutput" class="linearGradient-gradientOutput">&nbsp;</div>
+  
+  //container for css text and its toolbar and button
+  <div id="generatedLinearGradientCssPreviewContainer" class="linearGradient-generatedLinearGradientCssPreviewContainer">
+    
+    <div id="cssTextPreviewToolbar" class="css-text-preview-toolbar">
+      
+      //when this button is clicked, the generated css output will be displayed/hidden
+      <span id="cssTextPreviewButton" class="css-text-preview-toolbar-button">
+        <img src="img/previewCssButton.png" alt="preview the generated css text"/>
+      </span>
+      <label for="cssTextPreviewButton">Preview CSS</label>
+      
+    </div>
+  
+    //css generated from user interaction
+    <div id="generatedLinearGradientCssOutput" class="linearGradient-generatedLinearGradientCssOutput">
+      <textarea id="cssOutputTextArea" class="lg-css-output-textarea" rows="15" >generated css goes here</textarea> //cols="20"
+    </div>
+    
+  </div>
+  
+{/template}

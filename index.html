@@ -77,6 +77,9 @@
 	  	Loading gradients page html...
 		</div>
 		
+		<div id="cssOutputContainer">
+		  Loading generated css output container...
+		</div>
 		
   </div>
   
@@ -94,6 +97,29 @@
 	<!-- <script src="js/libs/jquery/jquery.min.js"></script> -->
 
   <script type="text/javascript">
+
+//generated output
+require([
+  'mylibs/uiDesignTools/uiDesignTools',
+  'libs/jquery/jqueryModule',
+  'mylibs/uiDesignTools/cssOutput/templates/cssOutputTemplateModule',
+  'mylibs/uiDesignTools/cssOutput/models/cssOutput',
+  'mylibs/uiDesignTools/cssOutput/widgets/cssOutputWidget'
+], function(uiDesignTools, $, cssOutputTemplateModule, cssOutput, cssOutputWidget){
+  
+  $(function(){
+    //create the cssOutput html and attach it to the dom
+    var cssOutputHtml = cssOutputTemplateModule.cssOutputTemplate({});
+    var $cssOutputContainer = $('#cssOutputContainer');
+    $cssOutputContainer[0].innerHTML = cssOutputHtml;
+    
+    //create the output widget
+    var newCssOutputWidget = new cssOutputWidget({
+      $cssOutputContainer : $cssOutputContainer
+    });
+  });
+  
+});
 
 //gradients page
 require([

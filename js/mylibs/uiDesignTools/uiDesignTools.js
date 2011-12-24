@@ -31,7 +31,7 @@ define([
 	
 	//linearGradient
 	uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'] = new uiDesignToolsEvent({type:'linearGradientModelHasChanged'});
-	
+	uiDesignTools.events.eventManager.events['linearGradientModelSideOrCornerHasChanged'] = new uiDesignToolsEvent({type:'linearGradientModelSideOrCornerHasChanged'});
 	//colorpicker
 	uiDesignTools.events.eventManager.events['colorPickerModelChanged'] = new uiDesignToolsEvent({type:'colorPickerModelChanged'});
 	uiDesignTools.events.eventManager.events['colorPickerNewColorSelected'] = new uiDesignToolsEvent({type:'colorPickerNewColorSelected'});//fires when a colorBox is clicked

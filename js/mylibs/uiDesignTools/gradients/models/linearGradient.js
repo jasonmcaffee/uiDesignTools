@@ -54,6 +54,7 @@ define([
 		this.options.colorStops.push(colorStopToAdd);
 		//emit the event
 		uiDesignTools.events.eventManager.events['colorStopModelHasBeenAdded'].publish({colorStop:colorStopToAdd});
+		uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish({linearGradient: this});//let the cssOutputWidget know that something changed and it needs to refresh its output.
 	};
 	
 	linearGradient.prototype.removeColorStop = function(colorStopToRemove){
@@ -63,6 +64,7 @@ define([
 		colorStops.splice(indexToRemove, 1);
 		//emit the event
 		uiDesignTools.events.eventManager.events['colorStopModelHasBeenDeleted'].publish({colorStop:colorStopToRemove});
+		uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish({linearGradient: this});//let the cssOutputWidget know that something changed and it needs to refresh its output.
 	};
 	
 	//use this method when you want to emit the event
@@ -104,7 +106,9 @@ define([
 				this.options.oldWebKitSideOrCorner.endPosition = "right top";
 				break;
 		}
-		uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish({linearGradient: this});
+		uiDesignTools.events.eventManager.events['linearGradientModelSideOrCornerHasChanged'].publish({linearGradient: this});//for linear gradient widget update... may not be needed.
+		uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish({linearGradient: this});//let the cssOutputWidget know that something changed and it needs to refresh its output.
+		
 	};
 	
 	return linearGradient;

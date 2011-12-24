@@ -84,7 +84,7 @@ define([
 		this.subscribeToColorStopModelDelete();//we fire this event after we get the colorStopModelShouldBeDeleted and update the model.
 		this.subscribeToColorStopModelShouldBeDeleted();//colorStopWidget fires this event when user clicks delete button
 		//subscribe to linearGradientModel events
-		this.subscribeToLinearGradientModelUpdate();
+		this.subscribeToLinearGradientModelSideOrCornerChanged();
 		this.subscribeToGradientDirectionRadioButtonSetModelUpdated();//direction radio button set changed
 		this.subscribeToGradientTypeRadioButtonSetModelUpdated();//gradient type radio button set changed
 		
@@ -232,8 +232,8 @@ define([
 			});//
 	};
 	
-	
-	linearGradientMakerWidget.prototype.subscribeToLinearGradientModelUpdate = function(){
+	//when the side or corner option is changed, refresh (top, top left, etc)
+	linearGradientMakerWidget.prototype.subscribeToLinearGradientModelSideOrCornerChanged = function(){
 		var self = this;//so call back functions can access method of this.
 		
 		//when the input of a color stop range (red, green, blue, alpha) has changed, we want to be notified so we can
@@ -244,7 +244,7 @@ define([
 		}
 		
 		//subscribe to the event
-		uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].subscribe(handleLinearGradientModelUpdate);
+		uiDesignTools.events.eventManager.events['linearGradientModelSideOrCornerHasChanged'].subscribe(handleLinearGradientModelUpdate);
 	};
 	
 	
@@ -255,6 +255,10 @@ define([
 		//when the input of a color stop range (red, green, blue, alpha) has changed, we want to be notified so we can
 		//re-render the gradientOuput so that it reflects the change the user made.
 		function handleColorStopModelUpdate(event){
+		  //need to publish event so that cssOutput knows that the linearGradientModel has been updated, without know the specifics.
+		  //kind of sloppy. this should be in the linearGradient model module... todo: move this to linearGradient
+		  uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish({linearGradient: self.options.linearGradientModel});//let the cssOutputWidget know that something changed and it needs to refresh its output.
+		  
 			//generate new css text and update the textarea and gradient outputs.
 			self.refreshGeneratedOutput();
 		}
