@@ -48,19 +48,37 @@ define([
     }
     
 //Jquery Objects
-    this.$cssOutputTextArea = $('#cssOutputTextArea', this.options.cssOutputContainer);
-    this.$gradientOutput = $('#gradientOutput', this.options.cssOutputContainer);
-  
+    this.$cssOutputTextArea = $('#cssOutputTextArea', this.options.$cssOutputContainer);
+    this.$gradientOutput = $('#gradientOutput', this.options.$cssOutputContainer);
+    this.$generatedCssOutputContainer = $('#generatedCssOutputContainer', this.options.$cssOutputContainer); //container for text area. we will show hide this on preview click.
+    
 //Model Events Registry
     this.subscribeToLinearGradientModelChanged();
-    // this.subscribeToColorStopModelUpdate();//color stop update
-    // this.subscribeToColorStopModelAdd();
-    // this.subscribeToColorStopModelShouldBeDeleted();
-    // this.subscribeToColorStopModelDelete();
+
+//UI Events Registry
+    this.registerCssPreviewButtonClickHandler();//when preview button is clicked, show/hide css text area
     
     this.refreshGeneratedOutput();
   }
   
+//============================================================== UI Events ==========================================
+ //show and hide the generated css text when the preview button is clicked
+  cssOutputWidget.prototype.registerCssPreviewButtonClickHandler = function(){
+    var self = this;
+    var isCurrentlyDisplayed = false;//start off without display showing.
+    //called when button is clicked
+    function handleCssPreviewButtonClick(event){
+      if(!isCurrentlyDisplayed){
+        self.$generatedCssOutputContainer.show();
+        isCurrentlyDisplayed = true;
+      }else{
+        self.$generatedCssOutputContainer.hide();
+        isCurrentlyDisplayed = false;
+      }
+    }
+    //register the event
+    this.options.$cssOutputContainer.on('click', '#cssTextPreviewButton', handleCssPreviewButtonClick);
+  };
 //============================================================== HTML Generation ====================================
 
   //convenience function for refreshing both the gradient output and generated css text area
@@ -190,3 +208,8 @@ define([
 //   
   // }  
 //   
+
+    // this.subscribeToColorStopModelUpdate();//color stop update
+    // this.subscribeToColorStopModelAdd();
+    // this.subscribeToColorStopModelShouldBeDeleted();
+    // this.subscribeToColorStopModelDelete();
