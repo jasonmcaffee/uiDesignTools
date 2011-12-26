@@ -18,9 +18,15 @@ java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPat
 //gradients page
 java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/pages/gradientsPage/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/pages/gradientsPage.html
 
+//boxshadow page
+java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/pages/boxShadowPage/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/pages/boxShadowPage.html
+
+
 //css output
 java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/cssOutput/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/cssOutput/cssOutput.html
 
+//box shadow
+java -jar S:/Aptana/uiDesignTools/build/tools/SoyToJsSrcCompiler.jar --outputPathFormat 'js/mylibs/uiDesignTools/boxShadow/templates/{INPUT_FILE_NAME_NO_EXT}.js' S:/Aptana/uiDesignTools/closureTemplates/boxShadow/boxShadow.html
 
 
 

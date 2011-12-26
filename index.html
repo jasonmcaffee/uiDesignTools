@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="css/uiDesignTools/gradients/linearGradient.css">
   <link rel="stylesheet" href="css/uiDesignTools/colorPicker/colorPicker.css">
   <link rel="stylesheet" href="css/uiDesignTools/pageHeader.css">
+  <link rel="stylesheet" href="css/uiDesignTools/pages/gradientsPage.css">
 
 	<!-- Load the script "js/main.js" as our entry point, along with requirejs -->
 	<script data-main="js/main" src="js/libs/require/require.js"></script>
@@ -63,7 +64,7 @@
 		
 		<span id="topLevelTabGroup" class="top-level-tab-group">
 			<span id="gradientsTab" class="top-level-tab">Gradients</span>
-			<span id="dropShadowTab" class="top-level-tab">Drop Shadow</span>
+			<span id="boxShadowTab" class="top-level-tab">Box Shadow</span>
 			<span id="textTab" class="top-level-tab">Text</span>
 			<span id="borderRadiusTab" class="top-level-tab">Border Radius</span>
 			<span id="generatedCssTab" class="top-level-tab generated-css-tab">Generated CSS</span>
@@ -72,22 +73,34 @@
   
   <div role="main" class="main">
   	
-  	<!-- -->
-  	<div id="gradientsPageContainer">
-	  	Loading gradients page html...
+  	<div id="row1" class="layout-row-1">
+      
+      <div id="column1" class="layout-column-1">
+    		<div id="cssOutputContainer">
+          Loading generated css output html...
+        </div>
+  		</div>
+  		
+  		<div id="column2" class="layout-column-2">
+    		
+    		<div id="gradientsPageContainer" class="gradients-page-container">
+          Loading gradients page html...
+        </div>
+        
+        <div id="boxShadowPageContainer" class="box-shadow-page-container">
+          Loading box shadow page html...
+        </div>
+        
+  		</div>
+  		
 		</div>
-		
-		<div id="cssOutputContainer">
-		  Loading generated css output container...
-		</div>
-		
   </div>
   
-  <footer>
+  <!-- <footer>
 
   </footer>
 
-	<div id="output"></div>
+	<div id="output"></div> -->
 	
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
@@ -98,7 +111,31 @@
 
   <script type="text/javascript">
 
-//generated output
+//box shadow page
+require([
+  'mylibs/uiDesignTools/uiDesignTools',
+  'libs/jquery/jqueryModule',
+  'mylibs/uiDesignTools/pages/boxShadowPage/templates/boxShadowPageTemplateModule',
+  'mylibs/uiDesignTools/pages/boxShadowPage/models/boxShadowPage',
+  'mylibs/uiDesignTools/pages/boxShadowPage/widgets/boxShadowPageWidget'
+], function(uiDesignTools, $, boxShadowPageTemplateModule, boxShadowPage, boxShadowPageWidget ){
+  
+  $(function(){
+    //create the cssOutput html and attach it to the dom
+    var boxShadowPageHtml = boxShadowPageTemplateModule.boxShadowPageTemplate({});
+    var $boxShadowPageContainer = $('#boxShadowPageContainer');
+    $boxShadowPageContainer[0].innerHTML = boxShadowPageHtml;
+    
+    //create the output widget
+    var newBoxShadowWidget = new boxShadowPageWidget({
+      $boxShadowPageContainer : $boxShadowPageContainer
+    });
+  });
+  
+});
+
+
+//generated css output
 require([
   'mylibs/uiDesignTools/uiDesignTools',
   'libs/jquery/jqueryModule',
@@ -148,77 +185,7 @@ require([
   
 });
 
-//probably should move this to main.js
-//creates the colo
-require([
-	'mylibs/uiDesignTools/uiDesignTools',
-	'libs/jquery/jqueryModule', //if you don't use this passed in param you will be using the global $ object
-	'mylibs/uiDesignTools/gradients/models/linearGradient',
-	'mylibs/uiDesignTools/gradients/models/colorStop',
-	'mylibs/uiDesignTools/gradients/templates/linearGradientMakerTemplateModule',
-	'mylibs/uiDesignTools/gradients/widgets/linearGradientMakerWidget'
-	], function(uiDesignTools, $, linearGradient, colorStop, linearGradientMakerTemplate, linearGradientMakerWidget){
 
-    return;//for now
-    
-		//on document ready.
-		$(function(){
-			//lose scope inside of this function, therefore must pass in require-scope parameters
-			createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate);
-				
-	  	//================================================== linearGradientWidget - Requirejs approach. Teh awesome.
-	  	function createLinearGradientModelAndWidget(linearGradient, colorStop, linearGradientMakerWidget, linearGradientMakerTemplate){
-	  		//first construct an inital model
-				var linearGradientModel = new linearGradient({
-					angle : 0, //only written out if sideOrCorner is empty
-					sideOrCorner : 'top',//if not empty, this will be written out, and angle will not be written out.
-					colorStops : [
-						//colorStop 1
-		  			new colorStop({ 
-		  				colorStopId: 'colorStop0',
-	  					rgba: { red:206, green:155, blue:215, alpha:100 },
-	  					position : 1 
-	  				}),//end colorStop 1
-		  			//colorStop 2
-		  			new colorStop({ 
-		  				colorStopId: 'colorStop1',
-	  					rgba: { red:155, green:109, blue:183, alpha:100 },
-	  					position : 100 
-	  				})//end colorStop 2
-	  			]
-				});
-				
-				//use the template to generate html reflective of the model.
-				var linearGradientMakerHtml = linearGradientMakerTemplate.linearGradientMakerTemplate({linearGradient:linearGradientModel});
-				//grab where we will place the newly created html
-				var $linearGradientMakerWidgetContainer = $('#linearGradientMakerWidgetContainer');
-				
-				//insert the html into the dom
-				$linearGradientMakerWidgetContainer[0].innerHTML = linearGradientMakerHtml;
-				
-				//now that the html is in the dom, we can query to get the top level element
-				var $linearGradientMaker = $('#linearGradientMaker', $linearGradientMakerWidgetContainer);
-				
-				//now we can create the widget
-				var linearGradientMakerWidget = new linearGradientMakerWidget({
-					linearGradientModel : linearGradientModel,
-					$linearGradientMaker : $linearGradientMaker //the widget needs its jquery wrapper for the html it represents.
-				});
-	  	}//end createLinearGradientModelAndWidget
-	  	
-	  	
-		});
-  	
-  	
-  	
-  	
-});//end require
-  	//});//end require
-  	
-  	function log2(message){
-  		document.getElementById("output").innerHTML += message + "<br/>";
-  	}
-  	
 
   </script>
   

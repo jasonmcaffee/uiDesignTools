@@ -1,4 +1,9 @@
+box shadow - allow skews like http://www.wordpressthemeshock.com/css-drop-shadow/
+support adding multiple box shadows
+
 finish css3 gradient generation.
+
+
 
 - for more options
 

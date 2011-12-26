@@ -1,0 +1,35 @@
+{namespace uiDesignTools.boxShadow.templates.boxShadow}
+
+/**
+ * notyetparam boxShadowModel model for the box shadow
+ */
+{template .boxShadowTemplate}
+  <div id="boxShadow" class="box-shadow">
+    
+    <label for="boxShadowHorizontalLength">Horizontal Length</label>
+    <input type="range" id="boxShadowHorizontalLength" min="0" max="255" value="25" />
+    
+    <label for="boxShadowVerticalLength">Vertical Length</label>
+    <input type="range" id="boxShadowVerticalLength" min="0" max="255" value="25" />
+    
+    <label for="boxShadowBlur">Blur</label>
+    <input type="range" id="boxShadowBlur" min="0" max="255" value="25" />
+    
+    <label for="boxShadowSpread">Spread</label>
+    <input type="range" id="boxShadowSpread" min="0" max="255" value="25" />
+    
+    //color stop for shadow color
+    
+    
+  </div>
+{/template}
+
+/**
+ * generates css to create the box shadow
+ * @param boxShadowModel
+ */
+{template .boxShadowCssTemplate}
+  -webkit-box-shadow: {$boxShadowModel.options.horizontalLength}px {$boxShadowModel.options.verticalLength}px {$boxShadowModel.options.blur}px {$boxShadowModel.options.spread}px rgba({$boxShadowModel.options.rgba.red}, {$boxShadowModel.options.rgba.green}, {$boxShadowModel.options.rgba.blue}, {$boxShadowModel.options.rgba.alpha});
+  -moz-box-shadow: 1px 2px 3px 22px rgba(95, 95, 95, 1);
+  box-shadow: 1px 2px 3px 22px rgba(95, 95, 95, 1);
+{/template}

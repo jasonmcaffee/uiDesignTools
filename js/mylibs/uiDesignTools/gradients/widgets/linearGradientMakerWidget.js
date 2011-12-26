@@ -52,15 +52,7 @@ define([
 		//direction
 		this.$gradientDirectionRadioButtonSetContainer = $("#gradientDirectionRadioButtonSetContainer", this.options.$linearGradientMaker);
 		this.$gradientTypeRadioButtonSetContainer = $("#gradientTypeRadioButtonSetContainer", this.options.$linearGradientMaker);
-		
-		//output/generated
-		this.$gradientOutput = $('#gradientOutput', this.options.$linearGradientMaker);//the final result of users modification. updated as user interacts with controls.
-		this.$generatedLinearGradientCssOutputTextArea = $('#generatedLinearGradientCssOutputTextArea', this.options.$linearGradientMaker);//where we will display generated css for the linear gradient
-		this.$generatedLinearGradientCssOutput = $("#generatedLinearGradientCssOutput", this.options.$linearGradientMaker);//show hide this when css preview button is clicked
-		
-		
-			//i don't know that i need this yet... this.$linearGradientSideOrCornerSelect = $('#linearGradientSideOrCorner', this.options.$linearGradientMaker);//user can pick which way the linear gradient should go.
-		
+
 //Widget Creation
 		this.colorStopWidgets = [];//array of colorStopWidgets which each represent a colorStop in this linear gradient
 		this.createColorStopWidgets();
@@ -83,21 +75,16 @@ define([
 		this.subscribeToColorStopModelAdd();//refresh colorStops, user has clicked add colorstop button.
 		this.subscribeToColorStopModelDelete();//we fire this event after we get the colorStopModelShouldBeDeleted and update the model.
 		this.subscribeToColorStopModelShouldBeDeleted();//colorStopWidget fires this event when user clicks delete button
-		//subscribe to linearGradientModel events
-		this.subscribeToLinearGradientModelSideOrCornerChanged();
+
+		
 		this.subscribeToGradientDirectionRadioButtonSetModelUpdated();//direction radio button set changed
 		this.subscribeToGradientTypeRadioButtonSetModelUpdated();//gradient type radio button set changed
 		
 //UI Events Registry
-		this.registerCssPreviewButtonClickHandler();//expand css preview when button is clicked.
-		this.registerAddColorStopButtonClickHandler();//listen for on click so we can add a new colorStop
-		//this.registerLinearGradientSideOrCornerSelectChangeHandler(); //replaced by radiobutton set
-		
-		this.registerOptionsTabBarClickHandler();//show and hide screens when tabs are clicked.
-		
-//HTML Generation
-		this.refreshGeneratedOutput();//gradientOutput and textarea should be refreshed to reflect the current model
-		
+    this.registerAddColorStopButtonClickHandler();//listen for on click so we can add a new colorStop
+    this.registerOptionsTabBarClickHandler();//show and hide screens when tabs are clicked.
+    
+
 	};//end linearGradientMakerWidget
 	
 
@@ -138,25 +125,6 @@ define([
 		this.options.$linearGradientMaker.on('click', '#directionTab',  handleDirectionTabClick);
 		this.options.$linearGradientMaker.on('click', '#gradientTypeTab', handleGradientTabClick);
 		
-	};
-
-
-  //show and hide the generated css text when the preview button is clicked
-	linearGradientMakerWidget.prototype.registerCssPreviewButtonClickHandler = function(){
-		var self = this;
-		var isCurrentlyDisplayed = false;//start off without display showing.
-		//called when button is clicked
-		function handleCssPreviewButtonClick(event){
-			if(!isCurrentlyDisplayed){
-				self.$generatedLinearGradientCssOutput.show();
-				isCurrentlyDisplayed = true;
-			}else{
-				self.$generatedLinearGradientCssOutput.hide();
-				isCurrentlyDisplayed = false;
-			}
-		}
-		//register the event
-		this.options.$linearGradientMaker.on('click', '#cssTextPreviewButton', handleCssPreviewButtonClick);
 	};
 
 	//when user clicks 'Add Color Stop', this function will be fired so we can update the model, etc.
@@ -200,9 +168,6 @@ define([
 			//emits an event for gradient output to update/refresh its css
 			self.options.linearGradientModel.setGradientType(selectedRadioButton.options.value);
 			
-			//? refresh generated gradient & css outputs
-			self.refreshGeneratedOutput();
-			
 			alert('this feature is not yet supported!');
 		}
 		
@@ -214,6 +179,7 @@ define([
 		
 	};
 	
+	//Need this to update the model when user changes gradient direction.
 	//gradient direction radio button model handling
 	linearGradientMakerWidget.prototype.subscribeToGradientDirectionRadioButtonSetModelUpdated = function(){
 		var self = this;
@@ -232,22 +198,7 @@ define([
 			});//
 	};
 	
-	//when the side or corner option is changed, refresh (top, top left, etc)
-	linearGradientMakerWidget.prototype.subscribeToLinearGradientModelSideOrCornerChanged = function(){
-		var self = this;//so call back functions can access method of this.
-		
-		//when the input of a color stop range (red, green, blue, alpha) has changed, we want to be notified so we can
-		//re-render the gradientOuput so that it reflects the change the user made.
-		function handleLinearGradientModelUpdate(event){
-			//generate new css text and update the textarea and gradient outputs.
-			self.refreshGeneratedOutput();
-		}
-		
-		//subscribe to the event
-		uiDesignTools.events.eventManager.events['linearGradientModelSideOrCornerHasChanged'].subscribe(handleLinearGradientModelUpdate);
-	};
-	
-	
+	//Needed so that lineargradient model changed event is fired for cssOutputWidget to change css text
 	//when any of our color stops has been updated, we need to update/render the gradientOutput
 	linearGradientMakerWidget.prototype.subscribeToColorStopModelUpdate = function(){
 		var self = this;//so call back functions can access method of this.
@@ -260,14 +211,15 @@ define([
 		  uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].publish({linearGradient: self.options.linearGradientModel});//let the cssOutputWidget know that something changed and it needs to refresh its output.
 		  
 			//generate new css text and update the textarea and gradient outputs.
-			self.refreshGeneratedOutput();
+			//self.refreshGeneratedOutput();  <-- no longer do this here. cssOutputWidget does this
 		}
 		
 		//subscribe to the event
 		uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].subscribe(handleColorStopModelUpdate);
 	};
 	
-	//when any of our color stops has been updated, we need to update/render the gradientOutput
+	//Needed so the color stops screen displays correct color stops
+	//when any of our color stops have been added, we need to update/render the gradientOutput
 	linearGradientMakerWidget.prototype.subscribeToColorStopModelAdd = function(){
 		var self = this;//so call back functions can access method of this.
 		
@@ -285,7 +237,7 @@ define([
 			self.colorStopWidgets.push(newColorStopWidget);
 			
 			//generate new css text and update outputs (textarea & gradient)
-			self.refreshGeneratedOutput();
+			//self.refreshGeneratedOutput();  <-- no longer needed. moved to cssOutputWidget
 		}
 		
 		//subscribe to the event
@@ -331,7 +283,7 @@ define([
 			}
 	
 			//generate new css text and update outputs (textarea & gradient)
-			self.refreshGeneratedOutput();
+			//self.refreshGeneratedOutput();
 		}
 		
 		//listen for the delete event.
@@ -409,40 +361,7 @@ define([
 			
 			return newColorStopWidget;
 	};
-	
-//==================================================== HTML Generation ========================================
-	//convenience function for refreshing both the gradient output and generated css text area
-	//by having them call their respective templates to generated new html & css
-	linearGradientMakerWidget.prototype.refreshGeneratedOutput = function(){
-		this.refreshGradientOutput();
-		this.refreshGeneratedCssTextArea();
-	}
-	
-	//after an update to the linearGradientModel has been made, most likely this function should be called.
-	linearGradientMakerWidget.prototype.refreshGradientOutput = function(newLinearGradientCssText){
-		//generate the background: linear-gradient css style using the updated model
-		if(!newLinearGradientCssText){ newLinearGradientCssText = this.options.linearGradientCssTemplate({linearGradient : this.options.linearGradientModel}); }
-		//update the css
-		this.$gradientOutput[0].style.cssText = newLinearGradientCssText;
-	};
-	
-	//call this when the model has been updated and you want the generated css textarea to reflect the change
-	linearGradientMakerWidget.prototype.refreshGeneratedCssTextArea = function(newLinearGradientCssText){
-		//generate the background: linear-gradient css style using the updated model
-		if(!newLinearGradientCssText){ newLinearGradientCssText = this.options.linearGradientCssPrettyPrintTemplate({linearGradient : this.options.linearGradientModel}); }
-		//update the textarea's value/inner
-		this.$generatedLinearGradientCssOutputTextArea.val(newLinearGradientCssText);
-	};
-	
 
-//===================================================== Polyfill Creation =====================================
-	//called by the callback function of Modernizr.load for the fdslider input range polyfill
-	linearGradientMakerWidget.prototype.polyfillInputRangeForAllColorStops = function(){
-		for(var i = 0; i < this.colorStopWidgets.length; ++i){
-			this.colorStopWidgets[i].polyfillInputRanges();
-		}
-	}
-	
 	
 //===================================================== Export =================================================
 	return linearGradientMakerWidget;
@@ -451,6 +370,14 @@ define([
 
 
 
+
+////this.subscribeToLinearGradientModelSideOrCornerChanged(); <-- no longer needed. replaced by radioButtonSet subscriptions.
+
+    //output/generated
+    //no longer needed. moved to cssOutputWidget
+    //this.$gradientOutput = $('#gradientOutput', this.options.$linearGradientMaker);//the final result of users modification. updated as user interacts with controls.
+    //this.$generatedLinearGradientCssOutputTextArea = $('#generatedLinearGradientCssOutputTextArea', this.options.$linearGradientMaker);//where we will display generated css for the linear gradient
+    //this.$generatedLinearGradientCssOutput = $("#generatedLinearGradientCssOutput", this.options.$linearGradientMaker);//show hide this when css preview button is clicked
 
 
 
@@ -470,3 +397,90 @@ define([
 // 		
 		// this.$linearGradientMakerControls.on("change", "#linearGradientSideOrCorner", linearGradientSideOrCornerSelectChangeHandler);
 	// };
+
+
+
+  //No longer needed as we don't have output to refresh any longer.
+  //when the side or corner option is changed, refresh (top, top left, etc)
+  // linearGradientMakerWidget.prototype.subscribeToLinearGradientModelSideOrCornerChanged = function(){
+    // var self = this;//so call back functions can access method of this.
+//    
+    // //when the input of a color stop range (red, green, blue, alpha) has changed, we want to be notified so we can
+    // //re-render the gradientOuput so that it reflects the change the user made.
+    // function handleLinearGradientModelUpdate(event){
+      // //generate new css text and update the textarea and gradient outputs.
+      // self.refreshGeneratedOutput();
+    // }
+//    
+    // //subscribe to the event
+    // uiDesignTools.events.eventManager.events['linearGradientModelSideOrCornerHasChanged'].subscribe(handleLinearGradientModelUpdate);
+  // };
+  
+
+
+
+  //No longer needed. Moved to cssOutputWidget
+  //show and hide the generated css text when the preview button is clicked
+  // linearGradientMakerWidget.prototype.registerCssPreviewButtonClickHandler = function(){
+    // var self = this;
+    // var isCurrentlyDisplayed = false;//start off without display showing.
+    // //called when button is clicked
+    // function handleCssPreviewButtonClick(event){
+      // if(!isCurrentlyDisplayed){
+        // self.$generatedLinearGradientCssOutput.show();
+        // isCurrentlyDisplayed = true;
+      // }else{
+        // self.$generatedLinearGradientCssOutput.hide();
+        // isCurrentlyDisplayed = false;
+      // }
+    // }
+    // //register the event
+    // this.options.$linearGradientMaker.on('click', '#cssTextPreviewButton', handleCssPreviewButtonClick);
+  // };
+
+
+    //this.registerCssPreviewButtonClickHandler();//expand css preview when button is clicked.
+    //this.registerLinearGradientSideOrCornerSelectChangeHandler(); //replaced by radiobutton set
+
+//HTML Generation
+    //this.refreshGeneratedOutput();//gradientOutput and textarea should be refreshed to reflect the current model
+    
+    
+    //===================================================== Polyfill Creation =====================================
+  //pos polyfill.
+  //called by the callback function of Modernizr.load for the fdslider input range polyfill
+  // linearGradientMakerWidget.prototype.polyfillInputRangeForAllColorStops = function(){
+    // for(var i = 0; i < this.colorStopWidgets.length; ++i){
+      // this.colorStopWidgets[i].polyfillInputRanges();
+    // }
+  // }
+  
+  
+    
+//==================================================== HTML Generation ========================================
+
+
+  //NO LONGER NEEDED. MOVED TO CSSOUTPUTWIDGET
+  //convenience function for refreshing both the gradient output and generated css text area
+  //by having them call their respective templates to generated new html & css
+  // linearGradientMakerWidget.prototype.refreshGeneratedOutput = function(){
+    // this.refreshGradientOutput();
+    // this.refreshGeneratedCssTextArea();
+  // }
+//  
+  // //after an update to the linearGradientModel has been made, most likely this function should be called.
+  // linearGradientMakerWidget.prototype.refreshGradientOutput = function(newLinearGradientCssText){
+    // //generate the background: linear-gradient css style using the updated model
+    // if(!newLinearGradientCssText){ newLinearGradientCssText = this.options.linearGradientCssTemplate({linearGradient : this.options.linearGradientModel}); }
+    // //update the css
+    // this.$gradientOutput[0].style.cssText = newLinearGradientCssText;
+  // };
+//  
+  // //call this when the model has been updated and you want the generated css textarea to reflect the change
+  // linearGradientMakerWidget.prototype.refreshGeneratedCssTextArea = function(newLinearGradientCssText){
+    // //generate the background: linear-gradient css style using the updated model
+    // if(!newLinearGradientCssText){ newLinearGradientCssText = this.options.linearGradientCssPrettyPrintTemplate({linearGradient : this.options.linearGradientModel}); }
+    // //update the textarea's value/inner
+    // this.$generatedLinearGradientCssOutputTextArea.val(newLinearGradientCssText);
+  // };
+    

@@ -20,56 +20,12 @@
 * @param linearGradient linear gradient model with colorstops,etc. 
 */
 {template .linearGradientMakerInnerContentTemplate}
-  
-  <div id="linearGradientMakerControlsRow1" class="linearGradient-linearGradientMakerControlsRow1">
-	  
-	  <!-- Column 1 -->
-	  <div id="linearGradientMakerControlsColumn1" class="linearGradient-linearGradientMakerControlsColumn1">
-	  	
-	  	//container for gradient and css text
-	  	<div id="generatedOutputsContainer" class="linearGradient-generatedOutputsContainer">
 
-		  	//Final result of what gradient looks like (after user modifies using sliders,etc) will go here.
-			  <div id="gradientOutput" class="linearGradient-gradientOutput">&nbsp;</div>
-			  
-			  //container for css text and its toolbar and button
-			  <div id="generatedLinearGradientCssPreviewContainer" class="linearGradient-generatedLinearGradientCssPreviewContainer">
-			  	
-			  	<div id="cssTextPreviewToolbar" class="css-text-preview-toolbar">
-			  		
-			  		//when this button is clicked, the generated css output will be displayed/hidden
-			  		<span id="cssTextPreviewButton" class="css-text-preview-toolbar-button">
-			  			<img src="img/previewCssButton.png" alt="preview the generated css text"/>
-			  		</span>
-			  		<label for="cssTextPreviewButton">Preview CSS</label>
-			  		
-			  	</div>
-			  
-				  //css generated from user interaction
-				  <div id="generatedLinearGradientCssOutput" class="linearGradient-generatedLinearGradientCssOutput">
-						<textarea id="generatedLinearGradientCssOutputTextArea" class="lg-css-output-textarea" rows="15" >generated css goes here</textarea> //cols="20"
-					</div>
-					
-				</div>
-			</div>
-			
-		</div><!-- End Column 1 -->
-		
-		<!-- Column 2 -->
-		<div id="linearGradientMakerControlsColumn2" class="linearGradient-linearGradientMakerControlsColumn2">
-			
-			//build controls section, which includes color stops, sliders, etc
-		  {call .linearGradientMakerControlsTemplate}
-		  	{param linearGradient: $linearGradient /}
-		  {/call}
-		  
-	  </div><!-- end column 2 -->
-	  
-	</div><!-- end row 1-->
-	
-			
-			
-			
+	//build controls section, which includes color stops, sliders, etc
+  {call .linearGradientMakerControlsTemplate}
+  	{param linearGradient: $linearGradient /}
+  {/call}
+
 {/template}
 
 
