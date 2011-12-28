@@ -45,5 +45,8 @@ define([
 	//let the generated output & css be updated when the gradient type has been changed.
 	uiDesignTools.events.eventManager.events['gradientTypeHasBeenUpdated'] = new uiDesignToolsEvent({type:'gradientTypeHasBeenUpdated'});
 	
+	//box shadow
+	uiDesignTools.events.eventManager.events['boxShadowUpdated'] = new uiDesignToolsEvent({type:'boxShadowUpdated'});
+	
 	return uiDesignTools;
 });//end require

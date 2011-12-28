@@ -84,7 +84,7 @@ body {
 /* --------------------------------------------------------------  pages */
 
 .box-shadow-page-container{
-  display: none; /*starts out invisible until tab is clicked. */
+  /*display: none;*/ /*starts out invisible until tab is clicked. */
 }
 
 .gradients-page-container{

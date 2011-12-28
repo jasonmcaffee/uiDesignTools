@@ -92,6 +92,7 @@ define([                 //todo: fsslider requirement
 			//update the input range sliders to reflect the rgba of what the user selected. 
 			self.refreshColorStopInputRanges();
 			
+			//todo: move this to the model. duh.
 			//update the css text and gradient of linearGradientWidget to reflect the rgba of our now updated colorStopModel.
 			uiDesignTools.events.eventManager.events['colorStopModelHasChanged'].publish({
 					colorStop : self.options.colorStopModel

@@ -122,12 +122,14 @@ require([
   
   $(function(){
     //create the cssOutput html and attach it to the dom
-    var boxShadowPageHtml = boxShadowPageTemplateModule.boxShadowPageTemplate({});
+    var boxShadowPageModel = new boxShadowPage();
+    var boxShadowPageHtml = boxShadowPageTemplateModule.boxShadowPageTemplate({boxShadowPageModel: boxShadowPageModel});
     var $boxShadowPageContainer = $('#boxShadowPageContainer');
     $boxShadowPageContainer[0].innerHTML = boxShadowPageHtml;
     
     //create the output widget
     var newBoxShadowWidget = new boxShadowPageWidget({
+      boxShadowPageModel : boxShadowPageModel,
       $boxShadowPageContainer : $boxShadowPageContainer
     });
   });

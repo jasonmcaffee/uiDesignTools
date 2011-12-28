@@ -13,8 +13,10 @@ define([
   'mylibs/uiDesignTools/gradients/models/colorStop',
   'mylibs/uiDesignTools/cssOutput/templates/cssOutputTemplateModule',
   'mylibs/uiDesignTools/cssOutput/models/cssOutput',
-  'mylibs/uiDesignTools/gradients/templates/linearGradientTemplateModule'
-  ], function(uiDesignTools, $, linearGradient, colorStop, cssOutputTemplateModule, cssOutput, linearGradientTemplateModule){
+  'mylibs/uiDesignTools/gradients/templates/linearGradientTemplateModule',
+  'mylibs/uiDesignTools/boxShadow/models/boxShadow',
+  'mylibs/uiDesignTools/boxShadow/templates/boxShadowTemplateModule'
+  ], function(uiDesignTools, $, linearGradient, colorStop, cssOutputTemplateModule, cssOutput, linearGradientTemplateModule, boxShadow, boxShadowTemplateModule){
   
   
   function cssOutputWidget(optionsParam){
@@ -22,6 +24,7 @@ define([
       cssOutputTemplate : cssOutputTemplateModule.cssOutputTemplate, //generates html for this widget.
       linearGradientCssPrettyPrintTemplate : linearGradientTemplateModule.linearGradientCssPrettyPrintTemplate, //pretty print css text for linear gradient
       linearGradientCssTemplate : linearGradientTemplateModule.linearGradientCssTemplate, //for background of gradient output div
+      boxShadowCssTemplate : boxShadowTemplateModule.boxShadowCssTemplate,//for box shadow background of gradient output div
       $cssOutputContainer : false , //all html for this widget goes in here.
       cssOutputModel : false, //model for this widget. includes colorStops, linearGradientModel, etc.
     };
@@ -40,10 +43,21 @@ define([
         })//end colorStop 2
       ];
       
+      var newBoxShadowModel = new boxShadow({
+        horizontalLength : 1,
+        verticalLength : 2,
+        blur : 3,
+        spread : 4,
+        rgba : {
+          red: 128, blue: 128, green: 128, alpha: 1
+        }
+      }); //needed for first paint
+      
       this.options.cssOutputModel = new cssOutput({
         linearGradientModel : new linearGradient({
           colorStops : colorStops
-        })
+        }),
+        boxShadowModel : newBoxShadowModel
       })
     }
     
@@ -54,6 +68,7 @@ define([
     
 //Model Events Registry
     this.subscribeToLinearGradientModelChanged();
+    this.subscribeToBoxShadowModelUpdated();
 
 //UI Events Registry
     this.registerCssPreviewButtonClickHandler();//when preview button is clicked, show/hide css text area
@@ -86,7 +101,7 @@ define([
   cssOutputWidget.prototype.refreshGeneratedOutput = function(){
     this.refreshGradientOutput();
     this.refreshGeneratedCssTextArea();
-  }
+  };
   
   //after an update to the linearGradientModel has been made, most likely this function should be called.
   cssOutputWidget.prototype.refreshGradientOutput = function(){
@@ -97,6 +112,11 @@ define([
         newCssText = this.options.linearGradientCssTemplate({linearGradient : this.options.cssOutputModel.options.linearGradientModel});
         break;
     }
+    
+    //box shadow css
+    var boxShadowCss = this.options.boxShadowCssTemplate({boxShadowModel : this.options.cssOutputModel.options.boxShadowModel});
+    newCssText += boxShadowCss;
+    
     //update the css
     this.$gradientOutput[0].style.cssText = newCssText;
   };
@@ -105,11 +125,17 @@ define([
   cssOutputWidget.prototype.refreshGeneratedCssTextArea = function(newLinearGradientCssText){
     //generate the background: linear-gradient css style using the updated model
     if(!newLinearGradientCssText){ newLinearGradientCssText = this.options.linearGradientCssPrettyPrintTemplate({linearGradient : this.options.cssOutputModel.options.linearGradientModel}); }
+    
+    //box shadow css
+    var boxShadowCss = this.options.boxShadowCssTemplate({boxShadowModel : this.options.cssOutputModel.options.boxShadowModel});
+    newLinearGradientCssText += boxShadowCss;
+    
     //update the textarea's value/inner
     this.$cssOutputTextArea.val(newLinearGradientCssText);
   };
   
 //============================================================== Model Event Handling ===============================
+  //linear gradient
   cssOutputWidget.prototype.subscribeToLinearGradientModelChanged = function(){
     var self = this;
     function handleLinearGradientModelChanged(event){
@@ -121,6 +147,17 @@ define([
     uiDesignTools.events.eventManager.events['linearGradientModelHasChanged'].subscribe(handleLinearGradientModelChanged);
   };
 
+  //box shadow
+  cssOutputWidget.prototype.subscribeToBoxShadowModelUpdated = function(){
+    var self = this;
+    function handleBoxShadowModelUpdated(event){
+      var newBoxShadowModel = event.data.boxShadow;
+      self.options.cssOutputModel.options.boxShadowModel = newBoxShadowModel;
+      self.refreshGeneratedOutput();
+    }
+    
+    uiDesignTools.events.eventManager.events['boxShadowUpdated'].subscribe(handleBoxShadowModelUpdated);
+  };
 //============================================================== Export =============================================
   return cssOutputWidget;
 });

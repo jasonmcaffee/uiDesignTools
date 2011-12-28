@@ -10,7 +10,7 @@ if (typeof uiDesignTools.pages.templates.boxShadowPage == 'undefined') { uiDesig
 uiDesignTools.pages.templates.boxShadowPage.boxShadowPageTemplate = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div id="boxShadowPage" class="drop-shadow-page"><div id="boxShadowWidgetContainer" class="box-shadow-widget-container">');
-  uiDesignTools.boxShadow.templates.boxShadow.boxShadowTemplate(null, output);
+  uiDesignTools.boxShadow.templates.boxShadow.boxShadowTemplate({boxShadowModel: opt_data.boxShadowPageModel.options.boxShadowModel}, output);
   output.append('</div></div>');
   return opt_sb ? '' : output.toString();
 };

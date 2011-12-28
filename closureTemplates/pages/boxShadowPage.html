@@ -1,7 +1,7 @@
 {namespace uiDesignTools.pages.templates.boxShadowPage}
 
 /**
- * 
+ * @param boxShadowPageModel
  */
 {template .boxShadowPageTemplate}
   <div id="boxShadowPage" class="drop-shadow-page">
@@ -9,6 +9,7 @@
     //box shadow
     <div id="boxShadowWidgetContainer" class="box-shadow-widget-container">
       {call uiDesignTools.boxShadow.templates.boxShadow.boxShadowTemplate}
+        {param boxShadowModel: $boxShadowPageModel.options.boxShadowModel /}
       {/call}
     </div>
     

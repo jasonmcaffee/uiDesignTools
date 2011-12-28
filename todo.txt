@@ -3,6 +3,7 @@ support adding multiple box shadows
 
 finish css3 gradient generation.
 
+dont redraw all the radio buttons on click, just replace the image.
 
 
 - for more options
