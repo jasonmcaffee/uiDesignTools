@@ -23,7 +23,7 @@ define([
     
 //Widget Creation
     this.colorStopWidget = this.createColorStopWidget();
-    
+
 //UI Event Registry
     //register input range change handlers
     this.registerHorizontalLengthChangeHandler();
