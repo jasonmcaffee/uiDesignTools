@@ -33,12 +33,30 @@ define([
   }  
   
 //=========================================== Widget Creation ======================
+
+    function itsMe(){
+        this.yNot = 'ynot?';
+        this.xNot = 'xnot?';
+        var zNot = 'zNot?';
+
+    }
+
+    /**
+     *
+     * @param itsMe
+     */
+    boxShadowWidget.prototype.testing = function(someObject){
+        var y = someObject.yNot;
+    };
+    /**
+     * @returns colorStopWidget
+     */
   boxShadowWidget.prototype.createColorStopWidget = function(){
       var newColorStopWidget = new colorStopWidget({
         colorStopModel : this.options.boxShadowModel.options.colorStopModel,
         $colorStop : this.$colorStopWidgetContainer
       });
-      
+
       return newColorStopWidget;
   };
   
@@ -107,4 +125,4 @@ define([
 //=========================================== Export ===============================
 
   return boxShadowWidget;
-})
+});
