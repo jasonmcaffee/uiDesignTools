@@ -1,7 +1,7 @@
 /**
  * @author Jason McAffee
  * Core library for uiDesignTools.
- * Holds subscriptions to all uiDesignToolEvents via the eventManager.
+ * Holds subscriptions to all uiDesignToolEvents via the eventManager.   a
  */
 
 //not sure how to do this only once...without global namespace pollution.
